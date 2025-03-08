@@ -5,10 +5,10 @@ import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
 
-import 'package:home_serviece/feature/home/prasntation/screen/editprofile.dart';
-import 'package:home_serviece/feature/home/prasntation/screen/home_screen.dart';
-import 'package:gradproject/feature/home/prasntation/screen/houses_screen.dart';
-import 'package:gradproject/feature/home/presenavbar.dart';
+import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
+import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/houses_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/support.dart';
@@ -40,24 +40,18 @@ class DreamHouse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      
       routes: {
         IamLookingFor.id: (context) => const IamLookingFor(),
         LoginScreen.id: (context) => LoginScreen(),
         SignupUser.id: (context) => SignupUser(),
         SignupWorker.id: (context) => SignupWorker(),
-      
         EditProfile.id: (context) => EditProfile(),
         HomeScreen.id: (context) => const HomeScreen(),
         HousesScreen.id: (context) => const HousesScreen(),
-        
         ProfileScreen.id: (context) => const ProfileScreen(),
         ServicesScreen.id: (context) => const ServicesScreen(),
-        
-       
       },
       debugShowCheckedModeBanner: false,
-      
       home: ProfileScreen(),
     );
   }
