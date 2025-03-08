@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+mport 'package:flutter/material.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
@@ -11,10 +10,7 @@ import 'package:home_serviece/feature/home/presentation/screen/houses_screen.dar
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/support.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
-import 'package:home_serviece/feature/onbording/pages/onbording_screen.dart';
-import 'package:home_serviece/feature/onbording/pages/splash_screen.dart';
 
 void main() {
   runApp(const DreamHouse());
@@ -22,7 +18,6 @@ void main() {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,7 +30,7 @@ class MainApp extends StatelessWidget {
 }
 
 class DreamHouse extends StatelessWidget {
-  const DreamHouse({Key? key}) : super(key: key);
+  const DreamHouse({super.key});
 
   @override
   Widget build(BuildContext context) {
