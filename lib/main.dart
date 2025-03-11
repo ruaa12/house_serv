@@ -3,13 +3,14 @@ import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.d
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
+
+import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
+import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/houses_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
-
-import 'feature/home/presentation/screen/edit_profile.dart';
-import 'feature/home/presentation/screen/home_screen.dart';
-import 'feature/home/presentation/screen/houses_screen.dart';
 
 void main() {
   runApp(const DreamHouse());
@@ -17,7 +18,6 @@ void main() {
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
