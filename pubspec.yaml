@@ -4,7 +4,7 @@ publish_to: 'none'
 version: 0.1.0
 
 environment:
-  sdk: ^3.6.2
+  sdk: ">=3.4.3 <4.0.0"
 
 dependencies:
   flutter:
@@ -16,6 +16,8 @@ dependencies:
   easy_localization: ^3.0.7+1
   hydrated_bloc: ^10.0.0
   path_provider: ^2.1.5
+  http: 
+  flutter_lints: 
 
 dev_dependencies:
   flutter_test:
