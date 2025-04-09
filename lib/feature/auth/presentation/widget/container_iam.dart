@@ -5,11 +5,11 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class ContainerIam extends StatelessWidget {
   const ContainerIam({
-    Key? key,
+    super.key,
     required this.label,
     required this.text,
     required this.onpressed,
-  }) : super(key: key);
+  });
   final String? label;
   final String? text;
   final VoidCallback? onpressed;

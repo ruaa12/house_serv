@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-
 import 'package:flutter/material.dart';
 
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
@@ -12,14 +11,12 @@ import '../widget/package_service.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'homepage';
-  final DetService ? detService;
-  
-  
+  final DetService? detService;
+
   const HomeScreen({
-    Key? key,
-     this.detService,
-    
-  }) : super(key: key);
+    super.key,
+    this.detService,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -31,30 +28,13 @@ class _HomeScreenState extends State<HomeScreen> {
     viewportFraction: .8,
   );
 
-  // @override
-  // void initState(){
-  //   Timer.periodic(Duration.extralong4 * 5 , (timer){
-  //     pageController.animateToPage(pageController.page!.toInt() +1,
-  //      duration: Duration.long1, curve: Curves.easeIn);
-  //    });
-  //    super.initState();
-  // }
-  
   List<ImageHome> listImage = [
-    ImageHome(
-      image: 'assets/images/image 51.png'),
-    ImageHome(
-      image: 'assets/images/ Gallery - Small-2.png'),
-    ImageHome(
-      image: 'assets/images/ Gallery - Small-1.png'),
-    ImageHome(
-      image: 'assets/images/image 51.png'),
-    ImageHome(
-      image: 'assets/images/image 51.png'),
-      
-      
-
-  ];  
+    ImageHome(image: 'assets/images/image 51.png'),
+    ImageHome(image: 'assets/images/ Gallery - Small-2.png'),
+    ImageHome(image: 'assets/images/ Gallery - Small-1.png'),
+    ImageHome(image: 'assets/images/image 51.png'),
+    ImageHome(image: 'assets/images/image 51.png'),
+  ];
   List<Package> listHomes = [
     Package(
         type: 'Villa',
@@ -106,44 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/ Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
   ];
-  List<DetService> listPservice =[
-     DetService(
-    imageSer: 'assets/images/Laundry.png', 
-    titleSer: 'Laudry'),
+  List<DetService> listPservice = [
+    DetService(imageSer: 'assets/images/Laundry.png', titleSer: 'Laudry'),
+    DetService(imageSer: 'assets/images/image 117.png', titleSer: 'Electric'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'solar'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'Painting'),
     DetService(
-    imageSer: 'assets/images/image 117.png', 
-    titleSer: 'Electric'),
-    DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'solar'),
-    DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'plumber'),
-    DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'Painting'),
-     DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'Air condition'),
-     DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'repair'),
-     DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'plumber'),
-     DetService(
-    imageSer: 'assets/images/image 118.png', 
-    titleSer: 'plumber'),
-    
-    
-  
+        imageSer: 'assets/images/image 118.png', titleSer: 'Air condition'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'repair'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
+    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
+  ];
 
-  
-];
-   
- 
   List<PackagePro> listProvider = [
-
     PackagePro(
         type: 'solar',
         name: 'Ahmed Mustafa',
@@ -152,9 +108,10 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/image 83.png',
         location: 'Aleppo_alshahba',
         phone: 0931267548,
-        experiance: 3, bio: '',
-         Gallery: []),
-     PackagePro(
+        experiance: 3,
+        bio: '',
+        gallery: []),
+    PackagePro(
         type: 'solar',
         name: 'Ahmed Mustafa',
         rating: '3.7',
@@ -162,9 +119,10 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/image 83-1.png',
         location: 'Aleppo_alshahba',
         phone: 0931267548,
-        experiance: 3, bio: '',
-         Gallery: []),
-       PackagePro(
+        experiance: 3,
+        bio: '',
+        gallery: []),
+    PackagePro(
         type: 'solar',
         name: 'Ahmed Mustafa',
         rating: '3.7',
@@ -172,9 +130,10 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/image 83.png',
         location: 'Aleppo_alshahba',
         phone: 0931267548,
-        experiance: 3, bio: '',
-         Gallery: []),
-       PackagePro(
+        experiance: 3,
+        bio: '',
+        gallery: []),
+    PackagePro(
         type: 'solar',
         name: 'Ahmed Mustafa',
         rating: '3.7',
@@ -182,9 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/image 83.png',
         location: 'Aleppo_alshahba',
         phone: 0931267548,
-        experiance: 3, bio: '',
-         Gallery: []),
-       PackagePro(
+        experiance: 3,
+        bio: '',
+        gallery: []),
+    PackagePro(
         type: 'solar',
         name: 'Ahmed Mustafa',
         rating: '3.7',
@@ -192,13 +152,11 @@ class _HomeScreenState extends State<HomeScreen> {
         photo: 'assets/images/image 83.png',
         location: 'Aleppo_alshahba',
         phone: 0931267548,
-        experiance: 3, bio: '',
-         Gallery: []),
-   
+        experiance: 3,
+        bio: '',
+        gallery: []),
   ];
   bool viewHouse = false;
-  
-  
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 35,
               ),
-              Container(
+              SizedBox(
                 height: 70,
                 child: Padding(
                   padding: EdgeInsets.only(top: 6, left: 6),
@@ -265,7 +223,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const Positioned(
                                     bottom: 40,
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding:  EdgeInsets.all(8.0),
                                       child: Text('Black'),
                                     )),
                               ],
@@ -318,9 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         icon: const Icon(Icons.arrow_upward)),
                                     SizedBox(
-                                      
                                       child: ListView.builder(
-
                                         itemCount: listHomes.length,
                                         scrollDirection: Axis.vertical,
                                         shrinkWrap: true,
@@ -342,55 +298,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                       PackageHomes(package: listHomes[index]),
                                 ),
                               ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                'popular Service',
-                                style: TextStyle(
-                                    fontSize: 24,
-                                    color: color1,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context, 
-                                      MaterialPageRoute(builder: (context) =>
-                                       ServicesScreen(
-                                        
-                                       )
-                                       )
-                                    );
-                                  },
-                                  child: const Text(
-                                    'View all',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: color3,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                            ],
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'popular Service',
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  color: color1,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ServicesScreen()));
+                                },
+                                child: const Text(
+                                  'View all',
+                                  style: TextStyle(
+                                      fontSize: 18,
+                                      color: color3,
+                                      fontWeight: FontWeight.bold),
+                                )),
+                          ],
                         ),
                         SizedBox(
-                            width: double.infinity,
-                            height: 130,
-                            
-                                
-                                  child: ListView.builder(
-                                    itemCount: listPservice.length,
-                                    scrollDirection: Axis.horizontal,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) =>
-                                        PackageService(
-                                          detService: listPservice[index])
-                                   
-                                  ),
-                                
-                              
-                            ),
+                          width: double.infinity,
+                          height: 130,
+                          child: ListView.builder(
+                              itemCount: listPservice.length,
+                              scrollDirection: Axis.horizontal,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) => PackageService(
+                                  detService: listPservice[index])),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -430,12 +374,8 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ]),
       ),
-      
     );
-
-    
   }
-
 }
 
 class ImageHome {

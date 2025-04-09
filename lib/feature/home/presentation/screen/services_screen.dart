@@ -13,9 +13,9 @@ class ServicesScreen extends StatefulWidget {
   
   
   const ServicesScreen({
-    Key? key,
+    super.key,
      this.service,
-  }) : super(key: key);
+  });
 
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();

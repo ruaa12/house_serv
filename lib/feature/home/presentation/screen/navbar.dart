@@ -52,8 +52,8 @@ class _NavbarState extends State<Navbar> {
       ),
       body: <Widget>[
         const HomeScreen(),
-        const SearchScreen(),
-        const CartScreen(),
+        SearchScreen(),
+        CartScreen(),
         const ProfileScreen()
       ][currentpage],
     );

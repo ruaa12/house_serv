@@ -6,9 +6,9 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 class PackagePorovider extends StatelessWidget {
   final PackagePro packagePro;
   const PackagePorovider({
-    Key? key,
+    super.key,
     required this.packagePro,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class PackagePorovider extends StatelessWidget {
         color: color6,
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey,
               spreadRadius: 3,
               blurRadius: 9,
               offset: const Offset(0, 3))
@@ -145,7 +145,7 @@ class PackagePro {
   final int? phone;
   final int? experiance;
   final String? bio;
-  final List<String>? Gallery;
+  final List<String>? gallery;
   PackagePro({
     required this.type,
     required this.name,
@@ -156,6 +156,6 @@ class PackagePro {
     required this.phone,
     required this.experiance,
     required this.bio,
-    required this.Gallery,
+    required this.gallery,
   });
 }

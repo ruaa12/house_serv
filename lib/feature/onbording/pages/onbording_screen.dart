@@ -49,7 +49,7 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   (Image.asset(
-                    '${data[index].image}',
+                    data[index].image,
                     height: 400,
                     width: 400,
                   )),
@@ -124,7 +124,7 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
 }
 
 class CustomContainer extends StatelessWidget {
-  const CustomContainer({Key? key, required this.isselected}) : super(key: key);
+  const CustomContainer({super.key, required this.isselected});
   final bool isselected;
   @override
   Widget build(BuildContext context) {

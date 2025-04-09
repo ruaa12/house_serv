@@ -7,9 +7,9 @@ import 'package:home_serviece/feature/home/presentation/widget/package_porovider
 class ServicesProvider extends StatelessWidget {
   final Service servP;
   const ServicesProvider({
-    Key? key,
+    super.key,
     required this.servP,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class ServicesProvider extends StatelessWidget {
                         phone: 0,
                         experiance: 2,
                         bio: '',
-                        Gallery: []))
+                        gallery: []))
 
                 // Container(child: Text('data'),)
                 ),

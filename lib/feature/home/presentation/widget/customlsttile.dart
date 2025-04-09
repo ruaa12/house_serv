@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class CustomListTile extends StatelessWidget {
+  // ignore: use_super_parameters
   const CustomListTile({
     Key? key,
     required this.title,
@@ -22,7 +23,7 @@ class CustomListTile extends StatelessWidget {
       trailing: trailing,
       tileColor: color4,
       title: Padding(
-        padding:const EdgeInsets.only(left: 80),
+        padding: EdgeInsets.only(left: 80),
         child: Text(
           title,
           style: const TextStyle(

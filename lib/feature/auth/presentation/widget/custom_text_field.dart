@@ -5,39 +5,36 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class CustomTextField extends StatelessWidget {
   const CustomTextField({
-    Key? key,
+    super.key,
     required this.validator,
     required this.label,
     required this.hintText,
     required this.controller,
-     required this.keybourdTybe,
-  }) : super(key: key);
+    required this.keybourdTybe,
+    required this.onChanged,
+  });
   final String? Function(String?) validator;
-  final String label;  
+  final String label;
   final String hintText;
   final TextEditingController controller;
   final TextInputType keybourdTybe;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-          controller: controller ,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          keyboardType: keybourdTybe,
-          
-          decoration: InputDecoration(
-            fillColor: color7,
-            filled: true,
-            labelText: label,
-
-            hintText: hintText ,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(40), 
-            ),
-
+        controller: controller,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        keyboardType: keybourdTybe,
+        decoration: InputDecoration(
+          fillColor: color7,
+          filled: true,
+          labelText: label,
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(40),
           ),
-          validator: validator
-          
-         );
+        ),
+        validator: validator);
   }
 }

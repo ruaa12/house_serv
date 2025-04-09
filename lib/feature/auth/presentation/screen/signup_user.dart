@@ -7,7 +7,7 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class SignupUser extends StatelessWidget {
   static String id = 'signupUser';
-   SignupUser({super.key});
+  SignupUser({super.key});
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -16,147 +16,158 @@ class SignupUser extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 200,),
+            SizedBox(
+              height: 200,
+            ),
             Container(
-                padding: EdgeInsets.all(25),
-                decoration:
-                 const BoxDecoration(
+              padding: EdgeInsets.all(25),
+              decoration: const BoxDecoration(
                   color: color4,
-        
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(100),
                     topRight: Radius.circular(100),
-                    
-                    )
-                ),
+                  )),
               child: Column(
                 children: [
-                  SizedBox(height: 10,),
-                  Text('Enter your information to sign up ',
-                   style: TextStyle(
-                  fontSize: 18,
-                   fontWeight: FontWeight.bold),
-                   ),
-                  SizedBox(height: 50,),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Enter your information to sign up ',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  ),
                   Form(
                     key: formKey,
-        
                     child: Column(
                       children: [
-                        CustomTextField(validator:
-                      (value){
-                        if(value!.length >= 3 ){
-                          return null;
-                        }
-                        else {
-                          return 'Please Add A Valid Name';
-                        }
-                      },
-                      keybourdTybe: TextInputType.name,
-                      label: 'First Name',
-                      hintText:'name' ,
-                      controller: TextEditingController(),),
-
-                     const SizedBox(height: 20,),
-
-                     CustomTextField(validator:
-                      (value){
-                        if(value!.length >= 3 ){
-                          return null;
-                        }
-                        else {
-                          return 'Please Add A Valid lastName';
-                        }
-                      },
-                      keybourdTybe: TextInputType.name,
-                      label: 'Last Name',
-                      hintText:'Enter Your Last Name' ,
-                      controller: TextEditingController(),),
-
-                      const SizedBox(height: 20,),
-
-                     CustomTextField(validator:
-                      (value){
-                        if(value!.contains('@gmail.com')){
-                          return null;
-                        }
-                        else {
-                          return 'Please Add A Valid E-mail';
-                        }
-                      },
-                      keybourdTybe: TextInputType.emailAddress,
-                       label: 'Email',
-                    hintText:'user@gmail.com' ,
-                      controller: TextEditingController(),),
-
-                     const SizedBox(height: 20,),
-
-                     CustomTextField(validator:
-                      (value){
-                        if(value!.length == 10 ){
-                          return null;
-                        }
-                        else {
-                          return 'Please Add A Valid Phone';
-                        }
-                      },
-                      keybourdTybe: TextInputType.phone,
-                      label: 'Phone',
-                      hintText:'0911111111' ,
-                      controller: TextEditingController(),),
-
-                        const SizedBox(height: 20,),
-
-                     CustomTextField(validator:
-                      (value){
-                        if(value!.length >= 8 ){
-                          return null;
-                        }
-                        else {
-                          return 'Please Add A Valid Password';
-                        }
-                      },
-                      keybourdTybe: TextInputType.visiblePassword,
-                      label: 'pasword',
-                    hintText:'xxxxxxxx' ,
-                      controller: TextEditingController(),),
-
-                      const SizedBox(height: 70,),
-        
-                      ],
-                      
-                     ),
-                     ),
-                      Button(ontap: () {if(formKey.currentState!.validate()){
-                     Navigator.pushReplacement(context, 
-                    MaterialPageRoute(builder:(context) => HomeScreen(),));
-                      }else{
-                
-                      }
-                   
-                  }, name: 'Sign up'),
-                    const SizedBox(height: 20,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                         const Text('already have an account?',
-                         style: TextStyle(
-                          fontSize: 16,
-                         ),),
-                        TextButton(onPressed: () {
-                          Navigator.push(context,
-                           MaterialPageRoute(builder: (context) => 
-                            LoginScreen(),
-                          ));
-                          
-                        }, child: const Text('log in now',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: color3
-                        ),)),
+                        CustomTextField(
+                          validator: (value) {
+                            if (value!.length >= 3) {
+                              return null;
+                            } else {
+                              return 'Please Add A Valid Name';
+                            }
+                          },
+                          keybourdTybe: TextInputType.name,
+                          label: 'First Name',
+                          hintText: 'name',
+                          controller: TextEditingController(),
+                          onChanged: null,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          validator: (value) {
+                            if (value!.length >= 3) {
+                              return null;
+                            } else {
+                              return 'Please Add A Valid lastName';
+                            }
+                          },
+                          keybourdTybe: TextInputType.name,
+                          label: 'Last Name',
+                          hintText: 'Enter Your Last Name',
+                          controller: TextEditingController(),
+                          onChanged: null,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          validator: (value) {
+                            if (value!.contains('@gmail.com')) {
+                              return null;
+                            } else {
+                              return 'Please Add A Valid E-mail';
+                            }
+                          },
+                          keybourdTybe: TextInputType.emailAddress,
+                          label: 'Email',
+                          hintText: 'user@gmail.com',
+                          controller: TextEditingController(),
+                          onChanged: null,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          validator: (value) {
+                            if (value!.length == 10) {
+                              return null;
+                            } else {
+                              return 'Please Add A Valid Phone';
+                            }
+                          },
+                          keybourdTybe: TextInputType.phone,
+                          label: 'Phone',
+                          hintText: '0911111111',
+                          controller: TextEditingController(),
+                          onChanged: null,
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        CustomTextField(
+                          validator: (value) {
+                            if (value!.length >= 8) {
+                              return null;
+                            } else {
+                              return 'Please Add A Valid Password';
+                            }
+                          },
+                          keybourdTybe: TextInputType.visiblePassword,
+                          label: 'pasword',
+                          hintText: 'xxxxxxxx',
+                          controller: TextEditingController(),
+                          onChanged: null,
+                        ),
+                        const SizedBox(
+                          height: 70,
+                        ),
                       ],
                     ),
-                     
+                  ),
+                  Button(
+                      ontap: () {
+                        if (formKey.currentState!.validate()) {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => HomeScreen(),
+                              ));
+                        } else {}
+                      },
+                      name: 'Sign up'),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'already have an account?',
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => LoginScreen(),
+                                ));
+                          },
+                          child: const Text(
+                            'log in now',
+                            style: TextStyle(fontSize: 16, color: color3),
+                          )),
+                    ],
+                  ),
                 ],
               ),
             )

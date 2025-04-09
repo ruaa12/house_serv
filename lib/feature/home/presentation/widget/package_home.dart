@@ -4,9 +4,9 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 class PackageHomes extends StatelessWidget {
   final Package package;
   const PackageHomes({
-    Key? key,
+    super.key,
     required this.package,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class PackageHomes extends StatelessWidget {
         color: color6,
         boxShadow: [
           BoxShadow(
-              color: Colors.grey.withOpacity(0.3),
+              color: Colors.grey,
               spreadRadius: 3,
               blurRadius: 9,
               offset: const Offset(0, 3))

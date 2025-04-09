@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
-
 class Button extends StatelessWidget {
-   Button({super.key,
-
- required this.ontap ,
- required this.name,
- 
-
+  const Button({
+    super.key,
+    required this.ontap,
+    required this.name,
   });
-    
-final String? name;
- final VoidCallback? ontap;
-  
+
+  final String? name;
+  final VoidCallback? ontap;
 
   @override
   Widget build(BuildContext context) {
-     return GestureDetector(
+    return GestureDetector(
       onTap: ontap,
       child: Container(
-        width: 150,
+        width: 200,
         height: 50,
         decoration: BoxDecoration(
           color: color3,
@@ -28,15 +24,14 @@ final String? name;
         ),
         child: Center(
           child: Text(
-            name!
-            ,
+            name!,
             style: const TextStyle(
                 color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
         ),
       ),
     );
-      // GestureDetector(
+    // GestureDetector(
     //         style: ElevatedButton.styleFrom(
     //           backgroundColor: Color(0xff0054A5),
     //           foregroundColor: Colors.white,

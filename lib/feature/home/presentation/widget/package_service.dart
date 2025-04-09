@@ -14,11 +14,11 @@ class PackageService extends StatelessWidget {
   
 
 
-  PackageService({
-    Key? key,
+  const PackageService({
+    super.key,
     required this.detService,
     this.service,
-  }) : super(key: key);
+  });
   
 
   @override
@@ -37,9 +37,10 @@ class PackageService extends StatelessWidget {
           },
            child: CircleAvatar(
             
-             child: Image.asset(detService!.imageSer),
+             
              backgroundColor: color2,
              maxRadius: 45,
+             child: Image.asset(detService!.imageSer),
            ),
          ), 
         
