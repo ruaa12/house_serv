@@ -23,7 +23,7 @@ class LoginScreen extends StatelessWidget {
           backgroundColor: color1,
           body: BlocListener<AuthBloc, AuthState>(
               listener: (context, State) {
-                if (State is AuthFailure) {
+                if (State is AuthLoginFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(State.message)),
                   );

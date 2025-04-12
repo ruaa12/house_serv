@@ -12,8 +12,19 @@ class AuthLoginSuccess extends AuthState {
   AuthLoginSuccess({required this.login});
 }
 
-class AuthFailure extends AuthState {
+class AuthLoginFailure extends AuthState {
   final String message;
 
-  AuthFailure({required this.message});
+  AuthLoginFailure({required this.message});
+}
+
+class RegisterSuccess extends AuthState {
+  final Register register;
+
+  RegisterSuccess({required this.register});
+}
+
+class RegisterFailure extends AuthState {
+  final String error;
+  RegisterFailure({required this.error});
 }

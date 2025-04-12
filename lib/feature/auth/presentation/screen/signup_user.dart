@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/custom_text_field.dart';
@@ -9,6 +11,11 @@ class SignupUser extends StatelessWidget {
   static String id = 'signupUser';
   SignupUser({super.key});
   final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,17 +138,47 @@ class SignupUser extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Button(
-                      ontap: () {
-                        if (formKey.currentState!.validate()) {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
-                              ));
-                        } else {}
-                      },
-                      name: 'Sign up'),
+                  BlocConsumer<AuthBloc, AuthState>(
+                    listener: (context, State) {
+                      if (State is AuthLoading) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            });
+                      }
+                      if (State is RegisterSuccess) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()),
+                        );
+                      }
+                      if (State is RegisterFailure) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(State.error),
+                        ));
+                      }
+                    },
+                    builder: (BuildContext context, AuthState state) {
+                      return Button(
+                          ontap: () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<AuthBloc>().add(
+                                    SignupButtonPressedEvent(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      phone: phoneController.text,
+                                    ),
+                                  );
+                            }
+                          },
+                          name: 'Sign up');
+                    },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
