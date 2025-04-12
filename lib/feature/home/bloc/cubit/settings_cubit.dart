@@ -1,50 +1,9 @@
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'dart:convert';
-
-class SettingsState {
-  final bool isDarkModeEnabled;
-  final bool isNotificationsEnabled;
-  final String selectedLanguage;
-
-  SettingsState({
-    required this.isDarkModeEnabled,
-    required this.isNotificationsEnabled,
-    required this.selectedLanguage,
-  });
-
-  // الحالة الافتراضية
-  factory SettingsState.initial() {
-    return SettingsState(
-      isDarkModeEnabled: false,
-      isNotificationsEnabled: true,
-      selectedLanguage: 'English',
-    );
-  }
-
-  // تحويل الحالة إلى نص JSON
-  String toJson() {
-    return jsonEncode({
-      'isDarkModeEnabled': isDarkModeEnabled,
-      'isNotificationsEnabled': isNotificationsEnabled,
-      'selectedLanguage': selectedLanguage,
-    });
-  }
-
-  // استعادة الحالة من نص JSON
-  factory SettingsState.fromJson(String jsonString) {
-    final data = jsonDecode(jsonString);
-    return SettingsState(
-      isDarkModeEnabled: data['isDarkModeEnabled'] ?? false,
-      isNotificationsEnabled: data['isNotificationsEnabled'] ?? true,
-      selectedLanguage: data['selectedLanguage'] ?? 'English',
-    );
-  }
-}
+/*import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'settings_state.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsState> {
   SettingsCubit() : super(SettingsState.initial());
 
-  // تعديل الوضع الداكن
   void toggleDarkMode() {
     emit(SettingsState(
       isDarkModeEnabled: !state.isDarkModeEnabled,
@@ -53,7 +12,6 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
     ));
   }
 
-  // تعديل الإشعارات
   void toggleNotifications() {
     emit(SettingsState(
       isDarkModeEnabled: state.isDarkModeEnabled,
@@ -62,7 +20,6 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
     ));
   }
 
-  // تغيير اللغة
   void changeLanguage(String language) {
     emit(SettingsState(
       isDarkModeEnabled: state.isDarkModeEnabled,
@@ -73,11 +30,11 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
 
   @override
   SettingsState fromJson(Map<String, dynamic> json) {
-    return SettingsState.fromJson(jsonEncode(json));
+    return SettingsState.fromJson(json);
   }
 
   @override
   Map<String, dynamic> toJson(SettingsState state) {
-    return jsonDecode(state.toJson());
+    return state.toJson();
   }
-}
+}*/

@@ -6,7 +6,6 @@ import 'package:home_serviece/feature/home/presentation/screen/editpassword.dart
 import 'package:home_serviece/feature/home/presentation/screen/my_order_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 
-import 'package:home_serviece/feature/home/presentation/screen/setting.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -84,7 +83,7 @@ class _ProScreenState extends State<ProfileScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => SettingsScreen(),
+                          builder: (context) => ProfileScreen(),
                         ));
                   },
                 ),

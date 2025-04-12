@@ -35,9 +35,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthDatasource authDatasource;
 
   AuthBloc({required this.authDatasource}) : super(AuthInitial()) {
-    <LoginEvent>(event, emit) async {
+    // إضافة الحدث LoginButtonPressed
+    on<LoginButtonPressedEvent>((event, emit) async {
       emit(AuthLoading());
-
       final loginResult =
           await authDatasource.login(event.email, event.password);
       if (loginResult != null) {
@@ -46,8 +46,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthFailure(
             message: "Login failed. Please check your credentials."));
       }
+    });
 
-      emit(AuthFailure(message: "An error occurred: "));
-    };
+    // يمكنك الاحتفاظ بالأحداث الأخرى هنا كما هي إذا كنت ترغب بذلك
   }
 }

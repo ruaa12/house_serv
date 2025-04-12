@@ -11,7 +11,7 @@ class AddressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Address'),
+        title: const Text('Address'),
         backgroundColor: color1,
         leading: Row(
           children: [
@@ -20,10 +20,10 @@ class AddressScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => ProfileScreen(),
+                      builder: (context) => const ProfileScreen(),
                     ));
               },
-              icon: Icon(Icons.arrow_back),
+              icon: const Icon(Icons.arrow_back),
             )
           ],
         ),
@@ -34,11 +34,11 @@ class AddressScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              const Text(
                 'Enter Your Address',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CustomTextField(
                 validator: (value) {
                   return null;
@@ -47,7 +47,7 @@ class AddressScreen extends StatelessWidget {
                 labelText: 'Name',
                 keyboardType: TextInputType.name,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextField(
                 validator: (value) {
                   return null;
@@ -56,7 +56,7 @@ class AddressScreen extends StatelessWidget {
                 labelText: 'Address',
                 keyboardType: TextInputType.streetAddress,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextField(
                 validator: (value) {
                   return null;
@@ -65,7 +65,7 @@ class AddressScreen extends StatelessWidget {
                 labelText: 'City',
                 keyboardType: TextInputType.text,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextField(
                 validator: (value) {
                   return null;
@@ -74,7 +74,7 @@ class AddressScreen extends StatelessWidget {
                 labelText: 'Postal Code',
                 keyboardType: TextInputType.number,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               CustomTextField(
                 validator: (value) {
                   return null;
@@ -83,7 +83,7 @@ class AddressScreen extends StatelessWidget {
                 labelText: 'Phone',
                 keyboardType: TextInputType.phone,
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Center(
                 child: Button(
                   name: 'Save Address',
@@ -92,13 +92,13 @@ class AddressScreen extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text('Success'),
-                        content:
-                            Text('Your address has been saved successfully!'),
+                        title: const Text('Success'),
+                        content: const Text(
+                            'Your address has been saved successfully!'),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       ),

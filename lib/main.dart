@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// المكتبة المطلوبة للحصول على دليل التخزين
-
+import 'package:flutter_bloc/flutter_bloc.dart'; // إضافة الـ Bloc
+import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
+import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart'; // إضافة DataSource
 import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
@@ -10,19 +10,13 @@ import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dar
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/houses_screen.dart';
-
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
-import 'package:home_serviece/feature/home/presentation/widget/const.dart';
-import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  /*inal storage = await HydratedStorage.build();
-  HydratedBloc.storage = storage;
-*/
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -35,30 +29,6 @@ void main() async {
   );
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => SettingsCubit(), // توفير الكيوبت
-        ),
-      ],
-      child: MaterialApp(
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        theme: Theme.of(context).copyWith(
-          scaffoldBackgroundColor: color4,
-        ),
-        // home: ProfileScreen(),
-      ),
-    );
-  }
-}
-
 class DreamHouse extends StatelessWidget {
   const DreamHouse({super.key});
 
@@ -66,9 +36,11 @@ class DreamHouse extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        // إضافة Bloc الخاص بتسجيل الدخول
         BlocProvider(
-          create: (_) => SettingsCubit(), // توفير الكيوبت هنا أيضًا
+          create: (context) => AuthBloc(authDatasource: AuthDatasource()),
         ),
+        // يمكنك إضافة المزيد من الـ Bloc الخاص بالـ Home أو الـ Profile هنا إذا كان هناك حاجة
       ],
       child: MaterialApp(
         routes: {
@@ -84,6 +56,9 @@ class DreamHouse extends StatelessWidget {
         },
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
       ),
     );
   }

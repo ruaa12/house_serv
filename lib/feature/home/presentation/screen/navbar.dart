@@ -8,6 +8,8 @@ import 'package:home_serviece/feature/home/presentation/screen/search_screen.dar
 import '../widget/const.dart';
 
 class Navbar extends StatefulWidget {
+  static var id;
+
   const Navbar({super.key});
 
   @override

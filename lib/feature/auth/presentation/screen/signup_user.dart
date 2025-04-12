@@ -16,11 +16,11 @@ class SignupUser extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 200,
             ),
             Container(
-              padding: EdgeInsets.all(25),
+              padding: const EdgeInsets.all(25),
               decoration: const BoxDecoration(
                   color: color4,
                   borderRadius: BorderRadius.only(
@@ -29,14 +29,14 @@ class SignupUser extends StatelessWidget {
                   )),
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     'Enter your information to sign up ',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
                   Form(
@@ -137,7 +137,7 @@ class SignupUser extends StatelessWidget {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => HomeScreen(),
+                                builder: (context) => const HomeScreen(),
                               ));
                         } else {}
                       },

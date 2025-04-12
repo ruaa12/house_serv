@@ -143,11 +143,11 @@ class SignupWorker extends StatelessWidget {
         itemBuilder: (context, index) => SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 250,
               ),
               Container(
-                padding: EdgeInsets.all(25),
+                padding: const EdgeInsets.all(25),
                 decoration: const BoxDecoration(
                     color: color4,
                     borderRadius: BorderRadius.only(
@@ -197,7 +197,7 @@ class SignupWorker extends StatelessWidget {
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => HomeScreen(),
+                                      builder: (context) => const HomeScreen(),
                                     ));
                               } else {}
                             },
