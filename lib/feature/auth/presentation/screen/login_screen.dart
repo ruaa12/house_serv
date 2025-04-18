@@ -4,8 +4,8 @@ import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/custom_text_field.dart';
-import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,7 +18,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthBloc(authDatasource: AuthDatasource()),
+      create: (_) => AuthBloc(
+        authDatasource: AuthDatasource(),
+      ),
       child: Scaffold(
           backgroundColor: color1,
           body: BlocListener<AuthBloc, AuthState>(
@@ -30,7 +32,7 @@ class LoginScreen extends StatelessWidget {
                 } else if (State is AuthLoginSuccess) {
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    MaterialPageRoute(builder: (context) => const Navbar()),
                   );
                 }
               },
@@ -74,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                                 keybourdTybe: TextInputType.emailAddress,
                                 label: 'Email',
                                 hintText: 'user@gmail.com',
-                                controller: TextEditingController(),
+                                controller: emailController,
                                 onChanged: null,
                               ),
                               const SizedBox(
@@ -91,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                                 keybourdTybe: TextInputType.visiblePassword,
                                 label: 'pasword',
                                 hintText: 'xxxxxxxx',
-                                controller: TextEditingController(),
+                                controller: passwordController,
                                 onChanged: null,
                               ),
                             ]),
@@ -118,7 +120,6 @@ class LoginScreen extends StatelessWidget {
                             if (State is AuthLoading) {
                               return const CircularProgressIndicator();
                             }
-
                             return Button(
                                 ontap: () {
                                   if (formKey.currentState!.validate()) {

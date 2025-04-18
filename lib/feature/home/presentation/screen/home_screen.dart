@@ -30,8 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<ImageHome> listImage = [
     ImageHome(image: 'assets/images/image 51.png'),
-    ImageHome(image: 'assets/images/ Gallery - Small-2.png'),
-    ImageHome(image: 'assets/images/ Gallery - Small-1.png'),
+    ImageHome(image: 'assets/images/Gallery - Small-2.png'),
+    ImageHome(image: 'assets/images/Gallery - Small-1.png'),
     ImageHome(image: 'assets/images/image 51.png'),
     ImageHome(image: 'assets/images/image 51.png'),
   ];
@@ -41,49 +41,49 @@ class _HomeScreenState extends State<HomeScreen> {
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
     Package(
         type: 'Villa',
         name: 'Bunding',
         rating: '4.2',
         price: '250',
-        photo: 'assets/images/ Gallery - Small-3.png',
+        photo: 'assets/images/Gallery - Small-3.png',
         location: 'Aleppo_alhamdania'),
   ];
   List<DetService> listPservice = [
@@ -193,8 +193,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                           onPressed: () {},
-                          child:
-                              Image.asset('assets/images/ Notification.png')),
+                          child: Image.asset('assets/images/Notification.png')),
                     ],
                   ),
                 ),
@@ -223,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const Positioned(
                                     bottom: 40,
                                     child: Padding(
-                                      padding:  EdgeInsets.all(8.0),
+                                      padding: EdgeInsets.all(8.0),
                                       child: Text('Black'),
                                     )),
                               ],

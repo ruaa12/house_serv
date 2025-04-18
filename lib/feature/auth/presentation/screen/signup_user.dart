@@ -11,10 +11,11 @@ class SignupUser extends StatelessWidget {
   static String id = 'signupUser';
   SignupUser({super.key});
   final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
+  final fullnameController = TextEditingController();
   final emailController = TextEditingController();
   final phoneController = TextEditingController();
   final passwordController = TextEditingController();
+  final usercontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +60,9 @@ class SignupUser extends StatelessWidget {
                             }
                           },
                           keybourdTybe: TextInputType.name,
-                          label: 'First Name',
+                          label: 'Full Name',
                           hintText: 'name',
-                          controller: TextEditingController(),
+                          controller: fullnameController,
                           onChanged: null,
                         ),
                         const SizedBox(
@@ -76,9 +77,9 @@ class SignupUser extends StatelessWidget {
                             }
                           },
                           keybourdTybe: TextInputType.name,
-                          label: 'Last Name',
+                          label: 'user Name',
                           hintText: 'Enter Your Last Name',
-                          controller: TextEditingController(),
+                          controller: usercontroller,
                           onChanged: null,
                         ),
                         const SizedBox(
@@ -95,7 +96,7 @@ class SignupUser extends StatelessWidget {
                           keybourdTybe: TextInputType.emailAddress,
                           label: 'Email',
                           hintText: 'user@gmail.com',
-                          controller: TextEditingController(),
+                          controller: emailController,
                           onChanged: null,
                         ),
                         const SizedBox(
@@ -112,7 +113,7 @@ class SignupUser extends StatelessWidget {
                           keybourdTybe: TextInputType.phone,
                           label: 'Phone',
                           hintText: '0911111111',
-                          controller: TextEditingController(),
+                          controller: phoneController,
                           onChanged: null,
                         ),
                         const SizedBox(
@@ -129,7 +130,7 @@ class SignupUser extends StatelessWidget {
                           keybourdTybe: TextInputType.visiblePassword,
                           label: 'pasword',
                           hintText: 'xxxxxxxx',
-                          controller: TextEditingController(),
+                          controller: passwordController,
                           onChanged: null,
                         ),
                         const SizedBox(
@@ -166,12 +167,14 @@ class SignupUser extends StatelessWidget {
                       return Button(
                           ontap: () {
                             if (formKey.currentState!.validate()) {
+                              print("signup button pressed");
                               context.read<AuthBloc>().add(
                                     SignupButtonPressedEvent(
-                                      name: nameController.text,
+                                      fullname: fullnameController.text,
                                       email: emailController.text,
                                       password: passwordController.text,
                                       phone: phoneController.text,
+                                      username: usercontroller.text,
                                     ),
                                   );
                             }

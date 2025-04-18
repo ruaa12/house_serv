@@ -38,6 +38,9 @@ class Data {
   final String? fullName;
   final String? phone;
   final String? email;
+  final String? token;
+  final dynamic image;
+  final dynamic address;
 
   Data({
     this.id,
@@ -45,6 +48,9 @@ class Data {
     this.fullName,
     this.phone,
     this.email,
+    this.token,
+    this.image,
+    this.address,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -53,6 +59,9 @@ class Data {
         fullName: json["full_name"],
         phone: json["phone"],
         email: json["email"],
+        token: json["token"],
+        image: json["image"],
+        address: json["address"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -61,5 +70,8 @@ class Data {
         "full_name": fullName,
         "phone": phone,
         "email": email,
+        "token": token,
+        "image": image,
+        "address": address,
       };
 }

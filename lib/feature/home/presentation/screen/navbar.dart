@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/home/presentation/screen/cart_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
-import 'package:home_serviece/feature/home/presentation/screen/search_screen.dart';
+
+import 'package:home_serviece/feature/wallet/wallet_screen.dart';
 
 import '../widget/const.dart';
 
@@ -36,9 +37,9 @@ class _NavbarState extends State<Navbar> {
             label: 'Home',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.search),
-            icon: Icon(Icons.search_off_outlined),
-            label: 'Search',
+            selectedIcon: Icon(Icons.wallet),
+            icon: Icon(Icons.wallet_giftcard),
+            label: 'Wallet',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.shopping_cart),
@@ -54,7 +55,7 @@ class _NavbarState extends State<Navbar> {
       ),
       body: <Widget>[
         const HomeScreen(),
-        SearchScreen(),
+        WalletScreen(),
         CartScreen(),
         const ProfileScreen()
       ][currentpage],

@@ -11,10 +11,12 @@ class LoginButtonPressedEvent extends AuthEvent {
 }
 
 class SignupButtonPressedEvent extends AuthEvent {
-  final String name, email, password, phone;
-  SignupButtonPressedEvent(
-      {required this.email,
-      required this.name,
-      required this.password,
-      required this.phone});
+  final String fullname, email, password, phone, username;
+  SignupButtonPressedEvent({
+    required this.fullname,
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.phone,
+  });
 }

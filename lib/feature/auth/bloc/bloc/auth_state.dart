@@ -7,9 +7,9 @@ class AuthInitial extends AuthState {}
 class AuthLoading extends AuthState {}
 
 class AuthLoginSuccess extends AuthState {
-  final Login login;
+  final String token;
 
-  AuthLoginSuccess({required this.login});
+  AuthLoginSuccess({required this.token});
 }
 
 class AuthLoginFailure extends AuthState {
@@ -19,9 +19,9 @@ class AuthLoginFailure extends AuthState {
 }
 
 class RegisterSuccess extends AuthState {
-  final Register register;
+  final String token;
 
-  RegisterSuccess({required this.register});
+  RegisterSuccess({required this.token});
 }
 
 class RegisterFailure extends AuthState {
