@@ -12,7 +12,7 @@ String changepasswordToJson(Changepassword data) => json.encode(data.toJson());
 class Changepassword {
   final bool? status;
   final String? message;
-  final String? data;
+  final dynamic data;
 
   Changepassword({
     this.status,

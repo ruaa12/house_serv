@@ -7,22 +7,30 @@ import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.d
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
+import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
+import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
+import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
+import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/houses_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final tempDir = await getTemporaryDirectory();
+  HydratedBloc.storage = await HydratedStorage.build(
+      storageDirectory: HydratedStorageDirectory(tempDir.path));
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
+      supportedLocales: const [Locale('en', ''), Locale('ar', '')],
       path: 'assets/langs',
-      fallbackLocale: Locale('en'),
-      startLocale: Locale('en'),
+      fallbackLocale: Locale('en', ''),
+      startLocale: Locale('en', ''),
       saveLocale: true,
       child: const DreamHouse(),
     ),
@@ -35,31 +43,38 @@ class DreamHouse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        // إضافة Bloc الخاص بتسجيل الدخول
-        BlocProvider(
-          create: (context) => AuthBloc(authDatasource: AuthDatasource()),
-        ),
-        // يمكنك إضافة المزيد من الـ Bloc الخاص بالـ Home أو الـ Profile هنا إذا كان هناك حاجة
-      ],
-      child: MaterialApp(
-        routes: {
-          IamLookingFor.id: (context) => const IamLookingFor(),
-          LoginScreen.id: (context) => LoginScreen(),
-          SignupUser.id: (context) => SignupUser(),
-          SignupWorker.id: (context) => SignupWorker(),
-          EditProfile.id: (context) => EditProfile(),
-          HomeScreen.id: (context) => const HomeScreen(),
-          HousesScreen.id: (context) => const HousesScreen(),
-          ProfileScreen.id: (context) => const ProfileScreen(),
-          ServicesScreen.id: (context) => const ServicesScreen(),
-        },
-        debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-      ),
-    );
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(authDatasource: AuthDatasource()),
+          ),
+          BlocProvider(
+            create: (_) => SettingsCubit(),
+          ),
+        ],
+        child: BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, State) {
+          return MaterialApp(
+            locale: context.locale,
+            supportedLocales: context.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
+            theme:
+                State.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
+            routes: {
+              IamLookingFor.id: (context) => const IamLookingFor(),
+              LoginScreen.id: (context) => LoginScreen(),
+              SignupUser.id: (context) => SignupUser(),
+              SignupWorker.id: (context) => SignupWorker(),
+              EditProfile.id: (context) => EditProfile(),
+              HomeScreen.id: (context) => const HomeScreen(),
+              ProfileScreen.id: (context) => const ProfileScreen(),
+              ServicesScreen.id: (context) => const ServicesScreen(),
+              '/favorites': (context) => FavoritesScreen(
+                    favoriteEstates: FavoriteManager.favoriteEstates,
+                  ),
+            },
+            debugShowCheckedModeBanner: false,
+            home: Navbar(),
+          );
+        }));
   }
 }

@@ -1,36 +1,57 @@
-/*class SettingsState {
-  final bool isDarkModeEnabled;
+import 'package:equatable/equatable.dart';
+
+class SettingsState extends Equatable {
   final bool isNotificationsEnabled;
+  final bool isDarkModeEnabled;
   final String selectedLanguage;
 
-  SettingsState({
-    required this.isDarkModeEnabled,
+  const SettingsState({
     required this.isNotificationsEnabled,
+    required this.isDarkModeEnabled,
     required this.selectedLanguage,
   });
 
+  // الحالة الابتدائية
   factory SettingsState.initial() {
-    return SettingsState(
+    return const SettingsState(
+      isNotificationsEnabled: false,
       isDarkModeEnabled: false,
-      isNotificationsEnabled: true,
-      selectedLanguage: 'English',
+      selectedLanguage: 'en',
     );
   }
 
-  factory SettingsState.fromJson(Map<String, dynamic> json) {
+  // لنسخ الحالة وتعديل قيم محددة
+  SettingsState copyWith({
+    bool? isNotificationsEnabled,
+    bool? isDarkModeEnabled,
+    String? selectedLanguage,
+  }) {
     return SettingsState(
-      isDarkModeEnabled: json['isDarkModeEnabled'] ?? false,
-      isNotificationsEnabled: json['isNotificationsEnabled'] ?? true,
-      selectedLanguage: json['selectedLanguage'] ?? 'English',
+      isNotificationsEnabled:
+          isNotificationsEnabled ?? this.isNotificationsEnabled,
+      isDarkModeEnabled: isDarkModeEnabled ?? this.isDarkModeEnabled,
+      selectedLanguage: selectedLanguage ?? this.selectedLanguage,
     );
   }
 
-  Map<String, dynamic> toJson() {
+  // لتحويل الحالة إلى Map لتخزينها
+  Map<String, dynamic> toMap() {
     return {
-      'isDarkModeEnabled': isDarkModeEnabled,
       'isNotificationsEnabled': isNotificationsEnabled,
+      'isDarkModeEnabled': isDarkModeEnabled,
       'selectedLanguage': selectedLanguage,
     };
   }
+
+  // لتحويل Map إلى الحالة
+  factory SettingsState.fromMap(Map<String, dynamic> map) {
+    return SettingsState(
+      isNotificationsEnabled: map['isNotificationsEnabled'] ?? false,
+      isDarkModeEnabled: map['isDarkModeEnabled'] ?? false,
+      selectedLanguage: map['selectedLanguage'] ?? 'en',
+    );
+  }
+  @override
+  List<Object> get props =>
+      [isNotificationsEnabled, isDarkModeEnabled, selectedLanguage];
 }
-*/

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/home/presentation/screen/cart_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
@@ -20,7 +21,7 @@ class CheckoutScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Check Out'),
+        title: Text('Check Out'.tr()),
         backgroundColor: color1,
         leading: Row(
           children: [
@@ -44,7 +45,7 @@ class CheckoutScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Your Order:',
+                'Your Order:'.tr(),
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
@@ -63,7 +64,7 @@ class CheckoutScreen extends StatelessWidget {
               ),
               Divider(),
               Text(
-                'Total Price: \$$totalPrice',
+                'Total Price: \$$totalPrice'.tr(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 20),
@@ -71,43 +72,46 @@ class CheckoutScreen extends StatelessWidget {
                 validator: (p0) {
                   return null;
                 },
-                label: 'Name',
-                labelText: 'Name',
+                label: 'Name'.tr(),
+                labelText: 'Name'.tr(),
                 keyboardType: TextInputType.name,
+                controller: TextEditingController(),
               ),
               SizedBox(height: 10),
               CustomTextField(
                 validator: (p0) {
                   return null;
                 },
-                label: 'Address',
-                labelText: 'Address',
+                label: 'Address'.tr(),
+                labelText: 'Address'.tr(),
                 keyboardType: TextInputType.name,
+                controller: TextEditingController(),
               ),
               SizedBox(height: 10),
               CustomTextField(
                 validator: (p0) {
                   return null;
                 },
-                label: 'Phone',
-                labelText: 'Phone',
+                label: 'Phone'.tr(),
+                labelText: 'Phone'.tr(),
                 keyboardType: TextInputType.phone,
+                controller: TextEditingController(),
               ),
               SizedBox(height: 30),
               Center(
                 child: Button(
-                  name: 'Confirm Order',
+                  name: 'Confirm Order'.tr(),
                   ontap: () {
                     showDialog(
                       context: context,
                       builder: (context) => AlertDialog(
-                        title: Text('Thank You!'),
-                        content:
-                            Text('Your order has been placed successfully.'),
+                        title: Text('Thank You!'.tr()),
+                        content: Text(
+                            'Your order has been placed successfully.'.tr()),
                         actions: [
                           TextButton(
                             onPressed: () => Navigator.pop(context),
-                            child: Text('OK'),
+                            child: Text('OK'.tr()),
                           ),
                         ],
                       ),

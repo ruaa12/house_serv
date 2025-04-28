@@ -1,14 +1,17 @@
+import 'package:home_serviece/feature/home/presentation/widget/custom_text_field1.dart';
+import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
-import 'package:home_serviece/feature/home/presentation/widget/custom_text_field1.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
-  static String id = 'homepage';
+  static String id = 'homepage'.tr();
 
   @override
   State<EditProfile> createState() => _EditProfileState();
@@ -28,11 +31,13 @@ class _EditProfileState extends State<EditProfile> {
           _image = File(result.files.single.path!);
         });
       } else {
-        _showAlert('No file selected.'); // إذا لم يتم اختيار ملف
+        _showAlert(LocaleKeys.editProfile_no_file_selected
+            .tr()); // إذا لم يتم اختيار ملف
       }
     } catch (e) {
-      _showAlert(
-          'An error occurred while picking the file: $e'); // عرض خطأ للمستخدم
+      _showAlert(LocaleKeys.editProfile_An_error_occured
+          .tr()
+          .tr()); // عرض خطأ للمستخدم
     }
   }
 
@@ -41,14 +46,14 @@ class _EditProfileState extends State<EditProfile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Notice'),
+          title: Text('Notice'.tr()),
           content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text('OK'.tr()),
             ),
           ],
         );
@@ -61,8 +66,8 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       backgroundColor: color1,
       appBar: AppBar(
-        title: const Text(
-          'Edit Profile',
+        title: Text(
+          LocaleKeys.editProfile_Edit_prof.tr(),
         ),
         leading: IconButton(
           onPressed: () {
@@ -104,10 +109,10 @@ class _EditProfileState extends State<EditProfile> {
             const SizedBox(
               height: 40,
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'User name',
+                LocaleKeys.editProfile_User_name.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -120,19 +125,20 @@ class _EditProfileState extends State<EditProfile> {
                 if (value!.length >= 8) {
                   return null;
                 } else {
-                  return 'Please Add A Valid user name';
+                  return LocaleKeys.editProfile_valid_user_name.tr();
                 }
               },
-              label: 'Enter name',
-              labelText: 'Enter name',
+              label: LocaleKeys.editProfile_Enter_name.tr(),
+              labelText: 'Enter name'.tr(),
+              controller: TextEditingController(),
             ),
             const SizedBox(
               height: 30,
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Email',
+                'Email'.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -145,19 +151,20 @@ class _EditProfileState extends State<EditProfile> {
                 if (value!.contains('@gmail.com')) {
                   return null;
                 } else {
-                  return 'Please Add A Valid E-mail';
+                  return LocaleKeys.editProfile_Valid_E_mail.tr();
                 }
               },
-              label: 'Email',
-              labelText: 'Email',
+              label: LocaleKeys.editProfile_Email.tr(),
+              labelText: 'Email'.tr(),
+              controller: TextEditingController(),
             ),
             const SizedBox(
               height: 30,
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Country',
+                LocaleKeys.editProfile_Country.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -170,19 +177,20 @@ class _EditProfileState extends State<EditProfile> {
                 if (value!.length >= 8) {
                   return null;
                 } else {
-                  return 'Please Add A Valid user country';
+                  return 'Please Add A Valid user country'.tr();
                 }
               },
-              label: 'Country',
-              labelText: 'Country',
+              label: LocaleKeys.editProfile_Country.tr(),
+              labelText: 'Country'.tr(),
+              controller: TextEditingController(),
             ),
             const SizedBox(
               height: 30,
             ),
-            const Align(
+            Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Phone number',
+                LocaleKeys.editProfile_Phone_num.tr(),
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
               ),
             ),
@@ -195,11 +203,12 @@ class _EditProfileState extends State<EditProfile> {
                 if (value!.length == 10) {
                   return null;
                 } else {
-                  return 'Please Add A Valid phone number';
+                  return LocaleKeys.editProfile_Valid_phone.tr();
                 }
               },
-              label: 'Phone number',
-              labelText: 'Phone number',
+              label: LocaleKeys.editProfile_Phone_num.tr(),
+              labelText: 'Phone number'.tr(),
+              controller: TextEditingController(),
             ),
             const SizedBox(
               height: 20,
@@ -211,7 +220,7 @@ class _EditProfileState extends State<EditProfile> {
                   MaterialPageRoute(builder: (context) => ProfileScreen()),
                 );
               },
-              name: 'Save',
+              name: LocaleKeys.editProfile_save.tr(),
             ),
           ],
         ),

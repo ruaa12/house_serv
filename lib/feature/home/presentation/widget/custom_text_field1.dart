@@ -9,6 +9,7 @@ class CustomTextField extends StatelessWidget {
     required this.label,
     required this.labelText,
     required TextInputType keyboardType,
+    required TextEditingController controller,
   }) : super(key: key);
   final String? Function(String?) validator;
   final String label;

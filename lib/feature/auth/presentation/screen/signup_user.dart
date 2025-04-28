@@ -5,6 +5,7 @@ import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/custom_text_field.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 class SignupUser extends StatelessWidget {
@@ -64,6 +65,9 @@ class SignupUser extends StatelessWidget {
                           hintText: 'name',
                           controller: fullnameController,
                           onChanged: null,
+                          hint: '',
+                          keyboardType: TextInputType.name,
+                          labelText: '',
                         ),
                         const SizedBox(
                           height: 20,
@@ -81,6 +85,9 @@ class SignupUser extends StatelessWidget {
                           hintText: 'Enter Your Last Name',
                           controller: usercontroller,
                           onChanged: null,
+                          hint: '',
+                          keyboardType: TextInputType.name,
+                          labelText: '',
                         ),
                         const SizedBox(
                           height: 20,
@@ -98,6 +105,9 @@ class SignupUser extends StatelessWidget {
                           hintText: 'user@gmail.com',
                           controller: emailController,
                           onChanged: null,
+                          hint: '',
+                          keyboardType: TextInputType.emailAddress,
+                          labelText: '',
                         ),
                         const SizedBox(
                           height: 20,
@@ -115,6 +125,9 @@ class SignupUser extends StatelessWidget {
                           hintText: '0911111111',
                           controller: phoneController,
                           onChanged: null,
+                          hint: '',
+                          labelText: '',
+                          keyboardType: TextInputType.phone,
                         ),
                         const SizedBox(
                           height: 20,
@@ -132,6 +145,9 @@ class SignupUser extends StatelessWidget {
                           hintText: 'xxxxxxxx',
                           controller: passwordController,
                           onChanged: null,
+                          hint: '',
+                          keyboardType: TextInputType.text,
+                          labelText: '',
                         ),
                         const SizedBox(
                           height: 70,
@@ -153,8 +169,7 @@ class SignupUser extends StatelessWidget {
                       if (State is RegisterSuccess) {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) => const HomeScreen()),
+                          MaterialPageRoute(builder: (context) => Navbar()),
                         );
                       }
                       if (State is RegisterFailure) {

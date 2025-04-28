@@ -1,3 +1,5 @@
+import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
@@ -12,8 +14,8 @@ class My_Order_Screen extends StatelessWidget {
     return Scaffold(
       backgroundColor: color1,
       appBar: AppBar(
-          title: const Text(
-            'My order',
+          title: Text(
+            LocaleKeys.myOrderScreen_My_order.tr(),
           ),
           leading: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -64,7 +66,8 @@ class OrderCard extends StatelessWidget {
   final String price;
   final String date;
 
-  const OrderCard({super.key, 
+  const OrderCard({
+    super.key,
     required this.image,
     required this.name,
     required this.price,
@@ -109,11 +112,11 @@ class OrderCard extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  'Price: $price',
+                  LocaleKeys.myOrderScreen_price.tr(),
                   style: TextStyle(color: Colors.grey[600]),
                 ),
                 Text(
-                  'Date: $date',
+                  LocaleKeys.myOrderScreen_Data.tr(),
                   style: TextStyle(color: Colors.grey[600]),
                 ),
               ],

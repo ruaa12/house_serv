@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
@@ -76,7 +77,7 @@ class IamLookingFor extends StatelessWidget {
                             builder: (context) => LoginScreen(),
                           ));
                     },
-                    child: const Text(
+                    child: Text(
                       'LogIn',
                       style: TextStyle(fontSize: 16, color: color4),
                     )),

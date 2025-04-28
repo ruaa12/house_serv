@@ -27,6 +27,9 @@ class SignupWorker extends StatelessWidget {
         hintText: ' Name',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        labelText: '',
+        keyboardType: TextInputType.name,
       ),
       field2: CustomTextField(
         validator: (value) {
@@ -41,6 +44,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'user@gmail.com',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.emailAddress,
+        labelText: '',
       ),
       field3: CustomTextField(
         validator: (value) {
@@ -55,6 +61,9 @@ class SignupWorker extends StatelessWidget {
         hintText: '0911111111',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.number,
+        labelText: '',
       ),
       field4: CustomTextField(
         validator: (value) {
@@ -69,6 +78,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'xxxxxxxx',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        labelText: '',
+        keyboardType: TextInputType.number,
       ),
     ),
     SignupData(
@@ -85,6 +97,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'Enter type of service ',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.text,
+        labelText: '',
       ),
       field2: CustomTextField(
         validator: (value) {
@@ -99,6 +114,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'Syria_aleppo',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.text,
+        labelText: '',
       ),
       field3: CustomTextField(
         validator: (value) {
@@ -113,6 +131,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'Enter number yer of experience',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.number,
+        labelText: '',
       ),
       field4: CustomTextField(
         validator: (value) {
@@ -127,6 +148,9 @@ class SignupWorker extends StatelessWidget {
         hintText: 'XXX',
         controller: TextEditingController(),
         onChanged: null,
+        hint: '',
+        keyboardType: TextInputType.number,
+        labelText: '',
       ),
     )
   ];

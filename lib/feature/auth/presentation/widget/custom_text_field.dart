@@ -12,6 +12,9 @@ class CustomTextField extends StatelessWidget {
     required this.controller,
     required this.keybourdTybe,
     required this.onChanged,
+    required String hint,
+    required String labelText,
+    required TextInputType keyboardType,
   });
   final String? Function(String?) validator;
   final String label;

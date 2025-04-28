@@ -1,161 +1,32 @@
+import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'package:easy_localization/easy_localization.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
-
+import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
+import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
+import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
+import 'package:home_serviece/feature/home/presentation/screen/notification_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
-
-import '../widget/package_home.dart';
-import '../widget/package_porovider.dart';
-import '../widget/package_service.dart';
+import 'package:home_serviece/feature/home/presentation/widget/home_slider.dart';
+import 'package:home_serviece/feature/home/presentation/widget/providers_section.dart';
+import 'package:home_serviece/feature/service/presentation/screen/provider_screen.dart';
+import 'package:home_serviece/feature/service/presentation/screen/services_provider.dart';
+import 'package:home_serviece/feature/service/presentation/widget/services_data.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'homepage';
-  final DetService? detService;
 
   const HomeScreen({
-    super.key,
-    this.detService,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var pageController = PageController(
-    initialPage: 0,
-    viewportFraction: .8,
-  );
-
-  List<ImageHome> listImage = [
-    ImageHome(image: 'assets/images/image 51.png'),
-    ImageHome(image: 'assets/images/Gallery - Small-2.png'),
-    ImageHome(image: 'assets/images/Gallery - Small-1.png'),
-    ImageHome(image: 'assets/images/image 51.png'),
-    ImageHome(image: 'assets/images/image 51.png'),
-  ];
-  List<Package> listHomes = [
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-    Package(
-        type: 'Villa',
-        name: 'Bunding',
-        rating: '4.2',
-        price: '250',
-        photo: 'assets/images/Gallery - Small-3.png',
-        location: 'Aleppo_alhamdania'),
-  ];
-  List<DetService> listPservice = [
-    DetService(imageSer: 'assets/images/Laundry.png', titleSer: 'Laudry'),
-    DetService(imageSer: 'assets/images/image 117.png', titleSer: 'Electric'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'solar'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'Painting'),
-    DetService(
-        imageSer: 'assets/images/image 118.png', titleSer: 'Air condition'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'repair'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
-    DetService(imageSer: 'assets/images/image 118.png', titleSer: 'plumber'),
-  ];
-
-  List<PackagePro> listProvider = [
-    PackagePro(
-        type: 'solar',
-        name: 'Ahmed Mustafa',
-        rating: '3.7',
-        price: '20',
-        photo: 'assets/images/image 83.png',
-        location: 'Aleppo_alshahba',
-        phone: 0931267548,
-        experiance: 3,
-        bio: '',
-        gallery: []),
-    PackagePro(
-        type: 'solar',
-        name: 'Ahmed Mustafa',
-        rating: '3.7',
-        price: '20',
-        photo: 'assets/images/image 83-1.png',
-        location: 'Aleppo_alshahba',
-        phone: 0931267548,
-        experiance: 3,
-        bio: '',
-        gallery: []),
-    PackagePro(
-        type: 'solar',
-        name: 'Ahmed Mustafa',
-        rating: '3.7',
-        price: '20',
-        photo: 'assets/images/image 83.png',
-        location: 'Aleppo_alshahba',
-        phone: 0931267548,
-        experiance: 3,
-        bio: '',
-        gallery: []),
-    PackagePro(
-        type: 'solar',
-        name: 'Ahmed Mustafa',
-        rating: '3.7',
-        price: '20',
-        photo: 'assets/images/image 83.png',
-        location: 'Aleppo_alshahba',
-        phone: 0931267548,
-        experiance: 3,
-        bio: '',
-        gallery: []),
-    PackagePro(
-        type: 'solar',
-        name: 'Ahmed Mustafa',
-        rating: '3.7',
-        price: '20',
-        photo: 'assets/images/image 83.png',
-        location: 'Aleppo_alshahba',
-        phone: 0931267548,
-        experiance: 3,
-        bio: '',
-        gallery: []),
-  ];
   bool viewHouse = false;
 
   @override
@@ -169,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 35,
               ),
-              SizedBox(
+              Container(
                 height: 70,
                 child: Padding(
                   padding: EdgeInsets.only(top: 6, left: 6),
@@ -192,48 +63,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 110,
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        NotificationsScreen()));
+                          },
                           child: Image.asset('assets/images/Notification.png')),
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 200,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: PageView.builder(
-                        itemCount: listImage.length,
-                        padEnds: true,
-                        controller: pageController,
-                        itemBuilder: (context, index) => Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.all(Radius.circular(20)),
-                            child: Stack(
-                              alignment: Alignment.centerLeft,
-                              children: [
-                                Image.asset(
-                                  listImage[index].image,
-                                  fit: BoxFit.fill,
-                                  width: MediaQuery.sizeOf(context).width * .8,
-                                ),
-                                const Positioned(
-                                    bottom: 40,
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text('Black'),
-                                    )),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              HomeSlider(estates: estates),
               Column(
                 children: [
                   Container(
@@ -244,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             const Text(
-                              ' Trinding Houses',
+                              'Trinding Houses',
                               style: TextStyle(
                                   fontSize: 24,
                                   color: color1,
@@ -256,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   setState(() {});
                                 },
                                 child: const Text(
-                                  'View all',
+                                  'view all',
                                   style: TextStyle(
                                       fontSize: 18,
                                       color: color3,
@@ -265,75 +107,136 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         viewHouse
-                            ? SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          viewHouse = false;
-                                          setState(() {});
-                                        },
-                                        icon: const Icon(Icons.arrow_upward)),
-                                    SizedBox(
-                                      child: ListView.builder(
-                                        itemCount: listHomes.length,
-                                        scrollDirection: Axis.vertical,
-                                        shrinkWrap: true,
-                                        itemBuilder: (context, index) =>
-                                            PackageHomes(
-                                                package: listHomes[index]),
-                                      ),
+                            ? Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      viewHouse = false;
+                                      setState(() {});
+                                    },
+                                    icon: const Icon(Icons.arrow_upward),
+                                  ),
+                                  const SizedBox(height: 10),
+                                  SizedBox(
+                                    height:
+                                        500, // عدلت الارتفاع من 900 لـ 500 ليكون أكثر واقعية
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: estates.length,
+                                      itemBuilder: (context, index) {
+                                        return GestureDetector(
+                                          onTap: () {},
+                                          child: EstateCard(
+                                              estate: estates[index]),
+                                        );
+                                      },
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                ],
                               )
                             : SizedBox(
-                                height: 300,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.33,
                                 child: ListView.builder(
-                                  itemCount: listHomes.length,
                                   scrollDirection: Axis.horizontal,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) =>
-                                      PackageHomes(package: listHomes[index]),
+                                  itemCount: estates.length,
+                                  itemBuilder: (context, index) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailsEstate(
+                                                      estate: estates[index]),
+                                            ));
+                                      },
+                                      child: EstateCard(estate: estates[index]),
+                                    );
+                                  },
                                 ),
                               ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'popular Service',
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  color: color1,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ServicesScreen()));
-                                },
-                                child: const Text(
-                                  'View all',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: color3,
-                                      fontWeight: FontWeight.bold),
-                                )),
-                          ],
+                        //
+
+                        Container(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                'popular service',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    color: color1,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                ServicesScreen()));
+                                  },
+                                  child: const Text(
+                                    'View all',
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        color: color3,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                            ],
+                          ),
                         ),
                         SizedBox(
-                          width: double.infinity,
-                          height: 130,
+                          height: 120,
                           child: ListView.builder(
-                              itemCount: listPservice.length,
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) => PackageService(
-                                  detService: listPservice[index])),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: services.length,
+                            itemBuilder: (context, index) {
+                              final service = services[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          ServiceProvidersScreen(
+                                              service: service),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  width: 100,
+                                  margin: const EdgeInsets.only(right: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade100,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Image.asset(
+                                        service['image'],
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        service['name'],
+                                        style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -345,7 +248,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   fontWeight: FontWeight.bold),
                             ),
                             TextButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ProvidersScreen(),
+                                      ));
+                                },
                                 child: const Text(
                                   'View all',
                                   style: TextStyle(
@@ -355,17 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )),
                           ],
                         ),
-                        SizedBox(
-                          height: 300,
-                          child: ListView.builder(
-                              itemCount: listProvider.length,
-                              scrollDirection: Axis.horizontal,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) => PackagePorovider(
-                                  packagePro: listProvider[index])
-                              // Container(child: Text('data'),)
-                              ),
-                        ),
+                        ProvidersSection(),
                       ],
                     ),
                   ),
@@ -375,11 +274,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-}
-
-class ImageHome {
-  final String image;
-  ImageHome({
-    required this.image,
-  });
 }

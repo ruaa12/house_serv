@@ -1,40 +1,33 @@
-/*import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'settings_state.dart';
 
 class SettingsCubit extends HydratedCubit<SettingsState> {
   SettingsCubit() : super(SettingsState.initial());
 
-  void toggleDarkMode() {
-    emit(SettingsState(
-      isDarkModeEnabled: !state.isDarkModeEnabled,
-      isNotificationsEnabled: state.isNotificationsEnabled,
-      selectedLanguage: state.selectedLanguage,
-    ));
-  }
-
+  // تشغيل/إيقاف الإشعارات
   void toggleNotifications() {
-    emit(SettingsState(
-      isDarkModeEnabled: state.isDarkModeEnabled,
-      isNotificationsEnabled: !state.isNotificationsEnabled,
-      selectedLanguage: state.selectedLanguage,
-    ));
+    emit(state.copyWith(isNotificationsEnabled: !state.isNotificationsEnabled));
   }
 
-  void changeLanguage(String language) {
-    emit(SettingsState(
-      isDarkModeEnabled: state.isDarkModeEnabled,
-      isNotificationsEnabled: state.isNotificationsEnabled,
-      selectedLanguage: language,
-    ));
+  // تشغيل/إيقاف الوضع الليلي
+  void toggleDarkMode() {
+    emit(state.copyWith(isDarkModeEnabled: !state.isDarkModeEnabled));
   }
 
+  // تغيير اللغة
+  void setLanguage(String lang) {
+    emit(state.copyWith(selectedLanguage: lang));
+  }
+
+  // حفظ الحالة تلقائياً
   @override
-  SettingsState fromJson(Map<String, dynamic> json) {
-    return SettingsState.fromJson(json);
+  Map<String, dynamic>? toJson(SettingsState state) {
+    return state.toMap();
   }
 
+  // استرجاع الحالة المحفوظة عند التشغيل
   @override
-  Map<String, dynamic> toJson(SettingsState state) {
-    return state.toJson();
+  SettingsState? fromJson(Map<String, dynamic> json) {
+    return SettingsState.fromMap(json);
   }
-}*/
+}

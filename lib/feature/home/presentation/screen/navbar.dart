@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_serviece/feature/estate/presentation/screen/filtered_estate_list.dart';
 
 import 'package:home_serviece/feature/home/presentation/screen/cart_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
@@ -9,6 +10,7 @@ import 'package:home_serviece/feature/wallet/wallet_screen.dart';
 import '../widget/const.dart';
 
 class Navbar extends StatefulWidget {
+  // ignore: prefer_typing_uninitialized_variables
   static var id;
 
   const Navbar({super.key});
@@ -42,6 +44,11 @@ class _NavbarState extends State<Navbar> {
             label: 'Wallet',
           ),
           NavigationDestination(
+            selectedIcon: Icon(Icons.search),
+            icon: Icon(Icons.search_off_outlined),
+            label: 'Search',
+          ),
+          NavigationDestination(
             selectedIcon: Icon(Icons.shopping_cart),
             icon: Icon(Icons.shopping_cart_outlined),
             label: 'Cart',
@@ -56,6 +63,7 @@ class _NavbarState extends State<Navbar> {
       body: <Widget>[
         const HomeScreen(),
         WalletScreen(),
+        FilteredEstateList(),
         CartScreen(),
         const ProfileScreen()
       ][currentpage],

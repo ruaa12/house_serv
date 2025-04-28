@@ -1,17 +1,28 @@
+import 'dart:io';
+
 import 'package:home_serviece/feature/auth/data/models/changepass.dart';
 import 'package:home_serviece/feature/auth/data/models/login_model.dart';
 import 'package:home_serviece/feature/auth/data/models/register_model.dart';
-import 'package:home_serviece/feature/auth/data/models/changepass.dart';
+import 'package:home_serviece/feature/auth/data/models/upadate_profile_model.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthDatasource {
   Future<Login?> login(String email, String password) async {
-    final result = await http
-        .post(Uri.parse('http://10.0.2.2:8000/api/auth/login'), body: {
-      'email': email,
-      'password': password,
-    });
+    final result = await http.post(
+        Uri(
+            scheme: 'http',
+            host: '10.0.2.2',
+            port: 8000,
+            path: 'api/auth/login'),
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: {
+          'email': email,
+          'password': password,
+        });
 
     if (result.statusCode == 200) {
       final loginResult = loginFromJson(result.body);
@@ -34,41 +45,70 @@ class AuthDatasource {
     String fullname,
     String username,
   ) async {
-    final result = await http
-        .post(Uri.parse('http://10.0.2.2:8000/api/auth/register'), body: {
-      'email': email,
-      'password': password,
-      'Name': fullname, // التأكد من توافق الاسم مع الموديل الموجود
-      'phone': phone,
-      'username': username,
-    });
+    final result = await http.post(
+        Uri(
+            scheme: 'http',
+            host: '10.0.2.2',
+            port: 8000,
+            path: 'api/auth/register'),
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: {
+          'email': email,
+          'password': password,
+          'name': fullname, // التأكد من توافق الاسم مع الموديل الموجود
+          'phone': phone,
+          'username': username,
+        });
+
     if (result.statusCode == 200) {
-      print("Response Body:${result.body}");
       final regstResult = registerFromJson(result.body);
-      final token = regstResult?.data?.token;
-      print("Token:${token}");
+      final token = regstResult.data?.token;
+
       if (token != null) {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('token', token);
-        regstResult;
+
+        return regstResult;
       }
     }
-    print("failed:${result.statusCode}");
+
     return null;
   }
-} /*Future<Changepassword?> changepassword(String currentpassword,String newpassword, String token ) async{
-    final url = await http
-        .post(Uri.parse('http://10.0.2.2:8000/api/auth/change-password'),
-        body:{'currentpassword' : currentpassword,
-        'newpassword':newpassword,
-        'token':token}
-        );
-  
-  if (url.statusCode == 200) {
-      final url = changepasswordFromJson(url.);
-      final token = url.data?.length;
+
+  Future<Changepassword?> changepassword(String new_password,
+      String current_password, String new_password_confirmation) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final result = await http.post(
+        Uri(
+            scheme: 'http',
+            host: '10.0.2.2',
+            port: 8000,
+            path: 'api/auth/change-password'),
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
+        body: {
+          'current_password': current_password,
+          'new_password': new_password,
+          'new_password_confirmation': new_password_confirmation,
+        });
+
+    if (result.statusCode == 200) {
+      final password = changepasswordFromJson(result.body);
+      final token = password.data?.length;
       if (token != null) {
         final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('token', token);
+
+        await prefs.setString('token', token as String);
       }
-  }}*/
+    }
+    return null;
+  }
+}
+
+Future<Updateprofile?> updateprofile(
+    String name, String email, String phone, File? image) async {}

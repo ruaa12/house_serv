@@ -20,3 +20,11 @@ class SignupButtonPressedEvent extends AuthEvent {
     required this.phone,
   });
 }
+
+class PasswordButtonPressed extends AuthEvent {
+  final String current_password, new_password, new_password_confirmation;
+  PasswordButtonPressed(
+      {required this.current_password,
+      required this.new_password,
+      required this.new_password_confirmation});
+}
