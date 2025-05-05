@@ -81,34 +81,47 @@ class AuthDatasource {
       String current_password, String new_password_confirmation) async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final result = await http.post(
-        Uri(
-            scheme: 'http',
-            host: '10.0.2.2',
-            port: 8000,
-            path: 'api/auth/change-password'),
-        headers: {
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-        body: {
-          'current_password': current_password,
-          'new_password': new_password,
-          'new_password_confirmation': new_password_confirmation,
-        });
 
+    if (token == null) {
+      throw Exception('Token is null. User might not be logged in.');
+    }
+
+    final result = await http.post(
+      Uri(
+        scheme: 'http',
+        host: '10.0.2.2',
+        port: 8000,
+        path: 'api/auth/change-password',
+      ),
+      headers: {
+        // 'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: {
+        'current_password': current_password,
+        'new_password': new_password,
+        'new_password_confirmation': new_password_confirmation,
+      },
+    );
+    print(token);
+    print({
+      // 'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    print(result.statusCode);
+    print(result.body);
+    print({
+      'current_password': current_password,
+      'new_password': new_password,
+      'new_password_confirmation': new_password_confirmation,
+    });
     if (result.statusCode == 200) {
       final password = changepasswordFromJson(result.body);
-      final token = password.data?.length;
-      if (token != null) {
-        final prefs = await SharedPreferences.getInstance();
-
-        await prefs.setString('token', token as String);
-      }
+      return password;
+    } else {
+      print('Failed to change password: ${result.body}');
     }
+
     return null;
   }
 }
-
-Future<Updateprofile?> updateprofile(
-    String name, String email, String phone, File? image) async {}

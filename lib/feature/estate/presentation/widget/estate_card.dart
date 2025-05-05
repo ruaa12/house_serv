@@ -41,7 +41,7 @@ class EstateCard extends StatelessWidget {
                       width: double.infinity,
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
-                          height: 120,
+                          height: 130,
                           width: double.infinity,
                           color: color4,
                           alignment: Alignment.center,
@@ -50,7 +50,7 @@ class EstateCard extends StatelessWidget {
                       },
                     )
                   : Container(
-                      height: 120,
+                      height: 130,
                       width: double.infinity,
                       color: color4,
                       alignment: Alignment.center,

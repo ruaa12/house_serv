@@ -72,7 +72,7 @@ final List<Estate> estates = [
     rooms: 2,
   ),
   Estate(
-    imagePath: 'assets/images/photo_2025-02-09_15-46-25.jpg',
+    imagePath: 'assets/images/home3.jpeg',
     type: 'Apartment',
     name: 'Sunset Residence',
     location: 'Amman',
@@ -82,7 +82,7 @@ final List<Estate> estates = [
     rooms: 4,
   ),
   Estate(
-    imagePath: 'assets/images/photo_2025-02-09_15-46-25.jpg',
+    imagePath: 'assets/images/home3.jpeg',
     type: 'Apartment',
     name: 'Sunset Residence',
     location: 'Amman',
@@ -92,7 +92,7 @@ final List<Estate> estates = [
     rooms: 5,
   ),
   Estate(
-    imagePath: 'assets/images/photo_2025-02-09_15-46-25.jpg',
+    imagePath: 'assets/images/home3.jpeg',
     type: 'Villa',
     name: 'Palm Villa',
     location: 'Aqaba',
@@ -102,7 +102,7 @@ final List<Estate> estates = [
     rooms: 5,
   ),
   Estate(
-    imagePath: 'assets/images/photo_2025-02-09_15-46-25.jpg',
+    imagePath: 'assets/images/home3.jpeg',
     type: 'Studio',
     name: 'City Center Studio',
     location: 'Irbid',

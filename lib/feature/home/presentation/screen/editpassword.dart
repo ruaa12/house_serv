@@ -164,12 +164,13 @@ class EditpasswordScreen extends StatelessWidget {
                     ontap: () {
                       // هنا إرسال حدث تغيير كلمة المرور
                       context.read<AuthBloc>().add(PasswordButtonPressed(
-                            current_password:
-                                'currentPassword', // ضع هنا القيمة الفعلية
-                            new_password:
-                                'newPassword', // ضع هنا القيمة الفعلية
+                            current_password: current_passwordController
+                                .text, // ضع هنا القيمة الفعلية
+                            new_password: new_passwordConroller
+                                .text, // ضع هنا القيمة الفعلية
                             new_password_confirmation:
-                                'newPasswordConfirmation', // ضع هنا القيمة الفعلية
+                                new_password_confirmationController
+                                    .text, // ضع هنا القيمة الفعلية
                           ));
                     },
                     name: LocaleKeys.editpassword_Update_pass.tr(),

@@ -1,6 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart'; // إضافة الـ Bloc
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart'; // إضافة DataSource
 import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.dart';
@@ -15,9 +15,10 @@ import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
-import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+
+import 'feature/service/presentation/screen/services_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -67,7 +68,7 @@ class DreamHouse extends StatelessWidget {
               EditProfile.id: (context) => EditProfile(),
               HomeScreen.id: (context) => const HomeScreen(),
               ProfileScreen.id: (context) => const ProfileScreen(),
-              ServicesScreen.id: (context) => const ServicesScreen(),
+              ServicesScreen.id: (context) => ServicesScreen(),
               '/favorites': (context) => FavoritesScreen(
                     favoriteEstates: FavoriteManager.favoriteEstates,
                   ),

@@ -41,7 +41,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.new_password);
       final token = changepassword?.data?.token;
       if (token != null) {
-        emit(PasswordSucces(token: token));
+        emit(PasswordSucces());
       } else {
         emit(PasswordFailure(erro: " failed please check your password"));
       }

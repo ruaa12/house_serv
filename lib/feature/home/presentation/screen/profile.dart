@@ -93,22 +93,6 @@ class _ProScreenState extends State<ProfileScreen> {
                         ));
                   },
                 ),
-                const SizedBox(height: 15),
-                CustomListTile(
-                  title: 'My Favorite Houses',
-                  leading: Image.asset('assets/images/Rectangle 2113.png'),
-                  trailing:
-                      const Icon(Icons.edit, color: Colors.black, size: 24),
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => FavoritesScreen(
-                            favoriteEstates: [],
-                          ),
-                        ));
-                  },
-                ),
                 const SizedBox(
                   height: 15,
                 ),

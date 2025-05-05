@@ -1,3 +1,5 @@
+import 'package:home_serviece/feature/estate/presentation/screen/all_estates_screen.dart';
+import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
 import 'package:easy_localization/easy_localization.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
@@ -7,13 +9,14 @@ import 'package:home_serviece/feature/estate/presentation/screen/details_estate.
 import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/home/presentation/screen/notification_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/home_slider.dart';
 import 'package:home_serviece/feature/home/presentation/widget/providers_section.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_screen.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_provider.dart';
 import 'package:home_serviece/feature/service/presentation/widget/services_data.dart';
+
+import '../../../service/presentation/screen/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'homepage';
@@ -28,6 +31,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   bool viewHouse = false;
+  int selectedTabIndex = 0;
+  final tabs = ['Houses', 'Services', 'Providers'];
 
   @override
   Widget build(BuildContext context) {
@@ -60,22 +65,99 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
-                        width: 110,
+                        width: 60,
                       ),
                       TextButton(
                           onPressed: () {
-                            Navigator.pushReplacement(
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => FavoritesScreen(
+                                          favoriteEstates: [],
+                                        )));
+                          },
+                          child: Icon(
+                            Icons.favorite_border,
+                            color: color1,
+                            size: 25,
+                          )),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         NotificationsScreen()));
                           },
-                          child: Image.asset('assets/images/Notification.png')),
+                          child: Icon(
+                            Icons.notifications_active_rounded,
+                            color: color1,
+                            size: 25,
+                          )),
                     ],
                   ),
                 ),
               ),
               HomeSlider(estates: estates),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+                child: SizedBox(
+                  height: 50,
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: tabs.length,
+                    separatorBuilder: (_, __) => SizedBox(width: 10),
+                    itemBuilder: (context, index) {
+                      final isSelected = selectedTabIndex == index;
+
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            selectedTabIndex = index;
+                          });
+
+                          if (tabs[index] == 'Houses') {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      AllEstatesScreen(estates: estates),
+                                ));
+                          } else if (tabs[index] == 'Providers') {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => ProvidersScreen(),
+                                ));
+                          } else {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ServicesScreen()));
+                          }
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 24, vertical: 10),
+                          decoration: BoxDecoration(
+                            color: isSelected ? color1 : color2,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: Text(
+                            tabs[index],
+                            style: TextStyle(
+                              color: isSelected ? color6 : color5,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ),
               Column(
                 children: [
                   Container(
@@ -92,71 +174,58 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: color1,
                                   fontWeight: FontWeight.bold),
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  viewHouse = true;
-                                  setState(() {});
-                                },
-                                child: const Text(
-                                  'view all',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: color3,
-                                      fontWeight: FontWeight.bold),
-                                )),
                           ],
                         ),
-                        viewHouse
-                            ? Column(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      viewHouse = false;
-                                      setState(() {});
-                                    },
-                                    icon: const Icon(Icons.arrow_upward),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  SizedBox(
-                                    height:
-                                        500, // عدلت الارتفاع من 900 لـ 500 ليكون أكثر واقعية
-                                    child: ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: estates.length,
-                                      itemBuilder: (context, index) {
-                                        return GestureDetector(
-                                          onTap: () {},
-                                          child: EstateCard(
-                                              estate: estates[index]),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 20),
-                                ],
-                              )
-                            : SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.33,
-                                child: ListView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: estates.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailsEstate(
-                                                      estate: estates[index]),
-                                            ));
-                                      },
-                                      child: EstateCard(estate: estates[index]),
-                                    );
-                                  },
-                                ),
-                              ),
+                        // viewHouse
+                        //     ? Column(
+                        //         children: [
+                        //           IconButton(
+                        //             onPressed: () {
+                        //               viewHouse = false;
+                        //               setState(() {});
+                        //             },
+                        //             icon: const Icon(Icons.arrow_upward),
+                        //           ),
+                        //           const SizedBox(height: 10),
+                        //           SizedBox(
+                        //             height:
+                        //                 500,
+                        //             child: ListView.builder(
+                        //               scrollDirection: Axis.vertical,
+                        //               itemCount: estates.length,
+                        //               itemBuilder: (context, index) {
+                        //                 return GestureDetector(
+                        //                   onTap: () {},
+                        //                   child: EstateCard(
+                        //                       estate: estates[index]),
+                        //                 );
+                        //               },
+                        //             ),
+                        //           ),
+                        //           const SizedBox(height: 20),
+                        //         ],
+                        //       )
+                        //     :
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.33,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: estates.length,
+                            itemBuilder: (context, index) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => DetailsEstate(
+                                            estate: estates[index]),
+                                      ));
+                                },
+                                child: EstateCard(estate: estates[index]),
+                              );
+                            },
+                          ),
+                        ),
                         //
 
                         Container(
@@ -170,21 +239,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                     color: color1,
                                     fontWeight: FontWeight.bold),
                               ),
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                ServicesScreen()));
-                                  },
-                                  child: const Text(
-                                    'View all',
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: color3,
-                                        fontWeight: FontWeight.bold),
-                                  )),
                             ],
                           ),
                         ),
@@ -210,7 +264,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 100,
                                   margin: const EdgeInsets.only(right: 10),
                                   decoration: BoxDecoration(
-                                    color: Colors.blue.shade100,
+                                    color: color7,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: Column(
@@ -247,21 +301,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: color1,
                                   fontWeight: FontWeight.bold),
                             ),
-                            TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => ProvidersScreen(),
-                                      ));
-                                },
-                                child: const Text(
-                                  'View all',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: color3,
-                                      fontWeight: FontWeight.bold),
-                                )),
                           ],
                         ),
                         ProvidersSection(),

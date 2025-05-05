@@ -5,7 +5,7 @@ import 'package:home_serviece/feature/home/presentation/screen/cart_screen.dart'
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 
-import 'package:home_serviece/feature/wallet/wallet_screen.dart';
+import 'package:home_serviece/feature/wallet/presentation/screen/wallet_screen.dart';
 
 import '../widget/const.dart';
 

@@ -1,26 +1,26 @@
 // To parse this JSON data, do
 //
-//     final updateprofile = updateprofileFromJson(jsonString);
+//     final updateProfile = updateProfileFromJson(jsonString);
 
 import 'dart:convert';
 
-Updateprofile updateprofileFromJson(String str) =>
-    Updateprofile.fromJson(json.decode(str));
+UpdateProfile updateProfileFromJson(String str) =>
+    UpdateProfile.fromJson(json.decode(str));
 
-String updateprofileToJson(Updateprofile data) => json.encode(data.toJson());
+String updateProfileToJson(UpdateProfile data) => json.encode(data.toJson());
 
-class Updateprofile {
+class UpdateProfile {
   final bool? status;
   final String? message;
   final Data? data;
 
-  Updateprofile({
+  UpdateProfile({
     this.status,
     this.message,
     this.data,
   });
 
-  factory Updateprofile.fromJson(Map<String, dynamic> json) => Updateprofile(
+  factory UpdateProfile.fromJson(Map<String, dynamic> json) => UpdateProfile(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? null : Data.fromJson(json["data"]),

@@ -29,10 +29,7 @@ class RegisterFailure extends AuthState {
   RegisterFailure({required this.error});
 }
 
-class PasswordSucces extends AuthState {
-  final String token;
-  PasswordSucces({required this.token});
-}
+class PasswordSucces extends AuthState {}
 
 class PasswordFailure extends AuthState {
   final String erro;
