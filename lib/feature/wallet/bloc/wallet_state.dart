@@ -1,29 +1,17 @@
-import 'package:equatable/equatable.dart';
-import 'package:home_serviece/feature/wallet/data/modeles/WalletTransaction.dart';
+import 'package:home_serviece/feature/wallet/data/modeles/get_balance.dart';
 
-abstract class WalletState extends Equatable {
-  @override
-  List<Object?> get props => [];
+abstract class WalletState {}
+
+class WalletInitialState extends WalletState {}
+
+class WalletLoadingState extends WalletState {}
+
+class WalletLoadedState extends WalletState {
+  final GetBalance? balance;
+  WalletLoadedState(this.balance);
 }
 
-class WalletInitial extends WalletState {}
-
-class WalletLoading extends WalletState {}
-
-class WalletSuccess extends WalletState {
-  final WalletTransaction transaction;
-
-  WalletSuccess(this.transaction);
-
-  @override
-  List<Object?> get props => [transaction];
-}
-
-class WalletFailure extends WalletState {
+class WalletErrorState extends WalletState {
   final String error;
-
-  WalletFailure(this.error);
-
-  @override
-  List<Object?> get props => [error];
+  WalletErrorState({required this.error});
 }

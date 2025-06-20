@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/address/bloc/bloc/address_bloc.dart';
+import 'package:home_serviece/feature/address/data/data_source/address_datasource.dart';
 import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
-import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart'; // إضافة DataSource
+import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
@@ -15,16 +17,16 @@ import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
+import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
-
-import 'feature/service/presentation/screen/services_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final tempDir = await getTemporaryDirectory();
   HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: HydratedStorageDirectory(tempDir.path));
+    storageDirectory: HydratedStorageDirectory(tempDir.path),
+  );
   await EasyLocalization.ensureInitialized();
   runApp(
     EasyLocalization(
@@ -44,16 +46,19 @@ class DreamHouse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (context) => AuthBloc(authDatasource: AuthDatasource()),
-          ),
-          BlocProvider(
-            create: (_) => SettingsCubit(),
-          ),
-        ],
-        child: BlocBuilder<SettingsCubit, SettingsState>(
-            builder: (context, State) {
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc(authDatasource: AuthDatasource()),
+        ),
+        BlocProvider(
+          create: (_) => SettingsCubit(),
+        ),
+        BlocProvider(
+          create: (_) => AddressBloc(dataSource: AddressDataSource()),
+        ),
+      ],
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, State) {
           return MaterialApp(
             locale: context.locale,
             supportedLocales: context.supportedLocales,
@@ -65,7 +70,6 @@ class DreamHouse extends StatelessWidget {
               LoginScreen.id: (context) => LoginScreen(),
               SignupUser.id: (context) => SignupUser(),
               SignupWorker.id: (context) => SignupWorker(),
-              EditProfile.id: (context) => EditProfile(),
               HomeScreen.id: (context) => const HomeScreen(),
               ProfileScreen.id: (context) => const ProfileScreen(),
               ServicesScreen.id: (context) => ServicesScreen(),
@@ -74,8 +78,10 @@ class DreamHouse extends StatelessWidget {
                   ),
             },
             debugShowCheckedModeBanner: false,
-            home: Navbar(),
+            home: LoginScreen(),
           );
-        }));
+        },
+      ),
+    );
   }
 }

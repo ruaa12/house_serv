@@ -1,228 +1,164 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:flutter/material.dart';
-import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
+import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
-import 'package:home_serviece/feature/home/presentation/widget/custom_text_field1.dart';
-import 'package:file_picker/file_picker.dart';
-import 'dart:io';
-
+import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
 
-class MyProfile extends StatefulWidget {
-  const MyProfile({super.key});
-  static String id = 'homepage'.tr();
+import 'package:shared_preferences/shared_preferences.dart';
+
+class MyProfileScreen extends StatefulWidget {
+  const MyProfileScreen({super.key});
 
   @override
-  State<MyProfile> createState() => _MyProfileState();
+  State<MyProfileScreen> createState() => _MyProfileScreenState();
 }
 
-class _MyProfileState extends State<MyProfile> {
-  final formKey = GlobalKey<FormState>();
-  File? _image;
+class _MyProfileScreenState extends State<MyProfileScreen> {
+  late AuthBloc _authBloc;
 
-  Future<void> _pickFile() async {
-    try {
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image, // السماح باختيار الصور فقط
+  @override
+  void initState() {
+    super.initState();
+    _authBloc = AuthBloc(authDatasource: AuthDatasource());
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+
+    if (token != null && token.isNotEmpty) {
+      _authBloc.add(GetProfile(token: token));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('التوكن غير موجود، يرجى تسجيل الدخول')),
       );
-      if (result != null) {
-        setState(() {
-          _image = File(result.files.single.path!);
-        });
-      } else {
-        _showAlert(LocaleKeys.editProfile_no_file_selected
-            .tr()); // إذا لم يتم اختيار ملف
-      }
-    } catch (e) {
-      _showAlert(
-          LocaleKeys.editProfile_An_error_occured.tr()); // عرض خطأ للمستخدم
     }
   }
 
-  void _showAlert(String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Notice'.tr()),
-          content: Text(message),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'.tr()),
-            ),
-          ],
-        );
-      },
-    );
+  @override
+  void dispose() {
+    _authBloc.close();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: color1,
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.myProfile_My_prof.tr(),
+    return BlocProvider.value(
+      value: _authBloc,
+      child: Scaffold(
+        backgroundColor: color1,
+        appBar: AppBar(
+          title: Text(LocaleKeys.editProfile_Edit_prof.tr()),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => const ProfileScreen()),
+              );
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ProfileScreen(),
-              ),
-            );
+        body: BlocBuilder<AuthBloc, AuthState>(
+          builder: (context, state) {
+            if (state is AuthLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is GetProfileSuccess) {
+              final user = state.user;
+
+              return SingleChildScrollView(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(
+                      child: CircleAvatar(
+                        radius: 50,
+                        backgroundColor: Colors.teal[100],
+                        backgroundImage: user.profilePhotoUrl != null
+                            ? NetworkImage(user.profilePhotoUrl!)
+                            : null,
+                        child: user.profilePhotoUrl == null
+                            ? const Icon(Icons.person,
+                                size: 50, color: Colors.teal)
+                            : null,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    _buildInfo('Name', user.name),
+                    const Divider(),
+                    const SizedBox(height: 20),
+                    _buildInfo('Username', user.username),
+                    const Divider(),
+                    const SizedBox(height: 20),
+                    _buildInfo('Email', user.email),
+                    const Divider(),
+                    const SizedBox(height: 20),
+                    _buildInfo('Phone', user.phone),
+                    const Divider(),
+                    const SizedBox(height: 20),
+                    _buildInfo(
+                      'created_at',
+                      user.createdAt != null
+                          ? user.createdAt!.toLocal().toString()
+                          : '-',
+                    ),
+                    const Divider(),
+                    const SizedBox(height: 20),
+                    _buildInfo(
+                      'updated_at',
+                      user.updatedAt != null
+                          ? user.updatedAt!.toLocal().toString()
+                          : '-',
+                    ),
+                  ],
+                ),
+              );
+            } else if (state is GetprofileFailure) {
+              return Center(
+                child: Text(
+                  'حدث خطأ: ${state.message}',
+                  style: const TextStyle(color: Colors.red),
+                ),
+              );
+            } else {
+              return const Center(
+                child: Text('لم يتم تحميل البيانات بعد'),
+              );
+            }
           },
-          icon: const Icon(Icons.arrow_back),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: ListView(
-          children: [
-            const SizedBox(
-              height: 30,
+    );
+  }
+
+  Widget _buildInfo(String title, String? value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: Row(
+        children: [
+          Text(
+            '$title : ',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color2,
             ),
-            GestureDetector(
-              onTap: _pickFile, // استدعاء التقاط الملف عند الضغط
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundImage: _image != null ? FileImage(_image!) : null,
-                    backgroundColor: Colors.grey[200],
-                    maxRadius: 65,
-                  ),
-                  const Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                ],
+          ),
+          Expanded(
+            child: Text(
+              value ?? '-',
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.black87,
               ),
             ),
-            const SizedBox(
-              height: 40,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                LocaleKeys.editProfile_User_name.tr(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-              keyboardType: TextInputType.name,
-              validator: (value) {
-                if (value!.length >= 8) {
-                  return null;
-                } else {
-                  return LocaleKeys.editProfile_valid_user_name.tr();
-                }
-              },
-              label: LocaleKeys.editProfile_Enter_name.tr(),
-              labelText: 'Enter name'.tr(),
-              controller: TextEditingController(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Email'.tr(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value!.contains('@gmail.com')) {
-                  return null;
-                } else {
-                  return LocaleKeys.editProfile_Valid_E_mail.tr();
-                }
-              },
-              label: 'Email'.tr(),
-              labelText: 'Email'.tr(),
-              controller: TextEditingController(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                LocaleKeys.editProfile_Country.tr(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-              keyboardType: TextInputType.name,
-              validator: (value) {
-                if (value!.length >= 8) {
-                  return null;
-                } else {
-                  return 'Please Add A Valid user country'.tr();
-                }
-              },
-              label: LocaleKeys.editProfile_Country.tr(),
-              labelText: 'Country'.tr(),
-              controller: TextEditingController(),
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                LocaleKeys.editProfile_Phone_num.tr(),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-              keyboardType: TextInputType.number,
-              validator: (value) {
-                if (value!.length == 10) {
-                  return null;
-                } else {
-                  return 'Please Add A Valid phone number'.tr();
-                }
-              },
-              label: LocaleKeys.editProfile_Phone_num.tr(),
-              labelText: 'Phone number'.tr(),
-              controller: TextEditingController(),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Button(
-              ontap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfileScreen()),
-                );
-              },
-              name: LocaleKeys.editProfile_save.tr(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

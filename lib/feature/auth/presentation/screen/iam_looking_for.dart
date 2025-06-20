@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';

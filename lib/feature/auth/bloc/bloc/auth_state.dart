@@ -35,3 +35,21 @@ class PasswordFailure extends AuthState {
   final String erro;
   PasswordFailure({required this.erro});
 }
+
+class UpdateProfileSucces extends AuthState {}
+
+class UpdateProfilefailure extends AuthState {
+  final String error;
+  UpdateProfilefailure({required this.error});
+}
+
+class GetProfileSuccess extends AuthState {
+  final UserData user;
+  GetProfileSuccess({required this.user});
+}
+
+class GetprofileFailure extends AuthState {
+  final String message;
+
+  GetprofileFailure({required this.message});
+}

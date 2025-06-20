@@ -18,9 +18,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthBloc(
-        authDatasource: AuthDatasource(),
-      ),
+      create: (_) => AuthBloc(authDatasource: AuthDatasource()),
       child: Scaffold(
           backgroundColor: color1,
           body: BlocListener<AuthBloc, AuthState>(

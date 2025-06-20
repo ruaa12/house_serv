@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/auth/data/models/get_profile.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -44,6 +47,34 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(PasswordSucces());
       } else {
         emit(PasswordFailure(erro: " failed please check your password"));
+      }
+    });
+    on<UpdateProfileButtonPressed>((event, emit) async {
+      emit(AuthLoading());
+      final updateprofile = await authDatasource.updateProfile(
+          name: event.name,
+          phone: event.phone,
+          email: event.email,
+          username: event.username,
+          image: event.image);
+      final token = updateprofile.data?.token;
+      if (token != null) {
+        emit(UpdateProfileSucces());
+      } else {
+        emit(UpdateProfilefailure(error: " failed please check your profile"));
+      }
+    });
+    on<GetProfile>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        final profileData = await authDatasource.getProfile(event.token);
+        if (profileData != null && profileData.data != null) {
+          emit(GetProfileSuccess(user: profileData.data!));
+        } else {
+          emit(GetprofileFailure(message: 'البيانات غير مكتملة'));
+        }
+      } catch (e) {
+        emit(GetprofileFailure(message: e.toString()));
       }
     });
   }

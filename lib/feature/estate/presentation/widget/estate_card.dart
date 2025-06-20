@@ -108,7 +108,7 @@ class EstateCard extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        'Price: ${estate.price?.toString() ?? 'Not Available'}',
+                        'Price: ${estate.price.toString() ?? 'Not Available'}',
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,

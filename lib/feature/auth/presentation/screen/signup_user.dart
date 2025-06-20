@@ -4,7 +4,7 @@ import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/custom_text_field.dart';
-import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 

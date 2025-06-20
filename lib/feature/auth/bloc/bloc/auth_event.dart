@@ -28,3 +28,19 @@ class PasswordButtonPressed extends AuthEvent {
       required this.new_password,
       required this.new_password_confirmation});
 }
+
+class UpdateProfileButtonPressed extends AuthEvent {
+  final String name, phone, username, email;
+  File? image;
+  UpdateProfileButtonPressed(
+      {required this.email,
+      required this.name,
+      this.image,
+      required this.phone,
+      required this.username});
+}
+
+class GetProfile extends AuthEvent {
+  final String token;
+  GetProfile({required this.token});
+}

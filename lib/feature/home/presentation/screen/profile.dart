@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:home_serviece/core/utils/logout_helper.dart';
+import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/adresses.dart';
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
@@ -13,6 +15,7 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -57,7 +60,7 @@ class _ProScreenState extends State<ProfileScreen> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => MyProfile(),
+                          builder: (context) => MyProfileScreen(),
                         ));
                   },
                 ),
@@ -179,7 +182,7 @@ class _ProScreenState extends State<ProfileScreen> {
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pop(); // إلغاء
                                   },
                                   child: Text('Cancel'.tr()),
                                 ),
@@ -190,7 +193,8 @@ class _ProScreenState extends State<ProfileScreen> {
                                     foregroundColor: Colors.white,
                                   ),
                                   onPressed: () {
-                                    Navigator.of(context).pop();
+                                    performLogout(
+                                        context); // تنفيذ تسجيل الخروج
                                   },
                                   child: Text('Log out'.tr()),
                                 ),
