@@ -21,6 +21,7 @@ dependencies:
   easy_localization_generator: ^0.3.3
   url_launcher: ^6.3.1
   signature: ^6.0.0
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
-import 'estate_data.dart';
+import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 
 class EstateCard extends StatelessWidget {
-  final Estate estate;
+  final HouseModel estate;
   const EstateCard({super.key, required this.estate});
+
+  String fixImageUrl(String url) {
+  return url.replaceAll("localhost", "10.0.2.2");
+}
+
 
   @override
   Widget build(BuildContext context) {
+    print('🧱 عرض EstateCard للعقار: ${estate.title}');
+
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Container(
@@ -33,9 +40,11 @@ class EstateCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
-              child: estate.imagePath != null && estate.imagePath.isNotEmpty
-                  ? Image.asset(
-                      estate.imagePath,
+              child: estate.images != null && estate.images!.isNotEmpty
+              
+                  ?
+                   Image.network(
+                     fixImageUrl( estate.images!.first),
                       fit: BoxFit.cover,
                       height: 120,
                       width: double.infinity,
@@ -65,7 +74,7 @@ class EstateCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    estate.type,
+                    estate.title!,
                     style: TextStyle(
                         fontSize: 12,
                         color: color3,
@@ -73,40 +82,40 @@ class EstateCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    estate.name,
+                    estate.description!,
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                         color: color1),
                   ),
                   const SizedBox(height: 6),
-                  Row(
-                    children: [
-                      Icon(Icons.location_on, size: 14, color: color2),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          estate.location,
-                          style: TextStyle(fontSize: 12, color: color5),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
+                  // Row(
+                  //   children: [
+                  //     Icon(Icons.location_on, size: 14, color: color2),
+                  //     const SizedBox(width: 4),
+                  //     // Expanded(
+                  //     //   child: Text(
+                  //     //     estate.,
+                  //     //     style: TextStyle(fontSize: 12, color: color5),
+                  //     //     overflow: TextOverflow.ellipsis,
+                  //     //   ),
+                  //     // ),
+                  //   ],
+                  // ),
+                  // const SizedBox(height: 8),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Icon(Icons.star, size: 14, color: Colors.amber),
-                          const SizedBox(width: 4),
-                          Text(
-                            estate.rating.toString(),
-                            style: TextStyle(fontSize: 12, color: color5),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   children: [
+                      //     Icon(Icons.star, size: 14, color: Colors.amber),
+                      //     const SizedBox(width: 4),
+                      //     Text(
+                      //       estate..toString(),
+                      //       style: TextStyle(fontSize: 12, color: color5),
+                      //     ),
+                      //   ],
+                      // ),
                       Text(
                         'Price: ${estate.price?.toString() ?? 'Not Available'}',
                         style: TextStyle(
@@ -116,16 +125,16 @@ class EstateCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Area: ${estate.area?.toString() ?? 'Unknown'} sqm',
-                          style: TextStyle(fontSize: 12, color: color5)),
-                      Text('Rooms: ${estate.rooms?.toString() ?? 'N/A'}',
-                          style: TextStyle(fontSize: 12, color: color5)),
-                    ],
-                  ),
+                  // const SizedBox(height: 6),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Text('Area: ${estate.?.toString() ?? 'Unknown'} sqm',
+                  //         style: TextStyle(fontSize: 12, color: color5)),
+                  //     Text('Rooms: ${estate.rooms?.toString() ?? 'N/A'}',
+                  //         style: TextStyle(fontSize: 12, color: color5)),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

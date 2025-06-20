@@ -13,6 +13,7 @@ class AuthRepository {
     required String fullname,
     required String username,
   }) async {
+    
     return await datasource.register(
         email, password, phone, fullname, username);
   }

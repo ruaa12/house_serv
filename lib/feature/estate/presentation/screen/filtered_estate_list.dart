@@ -119,7 +119,7 @@ class _FilteredEstateListState extends State<FilteredEstateList> {
             child: ListView.builder(
               itemCount: filteredEstates.length,
               itemBuilder: (context, index) {
-                return EstateCard(estate: filteredEstates[index]);
+                // return EstateCard(estate: filteredEstates[index]);
               },
             ),
           ),

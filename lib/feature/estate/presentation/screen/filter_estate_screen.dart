@@ -69,7 +69,7 @@ class _FilteredEstatesScreenState extends State<FilteredEstatesScreen> {
       body: ListView.builder(
         itemCount: _filteredEstates.length,
         itemBuilder: (context, index) {
-          return EstateCard(estate: _filteredEstates[index]);
+          // return EstateCard(estate: _filteredEstates[index]);
         },
       ),
     );
