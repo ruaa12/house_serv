@@ -1,2 +1,0 @@
-E:/house_serv/android/app/.cxx/RelWithDebInfo/2n3a5yj3/arm64-v8a/CMakeFiles/edit_cache.dir
-E:/house_serv/android/app/.cxx/RelWithDebInfo/2n3a5yj3/arm64-v8a/CMakeFiles/rebuild_cache.dir
