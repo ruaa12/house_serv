@@ -1,11 +1,21 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 
+import '../../../../core/unified_api/status.dart';
+import '../../bloc/bloc/home_bloc.dart';
+
 class HomeSlider extends StatefulWidget {
-  final List<Estate> estates;
-  const HomeSlider({super.key, required this.estates});
+
+  const HomeSlider({
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<HomeSlider> createState() => _HomeSliderState();
@@ -16,28 +26,26 @@ class _HomeSliderState extends State<HomeSlider> {
   int _currentIndex = 0;
   Timer? _timer;
 
-  @override
-  void initState() {
-    super.initState();
-    _startAutoSlide();
-  }
-
-  void _startAutoSlide() {
-    if (widget.estates.isNotEmpty) {
-      // تأجيل التمرير التلقائي للتأكد من تحميل الصفحة بشكل صحيح
-      _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-        if (_controller.hasClients) {
-          setState(() {
-            _currentIndex = (_currentIndex + 1) % widget.estates.length;
-            _controller.animateToPage(
-              _currentIndex,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeInOut,
-            );
-          });
-        }
+  void _startAutoSlide(int length) {
+   _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+  try {
+    if (_controller.hasClients && length > 1) {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % length;
+        _controller.animateToPage(
+          _currentIndex,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOut,
+        );
       });
     }
+  } catch (e) {
+    // هون ممكن نطبع الخطأ أو نلغي التايمر حتى ما يعمل مشاكل
+    print('Error in timer: $e');
+    timer.cancel();
+  }
+});
+
   }
 
   @override
@@ -49,89 +57,119 @@ class _HomeSliderState extends State<HomeSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 220,
-      width: double.infinity,
-      child: Stack(
-        children: [
-          PageView.builder(
-            controller: _controller,
-            itemCount: widget.estates.length,
-            itemBuilder: (context, index) {
-              final estate = widget.estates[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailsEstate(estate: estates[index]),
-                      ));
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        final status = state.trendingHousesStatus;
+
+        switch (status) {
+          case ApiStatus.loading:
+            return const Center(child: CircularProgressIndicator());
+
+          case ApiStatus.failed:
+            return Center(
+              child: ElevatedButton(
+                onPressed: () {
+                  context.read<HomeBloc>().add(GetTrendingEvent());
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Stack(
-                      children: [
-                        Image.asset(
-                          estate.imagePath,
-                          fit: BoxFit.cover,
-                          errorBuilder: (context, error, stackTrace) {
-                            debugPrint(
-                                "Error loading image: ${estate.imagePath}");
-                            return Icon(Icons.image_not_supported,
-                                size: 50, color: Colors.grey);
-                          },
-                          width: double.infinity,
-                        ),
-                        Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: Container(
-                            padding: const EdgeInsets.all(6),
-                            color: Colors.black54,
-                            child: Text(
-                              estate.name,
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
+                child: const Text("Try Again"),
+              ),
+            );
+
+          case ApiStatus.success:
+            final slider_estates = state.trendingHouses;
+            if (slider_estates.isEmpty) {
+              return const Center(child: Text("لا يوجد عقارات حالياً"));
+            }
+
+            _timer?.cancel(); // تأكدي من إيقاف أي تايمر قديم
+            _startAutoSlide(slider_estates.length);
+
+            return SizedBox(
+              height: 220,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    controller: _controller,
+                    itemCount: 5,
+                    itemBuilder: (context, index) {
+                      final sliderEstate = slider_estates[index];
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DetailsEstate(estate: sliderEstate),
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Stack(
+                              children: [
+                                Image.network(
+                                  sliderEstate.images!.first
+                                  ,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  errorBuilder: (context, error, stackTrace) =>
+                                      const Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
+                                ),
+                                Positioned(
+                                  bottom: 10,
+                                  left: 10,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(6),
+                                    color: Colors.black54,
+                                    child: Text(
+                                      sliderEstate.title!,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      ],
+                      );
+                    },
+                  ),
+                  Positioned(
+                    bottom: 15,
+                    left: 0,
+                    right: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: List.generate(
+                        state.trendingHouses.length,
+                        (index) => AnimatedContainer(
+                          duration: const Duration(milliseconds: 300),
+                          margin: const EdgeInsets.symmetric(horizontal: 4),
+                          width: _currentIndex == index ? 12 : 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _currentIndex == index ? Colors.white : Colors.grey,
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              );
-            },
-          ),
-          // Indicator for pages
-          Positioned(
-            bottom: 15,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                widget.estates.length,
-                (index) => AnimatedContainer(
-                  duration: const Duration(milliseconds: 300),
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  width: _currentIndex == index ? 12 : 8,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: _currentIndex == index ? Colors.white : Colors.grey,
-                  ),
-                ),
+                ],
               ),
-            ),
-          ),
-        ],
-      ),
+            );
+
+          case ApiStatus.initial:
+          default:
+            return const SizedBox();
+        }
+      },
     );
   }
 }

@@ -9,8 +9,10 @@ import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.d
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
+import 'package:home_serviece/feature/estate/bloc/bloc/estate_bloc.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
+import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
@@ -46,6 +48,7 @@ class DreamHouse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+
       providers: [
         BlocProvider(
           create: (context) => AuthBloc(authDatasource: AuthDatasource()),
@@ -59,6 +62,23 @@ class DreamHouse extends StatelessWidget {
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
         builder: (context, State) {
+
+        providers: [
+          BlocProvider(
+            create: (context) => AuthBloc(authDatasource: AuthDatasource()),
+            
+          ),
+          BlocProvider(
+            create: (context) => HomeBloc() ),
+            BlocProvider(
+              create: (context) => EstateBloc(), ),
+          BlocProvider(
+            create: (_) => SettingsCubit(),
+          ),
+        ],
+        child: BlocBuilder<SettingsCubit, SettingsState>(
+            builder: (context, State) {
+>>>>>>> b24fff6cb15e17a6c0dd7965e98b9d5f9ba66584
           return MaterialApp(
             locale: context.locale,
             supportedLocales: context.supportedLocales,

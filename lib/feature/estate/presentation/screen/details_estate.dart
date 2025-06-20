@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
-import '../widget/estate_data.dart';
+import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 
 class DetailsEstate extends StatefulWidget {
-  final Estate estate;
+  final HouseModel estate;
 
   const DetailsEstate({super.key, required this.estate});
 
@@ -31,7 +31,7 @@ class _DetailsEstateState extends State<DetailsEstate> {
                     bottomRight: Radius.circular(25),
                   ),
                   child: Image.asset(
-                    widget.estate.imagePath,
+                    widget.estate.images!.first,
                     height: MediaQuery.of(context).size.height * 0.65,
                     width: double.infinity,
                     fit: BoxFit.cover,
@@ -61,13 +61,13 @@ class _DetailsEstateState extends State<DetailsEstate> {
                         onTap: () {
                           setState(() {
                             isFav = !isFav;
-                            if (isFav) {
-                              FavoriteManager.favoriteEstates
-                                  .add(widget.estate);
-                            } else {
-                              FavoriteManager.favoriteEstates
-                                  .remove(widget.estate);
-                            }
+                            // if (isFav) {
+                            //   FavoriteManager.favoriteEstates
+                            //       .add(widget.estate);
+                            // } else {
+                            //   FavoriteManager.favoriteEstates
+                            //       .remove(widget.estate);
+                            // }
                           });
                         },
                       ),
@@ -90,7 +90,7 @@ class _DetailsEstateState extends State<DetailsEstate> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          widget.estate.name,
+                          widget.estate.title!,
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
@@ -113,7 +113,7 @@ class _DetailsEstateState extends State<DetailsEstate> {
                         Icon(Icons.location_on, size: 16, color: color3),
                         SizedBox(width: 4),
                         Text(
-                          widget.estate.location,
+                          widget.estate.description!,
                           style: TextStyle(color: color3),
                         ),
                       ],
@@ -125,10 +125,10 @@ class _DetailsEstateState extends State<DetailsEstate> {
                       spacing: 12,
                       runSpacing: 12,
                       children: [
-                        _infoTag(icon: Icons.home, label: widget.estate.type),
-                        _infoTag(
-                            icon: Icons.bed,
-                            label: '${widget.estate.rooms} غرف'),
+                        _infoTag(icon: Icons.home, label: widget.estate.title!),
+                        // _infoTag(
+                        //     icon: Icons.bed,
+                        //     label: '${widget.estate.rooms} غرف'),
                         // if (estate.type.toLowerCase() == 'شقة' || estate.type.toLowerCase() == 'apartment')
                         //   _infoTag(icon: Icons.apartment, label: 'الطابق ${estate.floor}'),
                       ],

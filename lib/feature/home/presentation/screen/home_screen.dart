@@ -1,13 +1,13 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/all_estates_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
-import 'package:home_serviece/generated/locale_keys.g.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/home/presentation/screen/notification_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/home_slider.dart';
@@ -24,6 +24,7 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
+  
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -33,6 +34,16 @@ class _HomeScreenState extends State<HomeScreen> {
   bool viewHouse = false;
   int selectedTabIndex = 0;
   final tabs = ['Houses', 'Services', 'Providers'];
+@override
+void initState(){
+  super.initState();
+   print("🔁 Sending GetTrendingEvent from initState");
+  Future.microtask((){
+  context.read<HomeBloc>().add(GetTrendingEvent());
+});
+
+ }
+
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              HomeSlider(estates: estates),
+              HomeSlider(),
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
@@ -122,7 +133,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
-                                      AllEstatesScreen(estates: estates),
+                                      AllEstatesScreen(),
                                 ));
                           } else if (tabs[index] == 'Providers') {
                             Navigator.push(
@@ -176,57 +187,63 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        // viewHouse
-                        //     ? Column(
-                        //         children: [
-                        //           IconButton(
-                        //             onPressed: () {
-                        //               viewHouse = false;
-                        //               setState(() {});
-                        //             },
-                        //             icon: const Icon(Icons.arrow_upward),
-                        //           ),
-                        //           const SizedBox(height: 10),
-                        //           SizedBox(
-                        //             height:
-                        //                 500,
-                        //             child: ListView.builder(
-                        //               scrollDirection: Axis.vertical,
-                        //               itemCount: estates.length,
-                        //               itemBuilder: (context, index) {
-                        //                 return GestureDetector(
-                        //                   onTap: () {},
-                        //                   child: EstateCard(
-                        //                       estate: estates[index]),
-                        //                 );
-                        //               },
-                        //             ),
-                        //           ),
-                        //           const SizedBox(height: 20),
-                        //         ],
-                        //       )
-                        //     :
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.33,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: estates.length,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailsEstate(
-                                            estate: estates[index]),
-                                      ));
-                                },
-                                child: EstateCard(estate: estates[index]),
-                              );
-                            },
-                          ),
-                        ),
-                        //
+                     
+                       BlocBuilder<HomeBloc, HomeState>(
+                        
+  builder: (context, state) {
+    print('🔍 BlocBuilder: trendingHousesStatus = ${state.trendingHousesStatus}');
+    print('📦 عدد العقارات في trendingHouses = ${state.trendingHouses.length}');
+
+    switch (state.trendingHousesStatus) {
+      case ApiStatus.loading:
+        return const Center(child: CircularProgressIndicator());
+
+      case ApiStatus.failed:
+        return Center(
+          child: ElevatedButton(
+            onPressed: () {
+              context.read<HomeBloc>().add(GetTrendingEvent());
+            },
+            child: const Text('Try Again'),
+          ),
+        );
+
+      case ApiStatus.success:
+        final trending_houses = state.trendingHouses;
+
+        if (trending_houses.isEmpty) {
+          return const Center(child: Text('لا يوجد عقارات حالياً'));
+        }
+
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.33,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: trending_houses.length,
+            itemBuilder: (context, index) {
+              final house = trending_houses[index];
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailsEstate(estate: house),
+                    ),
+                  );
+                },
+                child: EstateCard(estate: house),
+              );
+            },
+          ),
+        );
+
+      case ApiStatus.initial:
+      default:
+        return const SizedBox();
+    }
+  },
+),
+
 
                         Container(
                           child: Row(
