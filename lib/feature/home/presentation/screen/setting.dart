@@ -5,7 +5,7 @@ import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/editpassword.dart';
-import 'package:home_serviece/feature/home/presentation/screen/my_profile.dart';
+
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';

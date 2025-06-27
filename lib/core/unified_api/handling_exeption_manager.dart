@@ -1,6 +1,5 @@
 import 'dart:async';
 
-
 import 'package:dartz/dartz.dart';
 
 import 'exeptions.dart';

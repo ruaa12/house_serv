@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home_serviece/feature/address/bloc/bloc/address_bloc.dart';
+import 'package:home_serviece/feature/address/bloc/bloc/bloc/address_bloc.dart';
 import 'package:home_serviece/feature/address/data/data_source/address_datasource.dart';
 import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
 import 'package:home_serviece/feature/auth/data/data_source/auth_datasource.dart';
@@ -9,17 +9,17 @@ import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.d
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
-import 'package:home_serviece/feature/estate/bloc/bloc/estate_bloc.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
-import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
-import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
+
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
+
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
+import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد
+import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart'; // لو عندك datasource
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -30,12 +30,13 @@ void main() async {
     storageDirectory: HydratedStorageDirectory(tempDir.path),
   );
   await EasyLocalization.ensureInitialized();
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en', ''), Locale('ar', '')],
       path: 'assets/langs',
-      fallbackLocale: Locale('en', ''),
-      startLocale: Locale('en', ''),
+      fallbackLocale: const Locale('en', ''),
+      startLocale: const Locale('en', ''),
       saveLocale: true,
       child: const DreamHouse(),
     ),
@@ -48,10 +49,9 @@ class DreamHouse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-
       providers: [
         BlocProvider(
-          create: (context) => AuthBloc(authDatasource: AuthDatasource()),
+          create: (_) => AuthBloc(authDatasource: AuthDatasource()),
         ),
         BlocProvider(
           create: (_) => SettingsCubit(),
@@ -59,32 +59,21 @@ class DreamHouse extends StatelessWidget {
         BlocProvider(
           create: (_) => AddressBloc(dataSource: AddressDataSource()),
         ),
+        BlocProvider(
+          create: (_) =>
+              HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
+        ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(
-        builder: (context, State) {
-
-        providers: [
-          BlocProvider(
-            create: (context) => AuthBloc(authDatasource: AuthDatasource()),
-            
-          ),
-          BlocProvider(
-            create: (context) => HomeBloc() ),
-            BlocProvider(
-              create: (context) => EstateBloc(), ),
-          BlocProvider(
-            create: (_) => SettingsCubit(),
-          ),
-        ],
-        child: BlocBuilder<SettingsCubit, SettingsState>(
-            builder: (context, State) {
->>>>>>> b24fff6cb15e17a6c0dd7965e98b9d5f9ba66584
+        builder: (context, state) {
           return MaterialApp(
             locale: context.locale,
             supportedLocales: context.supportedLocales,
             localizationsDelegates: context.localizationDelegates,
             theme:
-                State.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
+                state.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
+            debugShowCheckedModeBanner: false,
+            home: LoginScreen(),
             routes: {
               IamLookingFor.id: (context) => const IamLookingFor(),
               LoginScreen.id: (context) => LoginScreen(),
@@ -97,8 +86,6 @@ class DreamHouse extends StatelessWidget {
                     favoriteEstates: FavoriteManager.favoriteEstates,
                   ),
             },
-            debugShowCheckedModeBanner: false,
-            home: LoginScreen(),
           );
         },
       ),

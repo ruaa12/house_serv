@@ -7,53 +7,56 @@ import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_state.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
-import 'package:home_serviece/feature/service/data/model/categories.dart';
-import 'package:home_serviece/feature/service/presentation/screen/categories_serv.dart';
 
-class ServicesScreen extends StatelessWidget {
+import 'package:home_serviece/feature/service/presentation/screen/services_provider.dart';
+
+class CategoriesServ extends StatelessWidget {
   static const String id = 'serviceScreen';
+  final int categoryId;
 
-  const ServicesScreen({Key? key}) : super(key: key);
+  const CategoriesServ({Key? key, required this.categoryId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => ServiceBloc(
         dataSource: ServiceDataSource(apiVariabels: ApiVariabels()),
-      )..add(GetCategoriesEvent()),
+      )..add(GetCategoryDetailsEvent(
+          categoryId: categoryId)), // ✅ استدعي التفاصيل حسب الـ ID
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text('Services'),
+          title: const Text('Category Services'),
         ),
         body: BlocBuilder<ServiceBloc, ServiceState>(
           builder: (context, state) {
-            if (state.categoryStatus == ApiStatus.loading) {
+            if (state.categoryDetailsStatus == ApiStatus.loading) {
               return const Center(child: CircularProgressIndicator());
-            } else if (state.categoryStatus == ApiStatus.failed) {
+            } else if (state.categoryDetailsStatus == ApiStatus.failed) {
               return Center(
-                child: Text(state.categoryFailure?.message ?? 'Error'),
+                child: Text(state.categoryDetailsFailure?.message ?? 'Error'),
               );
-            } else if (state.categoryStatus == ApiStatus.success) {
-              final List<CategoryData> categories = state.categories ?? [];
+            } else if (state.categoryDetailsStatus == ApiStatus.success) {
+              final services = state.categoryDetails?.services ?? [];
               return Padding(
                 padding: const EdgeInsets.all(10),
                 child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
+                    crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                   ),
-                  itemCount: categories.length,
+                  itemCount: services.length,
                   itemBuilder: (context, index) {
-                    final category = categories[index];
+                    final service = services[index];
                     return GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => CategoriesServ(
-                                    categoryId: category.id,
+                              builder: (context) => ServiceProvidersScreen(
+                                    serviceId: service.id,
+                                    serviceName: '',
                                   )),
                         );
                       },
@@ -66,7 +69,7 @@ class ServicesScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.network(
-                              category.mediaUrls,
+                              service.imageUrl,
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,
@@ -75,7 +78,7 @@ class ServicesScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Text(
-                              category.name,
+                              service.name,
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 16,

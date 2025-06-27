@@ -1,66 +1,93 @@
 import 'package:flutter/material.dart';
-
-import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/unified_api/status.dart';
+import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
+import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
+import 'package:home_serviece/feature/service/bloc/bloc/service_state.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_details_screen.dart';
-
-import '../widget/providers_data.dart';
+import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
+import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
+import 'package:home_serviece/core/unified_api/api_variabels.dart';
 
 class ServiceProvidersScreen extends StatelessWidget {
-  final Map<String, dynamic> service;
+  final int serviceId;
+  final String serviceName;
 
-  ServiceProvidersScreen({Key? key, required this.service}) : super(key: key);
+  const ServiceProvidersScreen({
+    Key? key,
+    required this.serviceId,
+    required this.serviceName,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final filteredProviders = providers
-        .where((provider) => provider['serviceId'] == service['id'])
-        .toList();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${service['name']} Providers'),
-        centerTitle: true,
-      ),
-      body: ListView.builder(
-        itemCount: filteredProviders.length,
-        itemBuilder: (context, index) {
-          final provider = filteredProviders[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      ProviderDetailsScreen(provider: provider),
-                ),
+    return BlocProvider(
+      create: (_) => ServiceBloc(
+        dataSource: ServiceDataSource(apiVariabels: ApiVariabels()),
+      )..add(GetServiceWithProvEvent(serviceId: serviceId)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('$serviceName Providers'),
+          centerTitle: true,
+        ),
+        body: BlocBuilder<ServiceBloc, ServiceState>(
+          builder: (context, state) {
+            if (state.serviceWithProvStatus == ApiStatus.loading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state.serviceWithProvStatus == ApiStatus.failed) {
+              return Center(
+                child: Text(state.serviceWithProvFailure?.message ?? 'Error'),
               );
-            },
-            child: Card(
-              margin: const EdgeInsets.all(10),
-              child: CustomListTile(
-                trailing: Text('Rate: \$${provider['hourlyRate']}/hour'),
-                title: provider['name'],
-                leading: Image.asset(provider['image']),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          ProviderDetailsScreen(provider: provider),
+            } else if (state.serviceWithProvStatus == ApiStatus.success) {
+              final serviceData = state.serviceWithProv!;
+              final providers = serviceData.serviceProviders;
+
+              if (providers.isEmpty) {
+                return const Center(child: Text('No providers found.'));
+              }
+
+              return ListView.builder(
+                itemCount: providers.length,
+                itemBuilder: (context, index) {
+                  final provider = providers[index];
+                  return Card(
+                    margin: const EdgeInsets.all(10),
+                    child: CustomListTile(
+                      trailing: Text('Rate: \$${provider.hourlyRate}/hour'),
+                      title: provider.name,
+                      leading: Image.network(
+                        provider.imageUrl,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) =>
+                            const Icon(Icons.broken_image),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProviderDetailsScreen(
+                              provider: {
+                                'id': provider.id,
+                                'name': provider.name,
+                                'image': provider.imageUrl,
+                                'location': provider.location,
+                                'hourlyRate': provider.hourlyRate,
+                              },
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   );
                 },
-              ),
-
-              // ListTile(
-              //   leading: Image.asset(provider['image'], width: 50, height: 50),
-              //   title: Text(provider['name']),
-              //   subtitle: Text('Location: ${provider['location']}'),
-              //   trailing: Text('Rate: \$${provider['hourlyRate']}/hour'),
-              // ),
-            ),
-          );
-        },
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        ),
       ),
     );
   }

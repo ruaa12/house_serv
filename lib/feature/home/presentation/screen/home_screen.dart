@@ -13,6 +13,7 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/home_slider.dart';
 import 'package:home_serviece/feature/home/presentation/widget/providers_section.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_screen.dart';
+
 import 'package:home_serviece/feature/service/presentation/screen/services_provider.dart';
 import 'package:home_serviece/feature/service/presentation/widget/services_data.dart';
 
@@ -24,7 +25,6 @@ class HomeScreen extends StatefulWidget {
   const HomeScreen({
     Key? key,
   }) : super(key: key);
-  
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -34,16 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   bool viewHouse = false;
   int selectedTabIndex = 0;
   final tabs = ['Houses', 'Services', 'Providers'];
-@override
-void initState(){
-  super.initState();
-   print("🔁 Sending GetTrendingEvent from initState");
-  Future.microtask((){
-  context.read<HomeBloc>().add(GetTrendingEvent());
-});
-
- }
-
+  @override
+  void initState() {
+    super.initState();
+    print("🔁 Sending GetTrendingEvent from initState");
+    Future.microtask(() {
+      context.read<HomeBloc>().add(GetTrendingEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,8 +130,7 @@ void initState(){
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>
-                                      AllEstatesScreen(),
+                                  builder: (context) => AllEstatesScreen(),
                                 ));
                           } else if (tabs[index] == 'Providers') {
                             Navigator.push(
@@ -187,64 +184,68 @@ void initState(){
                             ),
                           ],
                         ),
-                     
-                       BlocBuilder<HomeBloc, HomeState>(
-                        
-  builder: (context, state) {
-    print('🔍 BlocBuilder: trendingHousesStatus = ${state.trendingHousesStatus}');
-    print('📦 عدد العقارات في trendingHouses = ${state.trendingHouses.length}');
+                        BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            print(
+                                '🔍 BlocBuilder: trendingHousesStatus = ${state.trendingHousesStatus}');
+                            print(
+                                '📦 عدد العقارات في trendingHouses = ${state.trendingHouses.length}');
 
-    switch (state.trendingHousesStatus) {
-      case ApiStatus.loading:
-        return const Center(child: CircularProgressIndicator());
+                            switch (state.trendingHousesStatus) {
+                              case ApiStatus.loading:
+                                return const Center(
+                                    child: CircularProgressIndicator());
 
-      case ApiStatus.failed:
-        return Center(
-          child: ElevatedButton(
-            onPressed: () {
-              context.read<HomeBloc>().add(GetTrendingEvent());
-            },
-            child: const Text('Try Again'),
-          ),
-        );
+                              case ApiStatus.failed:
+                                return Center(
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      context
+                                          .read<HomeBloc>()
+                                          .add(GetTrendingEvent());
+                                    },
+                                    child: const Text('Try Again'),
+                                  ),
+                                );
 
-      case ApiStatus.success:
-        final trending_houses = state.trendingHouses;
+                              case ApiStatus.success:
+                                final trending_houses = state.trendingHouses;
 
-        if (trending_houses.isEmpty) {
-          return const Center(child: Text('لا يوجد عقارات حالياً'));
-        }
+                                if (trending_houses.isEmpty) {
+                                  return const Center(
+                                      child: Text('لا يوجد عقارات حالياً'));
+                                }
 
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.33,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: trending_houses.length,
-            itemBuilder: (context, index) {
-              final house = trending_houses[index];
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailsEstate(estate: house),
-                    ),
-                  );
-                },
-                child: EstateCard(estate: house),
-              );
-            },
-          ),
-        );
+                                return SizedBox(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.33,
+                                  child: ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: trending_houses.length,
+                                    itemBuilder: (context, index) {
+                                      final house = trending_houses[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailsEstate(estate: house),
+                                            ),
+                                          );
+                                        },
+                                        child: EstateCard(estate: house),
+                                      );
+                                    },
+                                  ),
+                                );
 
-      case ApiStatus.initial:
-      default:
-        return const SizedBox();
-    }
-  },
-),
-
-
+                              case ApiStatus.initial:
+                              default:
+                                return const SizedBox();
+                            }
+                          },
+                        ),
                         Container(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -273,7 +274,9 @@ void initState(){
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ServiceProvidersScreen(
-                                              service: service),
+                                        serviceId: service.id,
+                                        serviceName: '',
+                                      ),
                                     ),
                                   );
                                 },
@@ -307,7 +310,6 @@ void initState(){
                             },
                           ),
                         ),
-
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -330,4 +332,8 @@ void initState(){
       ),
     );
   }
+}
+
+extension on Map<String, dynamic> {
+  get id => null;
 }
