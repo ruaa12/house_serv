@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/helper/image_helper.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
@@ -56,7 +57,7 @@ class ServiceProvidersScreen extends StatelessWidget {
                       trailing: Text('Rate: \$${provider.hourlyRate}/hour'),
                       title: provider.name,
                       leading: Image.network(
-                        provider.imageUrl,
+                        fixImageUrl(provider.imageUrl),
                         width: 50,
                         height: 50,
                         fit: BoxFit.cover,
@@ -71,7 +72,7 @@ class ServiceProvidersScreen extends StatelessWidget {
                               provider: {
                                 'id': provider.id,
                                 'name': provider.name,
-                                'image': provider.imageUrl,
+                                'image': fixImageUrl(provider.imageUrl),
                                 'location': provider.location,
                                 'hourlyRate': provider.hourlyRate,
                               },

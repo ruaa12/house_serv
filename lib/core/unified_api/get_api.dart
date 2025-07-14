@@ -24,7 +24,7 @@ class GetApi<T> with HandlingExceptionRequest {
   Future<T> callRequest() async {
     try {
        print("📡 عنوان الطلب هو: $uri");
-        final token = await TokenHelper.getToken();
+        final token = await TokenStorageHelper.getToken();
         print("🪪 التوكن المسترجع: $token");
 
       Map<String, String> headers = {
@@ -42,7 +42,7 @@ class GetApi<T> with HandlingExceptionRequest {
       http.Response response = await http.Response.fromStream(streamedResponse);
       print("📬 Status Code: ${response.statusCode}");
       print("📦 Body: ${response.body}");
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200|| response.statusCode == 201) {
          print("🧩 قبل فك JSON");
          final parsed = fromJson(response.body);
          print("✅ تم فك JSON بنجاح");

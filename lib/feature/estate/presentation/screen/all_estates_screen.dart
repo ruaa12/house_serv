@@ -17,15 +17,13 @@ class AllEstatesScreen extends StatefulWidget {
 
 class _AllEstatesScreenState extends State<AllEstatesScreen> {
   @override
-  void initState(){
-  super.initState();
-   print("🔁 Sending GetTrendingEvent from initState");
-  Future.microtask((){
-  context.read<EstateBloc>().add(GetAllEstatesEvent());
-});
-
- }
-
+  void initState() {
+    super.initState();
+    print("🔁 Sending GetTrendingEvent from initState");
+    Future.microtask(() {
+      context.read<EstateBloc>().add(GetAllEstatesEvent());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +84,7 @@ class _AllEstatesScreenState extends State<AllEstatesScreen> {
               case ApiStatus.failed:
                 return Center(
                   child: Text(
-                   'حدث خطأ أثناء التحميل.',
+                    'حدث خطأ أثناء التحميل.',
                     style: TextStyle(color: Colors.red),
                   ),
                 );
