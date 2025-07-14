@@ -23,4 +23,5 @@ class ApiVariabels {
   Uri getServiceById(int serviceId) => _main_uri('api/services/$serviceId');
   Uri getUserorder() => _main_uri('api/user/orders');
   Uri createHouseOrder(int houseId) => _main_uri('api/orders/house/$houseId');
+  Uri getBalance() => _main_uri('api/categories');
 }

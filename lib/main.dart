@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/unified_api/api_variabels.dart';
 import 'package:home_serviece/feature/address/bloc/bloc/bloc/address_bloc.dart';
 import 'package:home_serviece/feature/address/data/data_source/address_datasource.dart';
 import 'package:home_serviece/feature/auth/bloc/bloc/auth_bloc.dart';
@@ -17,6 +18,8 @@ import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
+import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
+import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد
 import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart'; // لو عندك datasource
@@ -62,6 +65,11 @@ class DreamHouse extends StatelessWidget {
         BlocProvider(
           create: (_) =>
               HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
+        ),
+        BlocProvider(
+          create: (_) => OrderBloc(
+              dataSource: OrderDataSource(
+                  apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(

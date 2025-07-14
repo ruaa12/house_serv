@@ -8,69 +8,133 @@ import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/core/unified_api/api_variabels.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'request_house_screen.dart'; // تأكد من استيرادها هنا
 
-class MyOrderScreen extends StatelessWidget {
+class MyOrderScreen extends StatefulWidget {
   const MyOrderScreen({super.key});
 
   @override
+  State<MyOrderScreen> createState() => _MyOrderScreenState();
+}
+
+class _MyOrderScreenState extends State<MyOrderScreen>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: color1,
-      appBar: AppBar(
-        title: Text(LocaleKeys.myOrderScreen_My_order.tr()),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
-            );
-          },
-          icon: const Icon(Icons.arrow_back),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: color1,
+        appBar: AppBar(
+          title: Text(LocaleKeys.myOrderScreen_My_order.tr()),
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+          bottom: TabBar(
+            controller: _tabController,
+            labelColor: Colors.orange,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.orange,
+            tabs: const [
+              Tab(text: 'Orders'),
+              Tab(text: 'House Requests'),
+              Tab(text: 'Service Requests'),
+            ],
+          ),
         ),
-      ),
-      body: BlocProvider(
-        create: (_) => OrderBloc(
-          dataSource: OrderDataSource(apiVariabels: ApiVariabels()),
-        )..add(GetUserOrdersEvent(page: 1)),
-        child: BlocBuilder<OrderBloc, OrderState>(
-          builder: (context, state) {
-            if (state.status == ApiStatus.loading) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state.status == ApiStatus.failed) {
-              return Center(
-                child: Text(state.failure?.message ?? 'Error'),
-              );
-            } else if (state.status == ApiStatus.success) {
-              final orders = state.orders ?? [];
-              if (orders.isEmpty) {
-                return const Center(child: Text('No orders found.'));
-              }
-              return ListView.builder(
-                itemCount: orders.length,
-                itemBuilder: (context, index) {
-                  final order = orders[index];
-                  return OrderCard(
-                    id: order.id.toString(),
-                  );
-                },
-              );
-            } else {
-              return const SizedBox();
-            }
-          },
+        body: TabBarView(
+          controller: _tabController,
+          children: const [
+            OrdersTab(),
+            HouseRequestsTab(),
+            ServiceRequestsTab(),
+          ],
         ),
       ),
     );
   }
 }
 
+class OrdersTab extends StatelessWidget {
+  const OrdersTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => OrderBloc(
+        dataSource: OrderDataSource(apiVariabels: ApiVariabels()),
+      )..add(GetUserOrdersEvent(page: 1)),
+      child: BlocBuilder<OrderBloc, OrderState>(
+        builder: (context, state) {
+          if (state.status == ApiStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state.status == ApiStatus.failed) {
+            return Center(child: Text(state.failure?.message ?? 'Error'));
+          } else if (state.status == ApiStatus.success) {
+            final orders = state.orders ?? [];
+            if (orders.isEmpty) {
+              return const Center(child: Text('No orders found.'));
+            }
+            return ListView.builder(
+              itemCount: orders.length,
+              itemBuilder: (context, index) {
+                final order = orders[index];
+                return OrderCard(id: order.id.toString());
+              },
+            );
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
+    );
+  }
+}
+
+class HouseRequestsTab extends StatelessWidget {
+  const HouseRequestsTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: CreateHouseOrderContent(houseId: 1),
+    );
+  }
+}
+
+class ServiceRequestsTab extends StatelessWidget {
+  const ServiceRequestsTab({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(child: Text('Service Requests Tab'));
+  }
+}
+
 class OrderCard extends StatelessWidget {
   final String id;
-
-  const OrderCard({
-    super.key,
-    required this.id,
-  });
+  const OrderCard({super.key, required this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +163,9 @@ class OrderCard extends StatelessWidget {
                 Text(
                   'Order #$id',
                   style: const TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.bold),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 5),
               ],

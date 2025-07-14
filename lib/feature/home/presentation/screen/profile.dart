@@ -12,7 +12,7 @@ import 'package:home_serviece/feature/home/presentation/screen/setting.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:home_serviece/feature/order/presentation/my_profile.dart';
+import 'package:home_serviece/feature/home/presentation/screen/my_profile.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
 
 class ProfileScreen extends StatefulWidget {

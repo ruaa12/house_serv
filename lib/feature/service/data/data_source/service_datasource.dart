@@ -17,7 +17,6 @@ class ServiceDataSource {
 
   ServiceDataSource({required this.apiVariabels});
 
-  /// جلب الكاتيغوري
   Future<CategoryResponse> getCategories() async {
     final token = await getToken();
     if (token == null) {
