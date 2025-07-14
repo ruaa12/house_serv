@@ -13,9 +13,8 @@ import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
-
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
-
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
 import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/helper/image_helper.dart';
 import 'package:home_serviece/core/unified_api/api_variabels.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
@@ -69,7 +70,7 @@ class CategoriesServ extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Image.network(
-                              service.imageUrl,
+                             fixImageUrl( service.imageUrl),
                               width: 80,
                               height: 80,
                               fit: BoxFit.cover,

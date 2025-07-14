@@ -3,10 +3,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/core/helper/image_helper.dart';
 
-import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 
 import '../../../../core/unified_api/status.dart';
 import '../../bloc/bloc/home_bloc.dart';
@@ -110,7 +109,7 @@ class _HomeSliderState extends State<HomeSlider> {
                             child: Stack(
                               children: [
                                 Image.network(
-                                  sliderEstate.images!.first
+                                  fixImageUrl(sliderEstate.images!.first)
                                   ,
                                   fit: BoxFit.cover,
                                   width: double.infinity,

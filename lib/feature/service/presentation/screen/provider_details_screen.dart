@@ -14,7 +14,6 @@ class ProviderDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // صورة دائرية فوق الخلفية
             Stack(
               children: [
                 Container(
@@ -72,7 +71,7 @@ class ProviderDetailsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            // المعلومات الثلاثة الرئيسية
+            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Row(
