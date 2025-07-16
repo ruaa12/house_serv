@@ -108,14 +108,7 @@ class _HomeSliderState extends State<HomeSlider> {
                             borderRadius: BorderRadius.circular(20),
                             child: Stack(
                               children: [
-                                Image.network(
-                                  fixImageUrl(sliderEstate.images!.first)
-                                  ,
-                                  fit: BoxFit.cover,
-                                  width: double.infinity,
-                                  errorBuilder: (context, error, stackTrace) =>
-                                      const Icon(Icons.image_not_supported, size: 50, color: Colors.grey),
-                                ),
+                                MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
                                 Positioned(
                                   bottom: 10,
                                   left: 10,

@@ -56,14 +56,8 @@ class ServiceProvidersScreen extends StatelessWidget {
                     child: CustomListTile(
                       trailing: Text('Rate: \$${provider.hourlyRate}/hour'),
                       title: provider.name,
-                      leading: Image.network(
-                        fixImageUrl(provider.imageUrl),
-                        width: 50,
-                        height: 50,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) =>
-                            const Icon(Icons.broken_image),
-                      ),
+                      leading:                                 MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+
                       onTap: () {
                         Navigator.push(
                           context,
@@ -72,7 +66,8 @@ class ServiceProvidersScreen extends StatelessWidget {
                               provider: {
                                 'id': provider.id,
                                 'name': provider.name,
-                                'image': fixImageUrl(provider.imageUrl),
+                                'image':                                MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+
                                 'location': provider.location,
                                 'hourlyRate': provider.hourlyRate,
                               },

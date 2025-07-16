@@ -66,14 +66,8 @@ class ServicesScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Image.network(
-                              fixImageUrl(category.mediaUrls),
-                              width: 80,
-                              height: 80,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.broken_image, size: 80),
-                            ),
+                                                          MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+
                             const SizedBox(height: 8),
                             Text(
                               category.name,
