@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
@@ -10,7 +11,7 @@ class NotificationsScreen extends StatelessWidget {
     'Reminder: Meeting scheduled for 3 PM today.',
   ];
 
-   NotificationsScreen({super.key});
+  NotificationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class NotificationsScreen extends StatelessWidget {
             Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProfileScreen(),
+                  builder: (context) => HomeScreen(),
                 )); // العودة إلى الشاشة السابقة
           },
         ),

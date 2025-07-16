@@ -1,17 +1,34 @@
-import 'package:home_serviece/feature/wallet/data/modeles/get_balance.dart';
+part of 'wallet_bloc.dart';
 
-abstract class WalletState {}
+class WalletState {
+  final ApiStatus balanceStatus;
+  final double? balance;
+  final String? errorMessage;
+  final ApiStatus transactionStatus;
+  final String? transactionErrorMessage;
 
-class WalletInitialState extends WalletState {}
+  WalletState({
+    this.balanceStatus = ApiStatus.initial,
+    this.balance,
+    this.errorMessage,
+    this.transactionStatus = ApiStatus.initial,
+    this.transactionErrorMessage,
+  });
 
-class WalletLoadingState extends WalletState {}
-
-class WalletLoadedState extends WalletState {
-  final GetBalance? balance;
-  WalletLoadedState(this.balance);
-}
-
-class WalletErrorState extends WalletState {
-  final String error;
-  WalletErrorState({required this.error});
+  WalletState copyWith({
+    ApiStatus? balanceStatus,
+    double? balance,
+    String? errorMessage,
+    ApiStatus? transactionStatus,
+    String? transactionErrorMessage,
+  }) {
+    return WalletState(
+      balanceStatus: balanceStatus ?? this.balanceStatus,
+      balance: balance ?? this.balance,
+      errorMessage: errorMessage ?? this.errorMessage,
+      transactionStatus: transactionStatus ?? this.transactionStatus,
+      transactionErrorMessage:
+          transactionErrorMessage ?? this.transactionErrorMessage,
+    );
+  }
 }

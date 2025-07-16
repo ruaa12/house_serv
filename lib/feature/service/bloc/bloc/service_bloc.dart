@@ -11,7 +11,9 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
   ServiceBloc({required this.dataSource}) : super(ServiceState()) {
     on<GetCategoriesEvent>(_getCategories);
     on<GetCategoryDetailsEvent>(_getCategoryDetails);
-    on<GetServiceWithProvEvent>(_getServWithProv); // صح!
+    on<GetServiceWithProvEvent>(_getServWithProv);
+    on<GetPopularServicesEvent>(_onGetPopularServices);
+    on<GetPopularServicesProvidersEvent>(_onGetPopularServicesProviders);
   }
 
   Future<void> _getCategories(
@@ -83,6 +85,43 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       emit(state.copyWith(
         serviceWithProvStatus: ApiStatus.failed,
         serviceWithProvFailure: ServerFailure(message: e.toString()),
+      ));
+    }
+  }
+
+  Future<void> _onGetPopularServices(
+      GetPopularServicesEvent event, Emitter<ServiceState> emit) async {
+    emit(state.copyWith(popularServicesStatus: ApiStatus.loading));
+
+    try {
+      final response = await dataSource.getPopularServices();
+      emit(state.copyWith(
+        popularServicesStatus: ApiStatus.success,
+        popularServices: response.data,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        popularServicesStatus: ApiStatus.failed,
+        popularServicesError: e.toString(),
+      ));
+    }
+  }
+
+  Future<void> _onGetPopularServicesProviders(
+    GetPopularServicesProvidersEvent event,
+    Emitter<ServiceState> emit,
+  ) async {
+    emit(state.copyWith(popularServicesProvidersStatus: ApiStatus.loading));
+
+    try {
+      final response = await dataSource.getPopularServicesProviders();
+      emit(state.copyWith(
+        popularServicesProvidersStatus: ApiStatus.success,
+        popularServicesProviders: response.data,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        popularServicesProvidersStatus: ApiStatus.failed,
       ));
     }
   }
