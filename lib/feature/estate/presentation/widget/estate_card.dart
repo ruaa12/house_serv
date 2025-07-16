@@ -47,11 +47,7 @@ class EstateCard extends StatelessWidget {
               
                   ?
                    Image.network(
-                       (() {
-      final fixed = fixImageUrl(estate.images!.first);
-      print('📷 رابط الصورة المعروض: $fixed');
-      return fixed;
-    })(),
+                      estate.images!.first, 
                       fit: BoxFit.cover,
                       height: 120,
                       width: double.infinity,

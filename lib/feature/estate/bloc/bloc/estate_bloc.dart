@@ -14,15 +14,21 @@ class EstateBloc extends Bloc<EstateEvent, EstateState> {
       emit(state.copyWith(allEstatesStatus: ApiStatus.loading));
 
       final result = await EstateRepo().getAllEstates();
+      
 
       result.fold(
         (failure) => emit(state.copyWith(allEstatesStatus: ApiStatus.failed)),
-        (response) => emit(
+        
+        (response) {
+          print("✅ عدد العقارات المسترجعة: ${response.data!.length}");
+           emit(
           state.copyWith(
             allEstatesStatus: ApiStatus.success,
             estates: response.data ?? [],
           ),
-        ),
+        
+        );
+        }
       );
     });
   }
