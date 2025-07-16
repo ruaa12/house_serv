@@ -3,6 +3,8 @@ import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/service/data/model/categories.dart';
 import 'package:home_serviece/feature/service/data/model/categories_ser_model.dart';
 import 'package:home_serviece/feature/service/data/model/category_prov_model.dart';
+import 'package:home_serviece/feature/service/data/model/popular_services_provider_model.dart';
+import 'package:home_serviece/feature/service/data/model/populer_services_model.dart';
 
 class ServiceState {
   // الحاجات القديمة
@@ -19,6 +21,13 @@ class ServiceState {
   final Failure? serviceWithProvFailure;
   final ServWithProv? serviceWithProv;
 
+  final ApiStatus popularServicesStatus;
+  final List<PopularServiceData>? popularServices;
+  final String? popularServicesError;
+
+  final ApiStatus popularServicesProvidersStatus;
+  final List<PopularServiceProviderData>? popularServicesProviders;
+
   ServiceState({
     this.categoryStatus = ApiStatus.initial,
     this.categoryFailure,
@@ -29,6 +38,11 @@ class ServiceState {
     this.serviceWithProvStatus = ApiStatus.initial,
     this.serviceWithProvFailure,
     this.serviceWithProv,
+    this.popularServicesStatus = ApiStatus.initial,
+    this.popularServices,
+    this.popularServicesError,
+    this.popularServicesProvidersStatus = ApiStatus.initial,
+    this.popularServicesProviders,
   });
 
   ServiceState copyWith({
@@ -41,6 +55,11 @@ class ServiceState {
     ApiStatus? serviceWithProvStatus,
     Failure? serviceWithProvFailure,
     ServWithProv? serviceWithProv,
+    ApiStatus? popularServicesStatus,
+    List<PopularServiceData>? popularServices,
+    String? popularServicesError,
+    ApiStatus? popularServicesProvidersStatus,
+    List<PopularServiceProviderData>? popularServicesProviders,
   }) {
     return ServiceState(
       categoryStatus: categoryStatus ?? this.categoryStatus,
@@ -56,6 +75,14 @@ class ServiceState {
       serviceWithProvFailure:
           serviceWithProvFailure ?? this.serviceWithProvFailure,
       serviceWithProv: serviceWithProv ?? this.serviceWithProv,
+      popularServicesStatus:
+          popularServicesStatus ?? this.popularServicesStatus,
+      popularServices: popularServices ?? this.popularServices,
+      popularServicesError: popularServicesError ?? this.popularServicesError,
+      popularServicesProvidersStatus:
+          popularServicesProvidersStatus ?? this.popularServicesProvidersStatus,
+      popularServicesProviders:
+          popularServicesProviders ?? this.popularServicesProviders,
     );
   }
 }

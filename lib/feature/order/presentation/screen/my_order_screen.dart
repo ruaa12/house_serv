@@ -2,6 +2,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
+import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
@@ -45,7 +47,7 @@ class _MyOrderScreenState extends State<MyOrderScreen>
             onPressed: () {
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                MaterialPageRoute(builder: (context) => Navbar()),
               );
             },
             icon: const Icon(Icons.arrow_back),

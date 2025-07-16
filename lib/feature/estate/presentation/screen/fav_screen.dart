@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
+import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
-
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({Key? key, required List favoriteEstates})
@@ -24,7 +24,7 @@ class FavoritesScreen extends StatelessWidget {
           onPressed: () => Navigator.pushReplacement(
               context,
               MaterialPageRoute(
-                builder: (context) => ProfileScreen(),
+                builder: (context) => HomeScreen(),
               )),
         ),
       ),
@@ -40,8 +40,7 @@ class FavoritesScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (_) => DetailsEstate(estate: HouseModel())
-                      ),
+                          builder: (_) => DetailsEstate(estate: HouseModel())),
                     );
                   },
                   child: Card(

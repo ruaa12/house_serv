@@ -24,4 +24,8 @@ class ApiVariabels {
   Uri getUserorder() => _main_uri('api/user/orders');
   Uri createHouseOrder(int houseId) => _main_uri('api/orders/house/$houseId');
   Uri getBalance() => _main_uri('api/categories');
+  Uri makeTransaction() => _main_uri('api/wallet-transaction');
+  Uri getPopularServices() => _main_uri('api/services-popular');
+  Uri getPopularServicesProviders() =>
+      _main_uri('api/service-providers/popular');
 }

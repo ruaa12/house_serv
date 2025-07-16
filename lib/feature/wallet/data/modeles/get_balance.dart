@@ -1,7 +1,7 @@
 class GetBalance {
   final bool? status;
   final String? message;
-  final BalanceData? data;
+  final GetBalanceData? data;
 
   GetBalance({
     this.status,
@@ -9,35 +9,59 @@ class GetBalance {
     this.data,
   });
 
-  factory GetBalance.fromJson(Map<String, dynamic> json) => GetBalance(
-        status: json["status"],
-        message: json["message"],
-        data: json["data"] != null ? BalanceData.fromJson(json["data"]) : null,
-      );
+  factory GetBalance.fromJson(Map<String, dynamic> json) {
+    return GetBalance(
+      status: json['status'],
+      message: json['message'],
+      data: json['data'] != null ? GetBalanceData.fromJson(json['data']) : null,
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "status": status,
-        "message": message,
-        "data": data?.toJson(),
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'message': message,
+      'data': data?.toJson(),
+    };
+  }
 }
 
-class BalanceData {
-  final int? balance;
-  final String? currency;
+class GetBalanceData {
+  final int? id;
+  final int? userId;
+  final String? balance;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
 
-  BalanceData({
+  GetBalanceData({
+    this.id,
+    this.userId,
     this.balance,
-    this.currency,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  factory BalanceData.fromJson(Map<String, dynamic> json) => BalanceData(
-        balance: json["balance"],
-        currency: json["currency"],
-      );
+  factory GetBalanceData.fromJson(Map<String, dynamic> json) {
+    return GetBalanceData(
+      id: json['id'],
+      userId: json['user_id'],
+      balance: json['balance'],
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
+          : null,
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : null,
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        "balance": balance,
-        "currency": currency,
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'user_id': userId,
+      'balance': balance,
+      'created_at': createdAt?.toIso8601String(),
+      'updated_at': updatedAt?.toIso8601String(),
+    };
+  }
 }

@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:home_serviece/core/utils/logout_helper.dart';
 import 'package:home_serviece/feature/address/presentation/address_screen.dart';
-
 import 'package:home_serviece/feature/home/presentation/screen/edit_profile.dart';
 import 'package:home_serviece/feature/home/presentation/screen/editpassword.dart';
-
-import 'package:home_serviece/feature/order/presentation/screen/my_order_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/setting.dart';
-
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -108,19 +104,6 @@ class _ProScreenState extends State<ProfileScreen> {
                         MaterialPageRoute(
                           builder: (context) => SettingsScreen(),
                         ));
-                  },
-                ),
-                const SizedBox(height: 15),
-                CustomListTile(
-                  title: LocaleKeys.myOrderScreen_My_order.tr(),
-                  leading: Image.asset('assets/images/Rectangle 2113 (2).png'),
-                  trailing: const Icon(Icons.chevron_right,
-                      color: Colors.black, size: 24),
-                  onTap: () {
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MyOrderScreen()));
                   },
                 ),
                 const SizedBox(height: 15),

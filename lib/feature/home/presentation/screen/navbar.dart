@@ -4,6 +4,7 @@ import 'package:home_serviece/feature/estate/presentation/screen/filtered_estate
 import 'package:home_serviece/feature/home/presentation/screen/cart_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
+import 'package:home_serviece/feature/order/presentation/screen/my_order_screen.dart';
 
 import 'package:home_serviece/feature/wallet/presentation/screen/wallet_screen.dart';
 
@@ -49,9 +50,9 @@ class _NavbarState extends State<Navbar> {
             label: 'Search',
           ),
           NavigationDestination(
-            selectedIcon: Icon(Icons.shopping_cart),
-            icon: Icon(Icons.shopping_cart_outlined),
-            label: 'Cart',
+            selectedIcon: Icon(Icons.online_prediction_rounded),
+            icon: Icon(Icons.online_prediction_rounded),
+            label: 'order',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.person),
@@ -64,7 +65,7 @@ class _NavbarState extends State<Navbar> {
         const HomeScreen(),
         WalletScreen(),
         FilteredEstateList(),
-        CartScreen(),
+        MyOrderScreen(),
         const ProfileScreen()
       ][currentpage],
     );
