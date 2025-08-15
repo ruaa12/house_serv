@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/estate/data/data_source/estate_datasource.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
 import '../../../../core/unified_api/status.dart';
 import '../../../home/presentation/widget/const.dart';
 import '../../bloc/bloc/estate_bloc.dart';
-import 'details_estate.dart';
 
 class AllEstatesScreen extends StatefulWidget {
   const AllEstatesScreen({Key? key}) : super(key: key);
@@ -19,15 +19,13 @@ class _AllEstatesScreenState extends State<AllEstatesScreen> {
     super.initState();
     print("🔁 Sending GetTrendingEvent from initState");
     // Future.microtask(() {
-    //   context.read<EstateBloc>().add(GetAllEstatesEvent());
+      context.read<EstateBloc>().add(GetAllEstatesEvent());
     // });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => EstateBloc()..add(GetAllEstatesEvent()),
-      child: Scaffold(
+    return Scaffold(
         appBar: AppBar(
           title: Text('All estates'),
           centerTitle: true,
@@ -67,17 +65,8 @@ class _AllEstatesScreenState extends State<AllEstatesScreen> {
                     itemCount: state.estates.length,
                     itemBuilder: (context, index) {
                       final estate = state.estates[index];
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => DetailsEstate(estate: estate),
-                            ),
-                          );
-                        },
-                        child: EstateCard(estate: estate),
-                      );
+                      return  EstateCard(estate: estate);
+                      
                     },
                   );
 
@@ -92,7 +81,7 @@ class _AllEstatesScreenState extends State<AllEstatesScreen> {
             },
           ),
         ),
-      ),
+      
     );
   }
 }

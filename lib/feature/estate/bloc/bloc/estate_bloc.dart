@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
 
+import '../../data/data_source/estate_datasource.dart';
+import '../../data/models/get_estate_detailes.dart';
 import '../../data/models/get_houses.dart';
 import '../../data/repo/estate_repo.dart';
 import 'package:home_serviece/core/unified_api/status.dart' as api_status;
@@ -9,7 +11,7 @@ part 'estate_event.dart';
 part 'estate_state.dart';
 
 class EstateBloc extends Bloc<EstateEvent, EstateState> {
-  EstateBloc() : super(EstateState()) {
+  EstateBloc({ required EstateDatasource estateDatasource} ) : super(EstateState()) {
     on<GetAllEstatesEvent>((event, emit) async {
       emit(state.copyWith(allEstatesStatus: ApiStatus.loading));
 
@@ -28,8 +30,27 @@ class EstateBloc extends Bloc<EstateEvent, EstateState> {
           ),
         
         );
-        }
+        }); }
+    
+    );
+     on<GetEstateDetailsEvent>((event, emit) async {
+      emit(state.copyWith(detailsEstateStatus: ApiStatus.loading));
+
+      final result = await EstateRepo().getEstateDetails(event.estateId);
+
+      result.fold(
+        (failure) => emit(state.copyWith(
+          detailsEstateStatus: ApiStatus.failed,
+          message: failure.message,
+        )),
+        (response) => emit(state.copyWith(
+          detailsEstateStatus: ApiStatus.success,
+          estatedetails: response,
+        )),
       );
     });
+
+    
+    
   }
 }

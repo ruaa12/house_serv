@@ -9,7 +9,8 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/core/unified_api/api_variabels.dart';
-import 'package:home_serviece/generated/locale_keys.g.dart';
+import 'package:home_serviece/feature/order/presentation/screen/contract_form_screen.dart';
+import '../../../../generated/locale_keys.g.dart';
 import 'request_house_screen.dart'; // تأكد من استيرادها هنا
 
 class MyOrderScreen extends StatefulWidget {
@@ -174,6 +175,13 @@ class OrderCard extends StatelessWidget {
             ),
           ),
           const Icon(Icons.chevron_right, color: Colors.grey),
+          TextButton(onPressed: (){
+            Navigator.push(context, 
+            MaterialPageRoute(builder: 
+            (context) => ContractFormScreen(),)
+            );
+
+          }, child: Text('توقيع العقد'))
         ],
       ),
     );

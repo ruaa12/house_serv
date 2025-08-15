@@ -1,6 +1,12 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:home_serviece/core/unified_api/api_variabels.dart';
 import 'package:home_serviece/feature/address/bloc/bloc/bloc/address_bloc.dart';
 import 'package:home_serviece/feature/address/data/data_source/address_datasource.dart';
@@ -10,32 +16,59 @@ import 'package:home_serviece/feature/auth/presentation/screen/iam_looking_for.d
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_user.dart';
 import 'package:home_serviece/feature/auth/presentation/screen/signup_worker.dart';
+import 'package:home_serviece/feature/estate/bloc/bloc/estate_bloc.dart';
+import 'package:home_serviece/feature/estate/data/data_source/estate_datasource.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
+import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد
 import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
+import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart'; // لو عندك datasource
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
-import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد
-import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart'; // لو عندك datasource
 import 'package:home_serviece/feature/wallet/bloc/wallet_bloc.dart';
 import 'package:home_serviece/feature/wallet/data/data_source/wallet_datasource.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:home_serviece/firebase_options.dart';
+import 'package:home_serviece/generated/notification/cubit/notification_cubit.dart';
+import 'package:home_serviece/generated/notification/data/repo/notification_repository.dart';
 
-void main() async {
+import 'core/utils/notification_utils.dart';
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  // هي بتشتغل بالخلفية
+  print('Received a background message: ${message.messageId}');
+}
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  
+final sharedPreferences = await SharedPreferences.getInstance();
+final notification_repository = NotificationRepository(sharedPreferences);  
+
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await LocalNotificationService.initialize();
+  await NotificationService().initialize();
+  await NotificationService().getToken();
+
+   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+   
   final tempDir = await getTemporaryDirectory();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(tempDir.path),
   );
   await EasyLocalization.ensureInitialized();
+
 
   runApp(
     EasyLocalization(
@@ -44,13 +77,21 @@ void main() async {
       fallbackLocale: const Locale('en', ''),
       startLocale: const Locale('en', ''),
       saveLocale: true,
-      child: const DreamHouse(),
+      child:  DreamHouse(notificationRepository: notification_repository,),
     ),
   );
 }
 
+
+
 class DreamHouse extends StatelessWidget {
-  const DreamHouse({super.key});
+  final NotificationRepository notificationRepository;
+
+  const DreamHouse({
+    Key? key,
+    required this.notificationRepository,
+  }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +111,10 @@ class DreamHouse extends StatelessWidget {
               HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
         ),
         BlocProvider(
+          create: (_) => 
+              EstateBloc(estateDatasource: EstateDatasource() ),
+        ),
+        BlocProvider(
           create: (_) => OrderBloc(
               dataSource: OrderDataSource(
                   apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
@@ -83,6 +128,13 @@ class DreamHouse extends StatelessWidget {
           create: (_) => ServiceBloc(
               dataSource: ServiceDataSource(
                   apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
+        ),
+        BlocProvider<NotificationCubit>(
+          create: (_) {
+    final cubit = NotificationCubit(notificationRepository);
+    // NotificationUtils().setCubit(cubit); // ✅ ربط الكيوبت مع NotificationUtils
+    return cubit;
+  },
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(

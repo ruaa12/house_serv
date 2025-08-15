@@ -16,6 +16,7 @@ class ApiVariabels {
   Uri getPapularServices() => _main_uri('api/services-popular');
   Uri getPapularProviders() => _main_uri('api/service-providers/popular');
   Uri getAllhouses() => _main_uri('api/houses');
+  Uri getHouseDetails(int houseId) => _main_uri('/api/houses/$houseId');
   Uri getAddres() => _main_uri('api/create-address');
   Uri getCategories() => _main_uri('api/categories');
   Uri getCategoryById(int categoryId) =>
