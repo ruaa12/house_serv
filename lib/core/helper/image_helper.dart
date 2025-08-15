@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MyImageWidget extends StatelessWidget {
-  final String imagePath;  // متغير يخزن مسار الصورة
+  final String imagePath; // متغير يخزن مسار الصورة
 
   const MyImageWidget({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
+    print(imagePath);
     return Image.network(
-      'http://10.0.2.2/storage/$imagePath',
+      '$imagePath',
       loadingBuilder: (context, child, progress) {
         if (progress == null) return child;
         return const CircularProgressIndicator();
@@ -17,5 +18,3 @@ class MyImageWidget extends StatelessWidget {
     );
   }
 }
-
-// استخدام الويدجيت:

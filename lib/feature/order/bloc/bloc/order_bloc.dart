@@ -13,6 +13,7 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
   OrderBloc({required this.dataSource}) : super(OrderState()) {
     on<GetUserOrdersEvent>(_getUserOrders);
     on<CreateHouseOrderEvent>(_createHouseOrder);
+    on<CreateServOrderEvent>(_createServOrder);
   }
 
   Future<void> _getUserOrders(
@@ -49,6 +50,28 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       emit(state.copyWith(
         createHouseOrderStatus: ApiStatus.failed,
         createHouseOrderFailure: ServerFailure(message: e.toString()),
+      ));
+    }
+  }
+
+  Future<void> _createServOrder(
+    CreateServOrderEvent event,
+    Emitter<OrderState> emit,
+  ) async {
+    emit(state.copyWith(createServOrderStatus: ApiStatus.loading));
+    try {
+      final result = await dataSource.createServOrder(
+        serviceId: event.serviceId,
+        notes: event.notes,
+        serviceDate: event.serviceDate,
+      );
+      if (result) {
+        emit(state.copyWith(createServOrderStatus: ApiStatus.success));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        createServOrderStatus: ApiStatus.failed,
+        createServOrderFailure: ServerFailure(message: e.toString()),
       ));
     }
   }

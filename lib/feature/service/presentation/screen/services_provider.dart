@@ -5,6 +5,7 @@ import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_state.dart';
+import 'package:home_serviece/feature/service/data/model/category_prov_model.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_details_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
@@ -40,8 +41,8 @@ class ServiceProvidersScreen extends StatelessWidget {
                 child: Text(state.serviceWithProvFailure?.message ?? 'Error'),
               );
             } else if (state.serviceWithProvStatus == ApiStatus.success) {
-              final serviceData = state.serviceWithProv!;
-              final providers = serviceData.serviceProviders;
+              final serviceDat = state.serviceWithProv!;
+              final providers = serviceDat.serviceProviders;
 
               if (providers.isEmpty) {
                 return const Center(child: Text('No providers found.'));
@@ -56,7 +57,9 @@ class ServiceProvidersScreen extends StatelessWidget {
                     child: CustomListTile(
                       trailing: Text('Rate: \$${provider.hourlyRate}/hour'),
                       title: provider.name,
-                      leading:                                 MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+                      leading: MyImageWidget(
+                          imagePath:
+                              '38/vila.jpg'), // عرض الصورة من المسار المحدد
 
                       onTap: () {
                         Navigator.push(
@@ -64,11 +67,11 @@ class ServiceProvidersScreen extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => ProviderDetailsScreen(
                               provider: {
-                                'id': provider.id,
+                                'id': provider.userId,
                                 'name': provider.name,
-                                'image':                                MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
-
-                                'location': provider.location,
+                                'image':
+                                    'assets/images/home2.jpeg', // عرض الصورة من المسار المحدد
+                                'location': provider.address,
                                 'hourlyRate': provider.hourlyRate,
                               },
                             ),

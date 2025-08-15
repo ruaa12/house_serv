@@ -14,6 +14,7 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
     on<GetServiceWithProvEvent>(_getServWithProv);
     on<GetPopularServicesEvent>(_onGetPopularServices);
     on<GetPopularServicesProvidersEvent>(_onGetPopularServicesProviders);
+    //on<GetServiceWithProvEvent>(
   }
 
   Future<void> _getCategories(
@@ -125,4 +126,31 @@ class ServiceBloc extends Bloc<ServiceEvent, ServiceState> {
       ));
     }
   }
+
+  /*Future<void> _getproviders(
+    GetServiceProvidersEvent event,
+    Emitter<ServiceState> emit,
+  ) async {
+    emit(state.copyWith(serviceWithProvStatus: ApiStatus.loading));
+    try {
+      final response =
+          await dataSource.getServiceWithProviders(event.serviceId);
+      if (response.status) {
+        emit(state.copyWith(
+          serviceWithProvStatus: ApiStatus.success,
+          serviceWithProv: response.data,
+        ));
+      } else {
+        emit(state.copyWith(
+          serviceWithProvStatus: ApiStatus.failed,
+          serviceWithProvFailure: ServerFailure(message: response.message),
+        ));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        serviceWithProvStatus: ApiStatus.failed,
+        serviceWithProvFailure: ServerFailure(message: e.toString()),
+      ));
+    }
+  }*/
 }

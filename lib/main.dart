@@ -15,15 +15,15 @@ import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart
 import 'package:home_serviece/feature/home/bloc/cubit/settings_cubit.dart';
 import 'package:home_serviece/feature/home/bloc/cubit/settings_state.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
-import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
+import 'package:home_serviece/feature/onbording/pages/onbording_screen.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
-import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart'; // تأكد أنك أضفت هذا الاستيراد
-import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart'; // لو عندك datasource
+import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
+import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart';
 import 'package:home_serviece/feature/wallet/bloc/wallet_bloc.dart';
 import 'package:home_serviece/feature/wallet/data/data_source/wallet_datasource.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
@@ -94,7 +94,7 @@ class DreamHouse extends StatelessWidget {
             theme:
                 state.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
             debugShowCheckedModeBanner: false,
-            home: LoginScreen(),
+            home: OnbordingScreen(),
             routes: {
               IamLookingFor.id: (context) => const IamLookingFor(),
               LoginScreen.id: (context) => LoginScreen(),

@@ -1,37 +1,31 @@
-class ServWithProvResponse {
+class ServiceDetailsResponse {
   final bool status;
   final String message;
-  final ServWithProv data;
+  final ServiceWithproviderData data;
 
-  ServWithProvResponse({
+  ServiceDetailsResponse({
     required this.status,
     required this.message,
     required this.data,
   });
 
-  factory ServWithProvResponse.fromJson(Map<String, dynamic> json) {
-    return ServWithProvResponse(
+  factory ServiceDetailsResponse.fromJson(Map<String, dynamic> json) {
+    return ServiceDetailsResponse(
       status: json['status'],
       message: json['message'],
-      data: ServWithProv.fromJson(json['data']),
+      data: ServiceWithproviderData.fromJson(json['data']),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'status': status,
-        'message': message,
-        'data': data.toJson(),
-      };
 }
 
-class ServWithProv {
+class ServiceWithproviderData {
   final int id;
   final String name;
   final String description;
   final String imageUrl;
-  final List<ProviderData> serviceProviders;
+  final List<ServiceProvider> serviceProviders;
 
-  ServWithProv({
+  ServiceWithproviderData({
     required this.id,
     required this.name,
     required this.description,
@@ -39,57 +33,53 @@ class ServWithProv {
     required this.serviceProviders,
   });
 
-  factory ServWithProv.fromJson(Map<String, dynamic> json) {
-    return ServWithProv(
+  factory ServiceWithproviderData.fromJson(Map<String, dynamic> json) {
+    return ServiceWithproviderData(
       id: json['id'],
       name: json['name'],
       description: json['description'],
       imageUrl: json['image_url'],
       serviceProviders: (json['serviceProviders'] as List)
-          .map((e) => ProviderData.fromJson(e))
+          .map((e) => ServiceProvider.fromJson(e))
           .toList(),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'image_url': imageUrl,
-        'serviceProviders': serviceProviders.map((e) => e.toJson()).toList(),
-      };
 }
 
-class ProviderData {
-  final int id;
+class ServiceProvider {
+  final String hourlyRate;
+  final int userId;
   final String name;
-  final String? description;
-  final String imageUrl;
+  final String username;
+  final String email;
+  final String phone;
+  final List<dynamic> works;
+  final String? image;
+  final String? address;
 
-  ProviderData({
-    required this.id,
+  ServiceProvider({
+    required this.hourlyRate,
+    required this.userId,
     required this.name,
-    this.description,
-    required this.imageUrl,
+    required this.username,
+    required this.email,
+    required this.phone,
+    required this.works,
+    this.image,
+    this.address,
   });
 
-  factory ProviderData.fromJson(Map<String, dynamic> json) {
-    return ProviderData(
-      id: json['id'],
+  factory ServiceProvider.fromJson(Map<String, dynamic> json) {
+    return ServiceProvider(
+      hourlyRate: json['hourly_rate'],
+      userId: json['user_id'],
       name: json['name'],
-      description: json['description'],
-      imageUrl: json['image_url'],
+      username: json['username'],
+      email: json['email'],
+      phone: json['phone'],
+      works: json['works'] ?? [],
+      image: json['image'],
+      address: json['address'],
     );
   }
-
-  get hourlyRate => null;
-
-  get location => null;
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'image_url': imageUrl,
-      };
 }

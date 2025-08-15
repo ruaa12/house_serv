@@ -6,6 +6,7 @@ class GetBalanceEvent extends WalletEvent {}
 
 class MakeTransactionEvent extends WalletEvent {
   final double amount;
+  final String type;
 
-  MakeTransactionEvent(this.amount);
+  MakeTransactionEvent({required this.amount, required this.type});
 }

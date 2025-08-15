@@ -2,7 +2,8 @@ import 'package:home_serviece/core/unified_api/failures.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/service/data/model/categories.dart';
 import 'package:home_serviece/feature/service/data/model/categories_ser_model.dart';
-import 'package:home_serviece/feature/service/data/model/category_prov_model.dart';
+import 'package:home_serviece/feature/service/data/model/category_prov_model.dart'
+    as prov;
 import 'package:home_serviece/feature/service/data/model/popular_services_provider_model.dart';
 import 'package:home_serviece/feature/service/data/model/populer_services_model.dart';
 
@@ -12,14 +13,15 @@ class ServiceState {
   final Failure? categoryFailure;
   final List<CategoryData>? categories;
 
-  // للحالة الجديدة
+  // الحالة الجديدة الخاصة بتفاصيل الكاتيغوري
   final ApiStatus categoryDetailsStatus;
   final Failure? categoryDetailsFailure;
   final CategoryDetailsData? categoryDetails;
 
+  // حالة الخدمة مع المزودين (service with providers)
   final ApiStatus serviceWithProvStatus;
   final Failure? serviceWithProvFailure;
-  final ServWithProv? serviceWithProv;
+  final prov.ServiceWithproviderData? serviceWithProv;
 
   final ApiStatus popularServicesStatus;
   final List<PopularServiceData>? popularServices;
@@ -54,7 +56,7 @@ class ServiceState {
     CategoryDetailsData? categoryDetails,
     ApiStatus? serviceWithProvStatus,
     Failure? serviceWithProvFailure,
-    ServWithProv? serviceWithProv,
+    prov.ServiceWithproviderData? serviceWithProv,
     ApiStatus? popularServicesStatus,
     List<PopularServiceData>? popularServices,
     String? popularServicesError,

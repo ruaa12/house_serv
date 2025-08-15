@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/wallet/presentation/screen/wallet_screen.dart';
 
-class CreateHouseOrderContent extends StatefulWidget {
-  final int houseId;
-  final Estate estate;
-
-  const CreateHouseOrderContent({
+class CreateServiceOrderContent extends StatefulWidget {
+  final int serviceId; // رقم الخدمة اللي بدك تطلبها
+  const CreateServiceOrderContent({
     super.key,
-    required this.houseId,
-    required this.estate,
+    required this.serviceId,
   });
 
   @override
-  State<CreateHouseOrderContent> createState() =>
-      _CreateHouseOrderContentState();
+  State<CreateServiceOrderContent> createState() =>
+      _CreateServiceOrderContentState();
 }
 
-class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
+class _CreateServiceOrderContentState extends State<CreateServiceOrderContent> {
   final _formKey = GlobalKey<FormState>();
   final _notesController = TextEditingController();
 
@@ -34,70 +29,31 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("طلب العقار")),
+      appBar: AppBar(
+        title: const Text("طلب خدمة"),
+      ),
       body: BlocConsumer<OrderBloc, OrderState>(
         listener: (context, state) {
-          if (state.createHouseOrderStatus == ApiStatus.success) {
+          if (state.createServOrderStatus == ApiStatus.success) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('✅ تم إنشاء الطلب بنجاح')),
+              const SnackBar(content: Text('✅ تم إنشاء طلب الخدمة بنجاح')),
             );
-          } else if (state.createHouseOrderStatus == ApiStatus.failed) {
+          } else if (state.createServOrderStatus == ApiStatus.failed) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(
-                  state.createHouseOrderFailure?.message ?? '❌ فشل إنشاء الطلب',
-                ),
+                content: Text(state.createServOrderFailure?.message ??
+                    '❌ فشل إنشاء طلب الخدمة'),
               ),
             );
           }
         },
         builder: (context, state) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Form(
               key: _formKey,
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // --- عرض بيانات البيت ---
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.estate.type ?? '',
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.teal,
-                        ),
-                      ),
-                      Text(
-                        '\$${widget.estate.price}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on,
-                          size: 16, color: Colors.grey),
-                      const SizedBox(width: 4),
-                      Expanded(
-                        child: Text(
-                          widget.estate.name ?? '',
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-
-                  // --- حقل الملاحظات ---
                   TextFormField(
                     controller: _notesController,
                     maxLines: 5,
@@ -117,10 +73,8 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
                     },
                   ),
                   const SizedBox(height: 20),
-
-                  // --- زر الإرسال ---
-                  state.createHouseOrderStatus == ApiStatus.loading
-                      ? const Center(child: CircularProgressIndicator())
+                  state.createServOrderStatus == ApiStatus.loading
+                      ? const CircularProgressIndicator()
                       : SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
@@ -156,23 +110,26 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
                                 );
 
                                 if (confirmed == true) {
-                                  // هنا ممكن تستدعي الـ bloc لإرسال الطلب
-                                  // BlocProvider.of<OrderBloc>(context).add(...);
+                                  context.read<OrderBloc>().add(
+                                        CreateServOrderEvent(
+                                          serviceId: widget.serviceId,
+                                          notes: _notesController.text,
+                                          serviceDate: '',
+                                        ),
+                                      );
 
-                                  // الانتقال إلى شاشة المحفظة
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WalletScreen(),
+                                      builder: (context) => WalletScreen(),
                                     ),
                                   );
                                 }
                               }
                             },
-                            label: const Text("إرسال الطلب"),
+                            label: const Text("إرسال"),
                           ),
-                        ),
+                        )
                 ],
               ),
             ),

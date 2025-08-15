@@ -2,13 +2,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
-import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
+import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
-import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/core/unified_api/api_variabels.dart';
+import 'package:home_serviece/feature/order/presentation/screen/request_serv_screen.dart';
 import 'package:home_serviece/generated/locale_keys.g.dart';
 import 'request_house_screen.dart'; // تأكد من استيرادها هنا
 
@@ -120,7 +120,10 @@ class HouseRequestsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16),
-      child: CreateHouseOrderContent(houseId: 1),
+      child: CreateHouseOrderContent(
+        houseId: 1,
+        estate: estates.first,
+      ),
     );
   }
 }
@@ -130,7 +133,7 @@ class ServiceRequestsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text('Service Requests Tab'));
+    return const Center(child: CreateServiceOrderContent(serviceId: 1));
   }
 }
 

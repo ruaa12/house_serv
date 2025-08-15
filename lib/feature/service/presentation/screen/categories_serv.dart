@@ -69,7 +69,9 @@ class CategoriesServ extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                                                        MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+                            MyImageWidget(
+                                imagePath:
+                                    'http://10.0.2.2:8000/storage/7/Carpet-Cleaning.jpg'), // عرض الصورة من المسار المحدد
 
                             const SizedBox(height: 8),
                             Text(

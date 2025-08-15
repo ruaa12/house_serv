@@ -23,9 +23,12 @@ class ApiVariabels {
   Uri getServiceById(int serviceId) => _main_uri('api/services/$serviceId');
   Uri getUserorder() => _main_uri('api/user/orders');
   Uri createHouseOrder(int houseId) => _main_uri('api/orders/house/$houseId');
-  Uri getBalance() => _main_uri('api/categories');
+  Uri getBalance() => _main_uri('api/get-balance');
   Uri makeTransaction() => _main_uri('api/wallet-transaction');
   Uri getPopularServices() => _main_uri('api/services-popular');
   Uri getPopularServicesProviders() =>
       _main_uri('api/service-providers/popular');
+  Uri getServiceProviders(int serviceId) =>
+      _main_uri('/api/services/$serviceId');
+  Uri createServOrder() => _main_uri('api/orders/service-provider');
 }

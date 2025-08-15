@@ -17,3 +17,7 @@ class GetServiceWithProvEvent extends ServiceEvent {
 class GetPopularServicesEvent extends ServiceEvent {}
 
 class GetPopularServicesProvidersEvent extends ServiceEvent {}
+
+/*class GetServiceProvidersEvent extends ServiceEvent {
+  final int serviceId;
+  GetServiceProvidersEvent({required this.serviceId});*/

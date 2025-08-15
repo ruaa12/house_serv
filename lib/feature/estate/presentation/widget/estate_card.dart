@@ -3,19 +3,12 @@ import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 
 import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 
-import '../../../../core/helper/image_helper.dart';
-
 class EstateCard extends StatelessWidget {
   final HouseModel estate;
   const EstateCard({super.key, required this.estate});
 
- 
-
-
   @override
   Widget build(BuildContext context) {
-    print('🧱 عرض EstateCard للعقار: ${estate.title}');
-
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Container(
@@ -33,7 +26,6 @@ class EstateCard extends StatelessWidget {
             ),
           ],
         ),
-        
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,13 +33,9 @@ class EstateCard extends StatelessWidget {
             ClipRRect(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(16)),
-                  
               child: estate.images != null && estate.images!.isNotEmpty
-              
-              
-                  ?
-                   Image.network(
-                      estate.images!.first, 
+                  ? Image.network(
+                      estate.images!.first,
                       fit: BoxFit.cover,
                       height: 120,
                       width: double.infinity,

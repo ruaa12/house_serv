@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/fav_manger.dart';
+import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
-
 import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
+import 'package:home_serviece/feature/order/presentation/screen/request_house_screen.dart';
 
 class DetailsEstate extends StatefulWidget {
   final HouseModel estate;
@@ -61,31 +61,21 @@ class _DetailsEstateState extends State<DetailsEstate> {
                         onTap: () {
                           setState(() {
                             isFav = !isFav;
-                            // if (isFav) {
-                            //   FavoriteManager.favoriteEstates
-                            //       .add(widget.estate);
-                            // } else {
-                            //   FavoriteManager.favoriteEstates
-                            //       .remove(widget.estate);
-                            // }
                           });
                         },
                       ),
-                      // لسه ما اضفنا وظيفة
                     ],
                   ),
                 ),
               ],
             ),
 
-            // ====== التفاصيل ======
             Expanded(
               child: SingleChildScrollView(
                 padding: EdgeInsets.all(20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // العنوان والسعر
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -126,16 +116,10 @@ class _DetailsEstateState extends State<DetailsEstate> {
                       runSpacing: 12,
                       children: [
                         _infoTag(icon: Icons.home, label: widget.estate.title!),
-                        // _infoTag(
-                        //     icon: Icons.bed,
-                        //     label: '${widget.estate.rooms} غرف'),
-                        // if (estate.type.toLowerCase() == 'شقة' || estate.type.toLowerCase() == 'apartment')
-                        //   _infoTag(icon: Icons.apartment, label: 'الطابق ${estate.floor}'),
                       ],
                     ),
                     SizedBox(height: 24),
 
-                    // زر عرض صور 360
                     Align(
                       alignment: Alignment.centerRight,
                       child: InkWell(
@@ -166,7 +150,6 @@ class _DetailsEstateState extends State<DetailsEstate> {
                     ),
                     SizedBox(height: 40),
 
-                    // زر شراء
                     SizedBox(
                       width: double.infinity,
                       height: 50,
@@ -178,8 +161,12 @@ class _DetailsEstateState extends State<DetailsEstate> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.pushNamed(context, '/buy',
-                              arguments: widget.estate);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => CreateHouseOrderContent(
+                                    houseId: 1, estate: estates.first)),
+                          );
                         },
                         child: Text(
                           'Buy Now',

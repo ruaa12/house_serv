@@ -68,4 +68,39 @@ class OrderDataSource {
       throw ServerFailure(message: 'Server error ${response.statusCode}');
     }
   }
+
+  Future<bool> createServOrder({
+    required int serviceId,
+    required String notes,
+    required String serviceDate, // "YYYY-MM-DD HH:mm:ss"
+  }) async {
+    final token = await getToken();
+    if (token == null) throw ServerFailure(message: 'No token found');
+
+    final uri =
+        apiVariabels.createServOrder(); // لازم تكون موجودة بـ ApiVariabels
+    final response = await http.post(
+      uri,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: {
+        'notes': notes,
+        'service_id': serviceId.toString(),
+        'service_date': serviceDate,
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final json = jsonDecode(response.body);
+      if (json['status'] == true) {
+        return true;
+      } else {
+        throw ServerFailure(message: json['message'] ?? 'Request failed');
+      }
+    } else {
+      throw ServerFailure(message: 'Server error ${response.statusCode}');
+    }
+  }
 }

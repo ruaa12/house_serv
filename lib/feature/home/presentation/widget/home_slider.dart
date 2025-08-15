@@ -11,7 +11,6 @@ import '../../../../core/unified_api/status.dart';
 import '../../bloc/bloc/home_bloc.dart';
 
 class HomeSlider extends StatefulWidget {
-
   const HomeSlider({
     Key? key,
   }) : super(key: key);
@@ -26,25 +25,24 @@ class _HomeSliderState extends State<HomeSlider> {
   Timer? _timer;
 
   void _startAutoSlide(int length) {
-   _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
-  try {
-    if (_controller.hasClients && length > 1) {
-      setState(() {
-        _currentIndex = (_currentIndex + 1) % length;
-        _controller.animateToPage(
-          _currentIndex,
-          duration: const Duration(milliseconds: 400),
-          curve: Curves.easeInOut,
-        );
-      });
-    }
-  } catch (e) {
-    // هون ممكن نطبع الخطأ أو نلغي التايمر حتى ما يعمل مشاكل
-    print('Error in timer: $e');
-    timer.cancel();
-  }
-});
-
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
+      try {
+        if (_controller.hasClients && length > 1) {
+          setState(() {
+            _currentIndex = (_currentIndex + 1) % length;
+            _controller.animateToPage(
+              _currentIndex,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeInOut,
+            );
+          });
+        }
+      } catch (e) {
+        // هون ممكن نطبع الخطأ أو نلغي التايمر حتى ما يعمل مشاكل
+        print('Error in timer: $e');
+        timer.cancel();
+      }
+    });
   }
 
   @override
@@ -98,7 +96,8 @@ class _HomeSliderState extends State<HomeSlider> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => DetailsEstate(estate: sliderEstate),
+                              builder: (context) =>
+                                  DetailsEstate(estate: sliderEstate),
                             ),
                           );
                         },
@@ -108,7 +107,9 @@ class _HomeSliderState extends State<HomeSlider> {
                             borderRadius: BorderRadius.circular(20),
                             child: Stack(
                               children: [
-                                MyImageWidget(imagePath:'38/vila.jpg' ),  // عرض الصورة من المسار المحدد
+                                MyImageWidget(
+                                    imagePath: sliderEstate.images![
+                                        0]), // عرض الصورة من المسار المحدد
                                 Positioned(
                                   bottom: 10,
                                   left: 10,
@@ -147,7 +148,9 @@ class _HomeSliderState extends State<HomeSlider> {
                           height: 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: _currentIndex == index ? Colors.white : Colors.grey,
+                            color: _currentIndex == index
+                                ? Colors.white
+                                : Colors.grey,
                           ),
                         ),
                       ),
@@ -158,7 +161,6 @@ class _HomeSliderState extends State<HomeSlider> {
             );
 
           case ApiStatus.initial:
-          default:
             return const SizedBox();
         }
       },

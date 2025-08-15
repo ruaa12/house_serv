@@ -39,9 +39,11 @@ class WalletDataSource {
     }
   }
 
-  Future<MakeTransaction> makeTransaction(double amount) async {
+  Future<MakeTransaction> makeTransaction(double amount, String type) async {
     final token = await getToken();
     if (token == null) throw Exception('Token is null');
+
+    print('=================> ${token}');
 
     try {
       final uri = apiVariabels.makeTransaction(); // تأكد أنها موجودة
@@ -52,8 +54,10 @@ class WalletDataSource {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
-        body: jsonEncode({'amount': amount}),
+        body: jsonEncode({'amount': amount, 'type': type}),
       );
+
+      print('=================> ${response.body}');
 
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);

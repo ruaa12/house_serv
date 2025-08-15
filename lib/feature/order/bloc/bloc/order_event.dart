@@ -13,3 +13,15 @@ class CreateHouseOrderEvent extends OrderEvent {
 
   CreateHouseOrderEvent({required this.houseId, required this.notes});
 }
+
+class CreateServOrderEvent extends OrderEvent {
+  final int serviceId;
+  final String notes;
+  final String serviceDate;
+
+  CreateServOrderEvent({
+    required this.serviceId,
+    required this.notes,
+    required this.serviceDate,
+  });
+}

@@ -71,7 +71,7 @@ class ServiceDataSource {
     }
   }
 
-  Future<ServWithProvResponse> getServiceWithProviders(int serviceId) async {
+  Future<ServiceDetailsResponse> getServiceWithProviders(int serviceId) async {
     final token = await getToken();
     if (token == null) {
       throw Exception('Token is null');
@@ -85,7 +85,7 @@ class ServiceDataSource {
       });
       if (response.statusCode == 201) {
         final json = jsonDecode(response.body);
-        return ServWithProvResponse.fromJson(json);
+        return ServiceDetailsResponse.fromJson(json);
       } else {
         throw ServerFailure(message: 'Server Error: ${response.statusCode}');
       }
@@ -140,4 +140,32 @@ class ServiceDataSource {
       throw Exception("Failed to load popular service providers");
     }
   }
+
+  /*Future<List<ServiceProvider>> getServiceProviders(int serviceId) async {
+    final token = await getToken();
+    if (token == null) throw Exception("Token is null");
+
+    final uri = apiVariabels.getServiceProviders(serviceId);
+
+    final response = await http.get(
+      uri,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // هنا نحول النص JSON لخريطة Map<String, dynamic>
+      final Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+      // نجيب الليست الخاصة بالمزودين
+      final List<dynamic> data = jsonResponse['data']['serviceProviders'];
+
+      // نرجع الليست بعد تحويل كل عنصر لموديل
+      return data.map((json) => ServiceProvider.fromJson(json)).toList();
+    } else {
+      throw Exception('Failed to load service providers');
+    }
+  }*/
 }
