@@ -5,9 +5,7 @@ import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart
 import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
-import 'package:home_serviece/feature/home/presentation/screen/notification_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/home/presentation/widget/home_slider.dart';
 
@@ -16,7 +14,9 @@ import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_state.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_screen.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_provider.dart';
+import 'package:home_serviece/generated/notification/presentation/notification_screen.dart';
 
+import '../../../order/presentation/screen/contract_form_screen.dart';
 import '../../../service/presentation/screen/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   bool viewHouse = false;
   int selectedTabIndex = 0;
-  final tabs = ['Houses', 'Services', 'Providers'];
+  final tabs = ['Houses', 'Services', 'عقد'];
 
   @override
   void initState() {
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => NotificationsScreen(),
+                            builder: (context) => NotificationScreen(),
                           ),
                         );
                       },
@@ -130,17 +130,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             MaterialPageRoute(
                                 builder: (context) => AllEstatesScreen()),
                           );
-                        } else if (tabs[index] == 'Providers') {
+                        } else if (tabs[index] == 'Services') {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProvidersScreen()),
+                                builder: (context) => ServicesScreen()),
                           );
                         } else {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ServicesScreen()),
+                                builder: (context) => ContractFormScreen()),
                           );
                         }
                       },
@@ -215,18 +215,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   itemCount: trending_houses.length,
                                   itemBuilder: (context, index) {
                                     final house = trending_houses[index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsEstate(estate: house),
-                                          ),
-                                        );
-                                      },
-                                      child: EstateCard(estate: house),
-                                    );
+                                    
+                                    
+                                    return  EstateCard(estate: house);
+                                    
                                   },
                                 ),
                               );

@@ -10,7 +10,8 @@ import 'package:home_serviece/feature/home/presentation/screen/profile.dart';
 import 'package:home_serviece/feature/home/presentation/widget/const.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
-import 'package:home_serviece/generated/locale_keys.g.dart';
+
+import '../../../../generated/locale_keys.g.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});

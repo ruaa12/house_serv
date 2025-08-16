@@ -3,9 +3,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home_serviece/core/helper/image_helper.dart';
 
-import 'package:home_serviece/feature/estate/presentation/screen/details_estate.dart';
+import 'package:home_serviece/core/helper/image_helper.dart';
+import 'package:home_serviece/feature/estate/data/models/get_estate_detailes.dart';
+import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
+import 'package:home_serviece/feature/estate/presentation/screen/estate_details_screen.dart';
 
 import '../../../../core/unified_api/status.dart';
 import '../../bloc/bloc/home_bloc.dart';
@@ -96,8 +98,12 @@ class _HomeSliderState extends State<HomeSlider> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
+<<<<<<< HEAD
                               builder: (context) =>
                                   DetailsEstate(estate: sliderEstate),
+=======
+                              builder: (context) => EstateDetailsScreen(estateId:sliderEstate.id! ,),
+>>>>>>> a20141485a376f901dd53047eccdab5f8060d062
                             ),
                           );
                         },
@@ -107,9 +113,13 @@ class _HomeSliderState extends State<HomeSlider> {
                             borderRadius: BorderRadius.circular(20),
                             child: Stack(
                               children: [
+<<<<<<< HEAD
                                 MyImageWidget(
                                     imagePath: sliderEstate.images![
                                         0]), // عرض الصورة من المسار المحدد
+=======
+                               MyImageWidget(imagePath: sliderEstate.images!.last ),
+>>>>>>> a20141485a376f901dd53047eccdab5f8060d062
                                 Positioned(
                                   bottom: 10,
                                   left: 10,
