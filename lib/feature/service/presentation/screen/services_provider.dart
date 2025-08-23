@@ -5,7 +5,6 @@ import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_event.dart';
 import 'package:home_serviece/feature/service/bloc/bloc/service_state.dart';
-import 'package:home_serviece/feature/service/data/model/category_prov_model.dart';
 import 'package:home_serviece/feature/service/presentation/screen/provider_details_screen.dart';
 import 'package:home_serviece/feature/home/presentation/widget/customlsttile.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';

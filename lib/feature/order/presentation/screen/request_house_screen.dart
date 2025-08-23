@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
-import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
+
 import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/wallet/presentation/screen/wallet_screen.dart';

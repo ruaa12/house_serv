@@ -56,15 +56,14 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                     // صورة العقار الأساسية
                     Stack(
                       children: [
-                       
                         ClipRRect(
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(25),
                             bottomRight: Radius.circular(25),
                           ),
-                          child: estate?.images != null && estate!.images!.isNotEmpty
-                              ?
-                              MyImageWidget(imagePath: estate.images!.first)
+                          child: estate?.images != null &&
+                                  estate!.images!.isNotEmpty
+                              ? MyImageWidget(imagePath: estate.images!.first)
                               //  Image.network(
                               //     estate.images!.first,
                               //     height: MediaQuery.of(context).size.height * 0.6,
@@ -85,7 +84,8 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                               //     },
                               //   )
                               : Container(
-                                  height: MediaQuery.of(context).size.height * 0.4,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.4,
                                   width: double.infinity,
                                   color: color4,
                                   alignment: Alignment.center,
@@ -108,7 +108,8 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                           top: 16,
                           right: 16,
                           child: _circleButton(
-                            icon: isFav ? Icons.favorite : Icons.favorite_border,
+                            icon:
+                                isFav ? Icons.favorite : Icons.favorite_border,
                             color: isFav ? Colors.red : color7,
                             onTap: () {
                               setState(() {
@@ -192,22 +193,21 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                             const SizedBox(height: 24),
 
                             // معرض الصور كشبكة
-                           
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Gallery',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                      color: color1,
-                                    ),
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Gallery',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: color1,
                                   ),
-                                  const SizedBox(height: 12),
-                               
-                                ],
-                              ),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -229,38 +229,38 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                     SizedBox(height: 12),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<EstateBloc>().add(GetEstateDetailsEvent(widget.estateId));
+                        context
+                            .read<EstateBloc>()
+                            .add(GetEstateDetailsEvent(widget.estateId));
                       },
                       child: Text('حاول مرة أخرى'),
                     ),
                     const SizedBox(height: 12),
-
-                      SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: color7,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                    SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: color7,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CreateHouseOrderContent(
-                                    houseId: 1,
-
-                                    )),
-                          );
-                        },
-                        child: Text(
-                          'Buy Now',
-                          style: TextStyle(color: color5, fontSize: 16),
-                        ),
-                      )
-                      ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateHouseOrderContent(
+                                        houseId: 1,
+                                        estate: estates.first,
+                                      )),
+                            );
+                          },
+                          child: Text(
+                            'Buy Now',
+                            style: TextStyle(color: color5, fontSize: 16),
+                          ),
+                        )),
                   ],
                 ),
               );

@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:io';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -32,11 +34,6 @@ import 'package:home_serviece/feature/order/data/data_source/order_datasource.da
 import 'package:home_serviece/feature/service/bloc/bloc/service_bloc.dart';
 import 'package:home_serviece/feature/service/data/data_source/service_datasource.dart';
 import 'package:home_serviece/feature/service/presentation/screen/services_screen.dart';
-<<<<<<< HEAD
-import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
-import 'package:home_serviece/feature/home/data/data_source/home_datasource.dart';
-=======
->>>>>>> a20141485a376f901dd53047eccdab5f8060d062
 import 'package:home_serviece/feature/wallet/bloc/wallet_bloc.dart';
 import 'package:home_serviece/feature/wallet/data/data_source/wallet_datasource.dart';
 import 'package:home_serviece/firebase_options.dart';
@@ -45,18 +42,32 @@ import 'package:home_serviece/generated/notification/data/repo/notification_repo
 
 import 'core/utils/notification_utils.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port) {
+        // Allow only for local dev server
+        if (host == "10.0.2.2" || host == "localhost") {
+          return true;
+        }
+        return false;
+      };
+  }
+}
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   // هي بتشتغل بالخلفية
   print('Received a background message: ${message.messageId}');
 }
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = MyHttpOverrides();
 
-  
-final sharedPreferences = await SharedPreferences.getInstance();
-final notification_repository = NotificationRepository(sharedPreferences);  
-
+  final sharedPreferences = await SharedPreferences.getInstance();
+  final notification_repository = NotificationRepository(sharedPreferences);
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -66,15 +77,13 @@ final notification_repository = NotificationRepository(sharedPreferences);
   await NotificationService().initialize();
   await NotificationService().getToken();
 
-   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-   
   final tempDir = await getTemporaryDirectory();
   HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: HydratedStorageDirectory(tempDir.path),
   );
   await EasyLocalization.ensureInitialized();
-
 
   runApp(
     EasyLocalization(
@@ -83,12 +92,12 @@ final notification_repository = NotificationRepository(sharedPreferences);
       fallbackLocale: const Locale('en', ''),
       startLocale: const Locale('en', ''),
       saveLocale: true,
-      child:  DreamHouse(notificationRepository: notification_repository,),
+      child: DreamHouse(
+        notificationRepository: notification_repository,
+      ),
     ),
   );
 }
-
-
 
 class DreamHouse extends StatelessWidget {
   final NotificationRepository notificationRepository;
@@ -97,7 +106,6 @@ class DreamHouse extends StatelessWidget {
     Key? key,
     required this.notificationRepository,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +125,7 @@ class DreamHouse extends StatelessWidget {
               HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
         ),
         BlocProvider(
-          create: (_) => 
-              EstateBloc(estateDatasource: EstateDatasource() ),
+          create: (_) => EstateBloc(estateDatasource: EstateDatasource()),
         ),
         BlocProvider(
           create: (_) => OrderBloc(
@@ -137,10 +144,10 @@ class DreamHouse extends StatelessWidget {
         ),
         BlocProvider<NotificationCubit>(
           create: (_) {
-    final cubit = NotificationCubit(notificationRepository);
-    // NotificationUtils().setCubit(cubit); // ✅ ربط الكيوبت مع NotificationUtils
-    return cubit;
-  },
+            final cubit = NotificationCubit(notificationRepository);
+            // NotificationUtils().setCubit(cubit); // ✅ ربط الكيوبت مع NotificationUtils
+            return cubit;
+          },
         ),
       ],
       child: BlocBuilder<SettingsCubit, SettingsState>(

@@ -1,21 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:async';
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:home_serviece/core/helper/image_helper.dart';
-import 'package:home_serviece/feature/estate/data/models/get_estate_detailes.dart';
-import 'package:home_serviece/feature/estate/data/models/get_houses.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/estate_details_screen.dart';
-
 import '../../../../core/unified_api/status.dart';
 import '../../bloc/bloc/home_bloc.dart';
 
 class HomeSlider extends StatefulWidget {
-  const HomeSlider({
-    Key? key,
-  }) : super(key: key);
+  const HomeSlider({Key? key}) : super(key: key);
 
   @override
   State<HomeSlider> createState() => _HomeSliderState();
@@ -40,7 +34,6 @@ class _HomeSliderState extends State<HomeSlider> {
           });
         }
       } catch (e) {
-        // هون ممكن نطبع الخطأ أو نلغي التايمر حتى ما يعمل مشاكل
         print('Error in timer: $e');
         timer.cancel();
       }
@@ -59,7 +52,6 @@ class _HomeSliderState extends State<HomeSlider> {
     return BlocBuilder<HomeBloc, HomeState>(
       builder: (context, state) {
         final status = state.trendingHousesStatus;
-
         switch (status) {
           case ApiStatus.loading:
             return const Center(child: CircularProgressIndicator());
@@ -75,13 +67,13 @@ class _HomeSliderState extends State<HomeSlider> {
             );
 
           case ApiStatus.success:
-            final slider_estates = state.trendingHouses;
-            if (slider_estates.isEmpty) {
+            final sliderEstates = state.trendingHouses;
+            if (sliderEstates.isEmpty) {
               return const Center(child: Text("لا يوجد عقارات حالياً"));
             }
 
-            _timer?.cancel(); // تأكدي من إيقاف أي تايمر قديم
-            _startAutoSlide(slider_estates.length);
+            _timer?.cancel();
+            _startAutoSlide(sliderEstates.length);
 
             return SizedBox(
               height: 220,
@@ -90,20 +82,17 @@ class _HomeSliderState extends State<HomeSlider> {
                 children: [
                   PageView.builder(
                     controller: _controller,
-                    itemCount: 5,
+                    itemCount: sliderEstates.length,
                     itemBuilder: (context, index) {
-                      final sliderEstate = slider_estates[index];
+                      final sliderEstate = sliderEstates[index];
                       return GestureDetector(
                         onTap: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-<<<<<<< HEAD
-                              builder: (context) =>
-                                  DetailsEstate(estate: sliderEstate),
-=======
-                              builder: (context) => EstateDetailsScreen(estateId:sliderEstate.id! ,),
->>>>>>> a20141485a376f901dd53047eccdab5f8060d062
+                              builder: (context) => EstateDetailsScreen(
+                                estateId: sliderEstate.id!,
+                              ),
                             ),
                           );
                         },
@@ -113,13 +102,9 @@ class _HomeSliderState extends State<HomeSlider> {
                             borderRadius: BorderRadius.circular(20),
                             child: Stack(
                               children: [
-<<<<<<< HEAD
                                 MyImageWidget(
-                                    imagePath: sliderEstate.images![
-                                        0]), // عرض الصورة من المسار المحدد
-=======
-                               MyImageWidget(imagePath: sliderEstate.images!.last ),
->>>>>>> a20141485a376f901dd53047eccdab5f8060d062
+                                  imagePath: sliderEstate.images![0],
+                                ),
                                 Positioned(
                                   bottom: 10,
                                   left: 10,
@@ -127,7 +112,7 @@ class _HomeSliderState extends State<HomeSlider> {
                                     padding: const EdgeInsets.all(6),
                                     color: Colors.black54,
                                     child: Text(
-                                      sliderEstate.title!,
+                                      sliderEstate.title ?? '',
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 18,

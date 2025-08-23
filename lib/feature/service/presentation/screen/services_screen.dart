@@ -66,13 +66,12 @@ class ServicesScreen extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-<<<<<<< HEAD
                             MyImageWidget(
                               imagePath: category.mediaUrls,
                             ), // عرض الصورة من المسار المحدد
-=======
-                             MyImageWidget(imagePath:category.mediaUrls ),  // عرض الصورة من المسار المحدد
->>>>>>> a20141485a376f901dd53047eccdab5f8060d062
+                            MyImageWidget(
+                                imagePath: category
+                                    .mediaUrls), // عرض الصورة من المسار المحدد
 
                             const SizedBox(height: 8),
                             Text(
