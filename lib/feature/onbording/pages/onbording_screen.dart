@@ -74,22 +74,27 @@ class _OnbordingScreenState extends State<OnbordingScreen> {
                       : Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                              Button(
-                                  ontap: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => LoginScreen(),
-                                        ));
-                                  },
-                                  name: 'Skip'),
-                              Button(
-                                  ontap: () {
-                                    pageController.nextPage(
-                                        duration: const Duration(seconds: 1),
-                                        curve: Curves.ease);
-                                  },
-                                  name: 'Next')
+                              Flexible(
+                                child: Button(
+                                    ontap: () {
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => LoginScreen(),
+                                          ));
+                                    },
+                                    name: 'Skip'),
+                              ),
+                              SizedBox(width: 10,),
+                              Flexible(
+                                child: Button(
+                                    ontap: () {
+                                      pageController.nextPage(
+                                          duration: const Duration(seconds: 1),
+                                          curve: Curves.ease);
+                                    },
+                                    name: 'Next'),
+                              )
                             ]),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

@@ -1,13 +1,13 @@
 class ApiVariabels {
-  final _scheme = 'http';
-  final _host = '10.0.2.2';
-  final _port = 8000;
+  final _scheme = 'https';
+  final _host = 'home.mustafafares.com';
+
+  // https://home.mustafafares.com/login
 
   Uri _main_uri(String path, {Map<String, String>? params}) {
     return Uri(
         host: _host,
         scheme: _scheme,
-        port: _port,
         path: path,
         queryParameters: params);
   }

@@ -28,26 +28,28 @@ class ContainerIam extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Column(
-            children: [
-              Text(
-                label!,
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: color2,
-                  fontWeight: FontWeight.bold,
+          Flexible(
+            child: Column(
+              children: [
+                Text(
+                  label!,
+                  style: const TextStyle(
+                    fontSize: 24,
+                    color: color2,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Text(
-                text!,
-                style: const TextStyle(
-                  fontSize: 17,
+                const SizedBox(
+                  height: 15,
                 ),
-              ),
-            ],
+                Text(
+                  text!,
+                  style: const TextStyle(
+                    fontSize: 17,
+                  ),
+                ),
+              ],
+            ),
           ),
           const SizedBox(
             width: 4,

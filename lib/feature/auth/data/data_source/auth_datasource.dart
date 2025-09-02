@@ -17,9 +17,8 @@ class AuthDatasource {
   Future<Login?> login(String email, String password) async {
     final result = await http.post(
       Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8000,
+        scheme: 'https',
+        host: 'home.mustafafares.com',
         path: 'api/auth/login',
       ),
       headers: {
@@ -52,9 +51,8 @@ class AuthDatasource {
   ) async {
     final result = await http.post(
       Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8000,
+        scheme: 'https',
+        host: 'home.mustafafares.com',
         path: 'api/auth/register',
       ),
       headers: {
@@ -81,6 +79,41 @@ class AuthDatasource {
     return null;
   }
 
+  Future<Register?> joinRequest({
+    required String service,
+    String? address,
+    String? name,
+    required File cv,
+  }) async {
+    final uri = Uri(
+      scheme: 'https',
+      host: 'home.mustafafares.com',
+      path: 'api/auth/register',
+    );
+
+    // Create multipart request
+    var request = http.MultipartRequest('POST', uri);
+    request.headers['Accept'] = 'application/json';
+
+    // Add text fields
+    if (name != null) request.fields['full_name'] = name;
+    if (address != null) request.fields['address'] = address;
+    request.fields['field'] = service;
+
+    // Attach the file
+    request.files.add(await http.MultipartFile.fromPath('cv', cv.path));
+
+    // Send request
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode == 200) {
+      final regstResult = registerFromJson(response.body);
+      return regstResult;
+    }
+    return null;
+  }
+
   Future<Changepassword?> changepassword(
     String new_password,
     String current_password,
@@ -93,9 +126,8 @@ class AuthDatasource {
 
     final result = await http.post(
       Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8000,
+        scheme: 'https',
+        host: 'home.mustafafares.com',
         path: 'api/auth/change-password',
       ),
       headers: {
@@ -132,9 +164,8 @@ class AuthDatasource {
     var request = http.MultipartRequest(
       'POST',
       Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8000,
+        scheme: 'https',
+        host: 'home.mustafafares.com',
         path: 'api/auth/update-profile',
       ),
     );
@@ -173,9 +204,8 @@ class AuthDatasource {
 
     final response = await http.get(
       Uri(
-        scheme: 'http',
-        host: '10.0.2.2',
-        port: 8000,
+        scheme: 'https',
+        host: 'home.mustafafares.com',
         path: 'api/profile',
       ),
       headers: {
@@ -190,8 +220,7 @@ class AuthDatasource {
     } else {
       print("status code :${response.statusCode}");
       print("response body :${response.body}");
-      throw Exception(
-          'فشل في جلب بيانات المستخدم - الكود: ${response.statusCode}');
+      throw Exception('فشل في جلب بيانات المستخدم - الكود: ${response.statusCode}');
     }
   }
 }

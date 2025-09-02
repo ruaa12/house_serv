@@ -53,3 +53,7 @@ class GetprofileFailure extends AuthState {
 
   GetprofileFailure({required this.message});
 }
+
+class JoinLoading extends AuthState{}
+class JoinSuccess extends AuthState{}
+class JoinFailed extends AuthState{}

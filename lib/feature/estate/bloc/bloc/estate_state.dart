@@ -5,6 +5,9 @@ class EstateState {
   final List<HouseModel> estates;
   final ApiStatus allEstatesStatus;
 
+  final ApiStatus? getCategoriesStatus;
+  final CategoryServiceModel? getCategories;
+
   final ApiStatus detailsEstateStatus;
   final List<EstateDetails> detEstate;
   final EstateDetails? estatedetails;
@@ -15,11 +18,11 @@ class EstateState {
     this.allEstatesStatus = ApiStatus.initial,
     this.detailsEstateStatus = ApiStatus.initial,
     this.detEstate = const [],
-     this.estatedetails,
+    this.estatedetails,
     this.message,
+    this.getCategories,
+    this.getCategoriesStatus,
   });
-
-  
 
   EstateState copyWith({
     List<HouseModel>? estates,
@@ -28,6 +31,8 @@ class EstateState {
     List<EstateDetails>? detEstate,
     EstateDetails? estatedetails,
     String? message,
+    ApiStatus? getCategoriesStatus,
+    CategoryServiceModel? getCategories,
   }) {
     return EstateState(
       estates: estates ?? this.estates,
@@ -36,6 +41,8 @@ class EstateState {
       detEstate: detEstate ?? this.detEstate,
       estatedetails: estatedetails ?? this.estatedetails,
       message: message ?? this.message,
+      getCategories: getCategories ?? this.getCategories,
+      getCategoriesStatus: getCategoriesStatus ?? this.getCategoriesStatus,
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/feature/auth/data/models/get_profile.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -14,21 +15,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc({required this.authDatasource}) : super(AuthInitial()) {
     on<LoginButtonPressedEvent>((event, emit) async {
       emit(AuthLoading());
-      final loginResult =
-          await authDatasource.login(event.email, event.password);
+      final loginResult = await authDatasource.login(event.email, event.password);
       final token = loginResult?.data?.token;
       if (token != null) {
         emit(AuthLoginSuccess(token: token));
       } else {
-        emit(AuthLoginFailure(
-            message: "Login failed. Please check your credentials."));
+        emit(AuthLoginFailure(message: "Login failed. Please check your credentials."));
       }
     });
 
     on<SignupButtonPressedEvent>((event, emit) async {
       emit(AuthLoading());
-      final register = await authDatasource.register(event.email,
-          event.password, event.phone, event.fullname, event.username);
+      final register = await authDatasource.register(event.email, event.password, event.phone, event.fullname, event.username);
       final token = register?.data?.token;
       if (token != null) {
         emit(RegisterSuccess(token: token));
@@ -36,12 +34,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(RegisterFailure(error: "Signup failed please check your"));
       }
     });
+
+    on<JoinRequestEvent>((event, emit) async {
+      emit(JoinLoading());
+      final register = await authDatasource.joinRequest(cv: event.cv, service: event.service, address: event.address, name: event.name);
+      final status = register?.status;
+      if (status == true) {
+        emit(JoinSuccess());
+      } else {
+        emit(JoinFailed());
+      }
+    });
+
     on<PasswordButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      final changepassword = await authDatasource.changepassword(
-          event.new_password_confirmation,
-          event.current_password,
-          event.new_password);
+      final changepassword = await authDatasource.changepassword(event.new_password_confirmation, event.current_password, event.new_password);
       final token = changepassword?.data?.token;
       if (token != null) {
         emit(PasswordSucces());
@@ -51,12 +58,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<UpdateProfileButtonPressed>((event, emit) async {
       emit(AuthLoading());
-      final updateprofile = await authDatasource.updateProfile(
-          name: event.name,
-          phone: event.phone,
-          email: event.email,
-          username: event.username,
-          image: event.image);
+      final updateprofile =
+          await authDatasource.updateProfile(name: event.name, phone: event.phone, email: event.email, username: event.username, image: event.image);
       final token = updateprofile.data?.token;
       if (token != null) {
         emit(UpdateProfileSucces());

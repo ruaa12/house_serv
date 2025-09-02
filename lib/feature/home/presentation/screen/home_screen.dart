@@ -3,6 +3,7 @@ import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/all_estates_screen.dart';
 import 'package:home_serviece/feature/estate/presentation/screen/fav_screen.dart';
 import 'package:home_serviece/feature/home/bloc/bloc/home_bloc.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_card.dart';
@@ -21,7 +22,9 @@ import '../../../service/presentation/screen/services_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = 'homepage';
+
   const HomeScreen({Key? key}) : super(key: key);
+
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -71,24 +74,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(width: 60),
-                    TextButton(
+                    Spacer(),
+                    IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                FavoritesScreen(favoriteEstates: []),
+                            builder: (context) => FavoritesScreen(favoriteEstates: []),
                           ),
                         );
                       },
-                      child: Icon(
+                      icon: Icon(
                         Icons.favorite_border,
                         color: color1,
                         size: 25,
                       ),
                     ),
-                    TextButton(
+                    IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -97,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      child: Icon(
+                      icon: Icon(
                         Icons.notifications_active_rounded,
                         color: color1,
                         size: 25,
@@ -109,8 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             HomeSlider(),
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
               child: SizedBox(
                 height: 50,
                 child: ListView.separated(
@@ -127,26 +128,22 @@ class _HomeScreenState extends State<HomeScreen> {
                         if (tabs[index] == 'Houses') {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => AllEstatesScreen()),
+                            MaterialPageRoute(builder: (context) => AllEstatesScreen()),
                           );
                         } else if (tabs[index] == 'Services') {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => ServicesScreen()),
+                            MaterialPageRoute(builder: (context) => ServicesScreen()),
                           );
                         } else {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => ContractFormScreen()),
+                            MaterialPageRoute(builder: (context) => ContractFormScreen()),
                           );
                         }
                       },
                       child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 10),
                         decoration: BoxDecoration(
                           color: isSelected ? color1 : color2,
                           borderRadius: BorderRadius.circular(24),
@@ -188,15 +185,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context, state) {
                           switch (state.trendingHousesStatus) {
                             case ApiStatus.loading:
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return const Center(child: CircularProgressIndicator());
                             case ApiStatus.failed:
                               return Center(
                                 child: ElevatedButton(
                                   onPressed: () {
-                                    context
-                                        .read<HomeBloc>()
-                                        .add(GetTrendingEvent());
+                                    context.read<HomeBloc>().add(GetTrendingEvent());
                                   },
                                   child: const Text('Try Again'),
                                 ),
@@ -204,21 +198,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             case ApiStatus.success:
                               final trending_houses = state.trendingHouses;
                               if (trending_houses.isEmpty) {
-                                return const Center(
-                                    child: Text('لا يوجد عقارات حالياً'));
+                                return const Center(child: Text('لا يوجد عقارات حالياً'));
                               }
                               return SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.33,
+                                height: MediaQuery.of(context).size.height * 0.33,
                                 child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: trending_houses.length,
                                   itemBuilder: (context, index) {
                                     final house = trending_houses[index];
-                                    
-                                    
-                                    return  EstateCard(estate: house);
-                                    
+
+                                    return EstateCard(estate: house);
                                   },
                                 ),
                               );
@@ -245,18 +235,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 140,
                         child: BlocBuilder<ServiceBloc, ServiceState>(
                           builder: (context, state) {
-                            if (state.popularServicesStatus ==
-                                ApiStatus.loading) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            } else if (state.popularServicesStatus ==
-                                ApiStatus.failed) {
-                              return const Center(
-                                  child: Text('فشل في تحميل الخدمات الشائعة'));
-                            } else if (state.popularServices == null ||
-                                state.popularServices!.isEmpty) {
-                              return const Center(
-                                  child: Text('لا توجد خدمات متاحة حالياً'));
+                            if (state.popularServicesStatus == ApiStatus.loading) {
+                              return const Center(child: CircularProgressIndicator());
+                            } else if (state.popularServicesStatus == ApiStatus.failed) {
+                              return const Center(child: Text('فشل في تحميل الخدمات الشائعة'));
+                            } else if (state.popularServices == null || state.popularServices!.isEmpty) {
+                              return const Center(child: Text('لا توجد خدمات متاحة حالياً'));
                             }
                             final services = state.popularServices!;
 
@@ -270,8 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            ServiceProvidersScreen(
+                                        builder: (context) => ServiceProvidersScreen(
                                           serviceId: service.id ?? 0,
                                           serviceName: service.name ?? '',
                                         ),
@@ -286,29 +269,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         ClipRRect(
-                                          borderRadius:
-                                              const BorderRadius.vertical(
-                                                  top: Radius.circular(12)),
+                                          borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                                           child: Image.network(
                                             service.imageUrl ?? '',
                                             width: 100,
                                             height: 70,
                                             fit: BoxFit.cover,
-                                            errorBuilder: (context, error,
-                                                    stackTrace) =>
-                                                const Icon(Icons.broken_image),
+                                            errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
                                           ),
                                         ),
                                         const SizedBox(height: 6),
                                         Text(
                                           service.name ?? '',
-                                          style: const TextStyle(
-                                              fontSize: 13,
-                                              fontWeight: FontWeight.bold),
+                                          style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                                           textAlign: TextAlign.center,
                                         ),
                                       ],
@@ -337,18 +313,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 150,
                         child: BlocBuilder<ServiceBloc, ServiceState>(
                           builder: (context, state) {
-                            if (state.popularServicesProvidersStatus ==
-                                ApiStatus.loading) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            } else if (state.popularServicesProvidersStatus ==
-                                ApiStatus.failed) {
-                              return const Center(
-                                  child: Text('فشل تحميل المزودين الشائعين'));
-                            } else if (state.popularServicesProviders == null ||
-                                state.popularServicesProviders!.isEmpty) {
-                              return const Center(
-                                  child: Text('لا يوجد مزودين حالياً'));
+                            if (state.popularServicesProvidersStatus == ApiStatus.loading) {
+                              return const Center(child: CircularProgressIndicator());
+                            } else if (state.popularServicesProvidersStatus == ApiStatus.failed) {
+                              return const Center(child: Text('فشل تحميل المزودين الشائعين'));
+                            } else if (state.popularServicesProviders == null || state.popularServicesProviders!.isEmpty) {
+                              return const Center(child: Text('لا يوجد مزودين حالياً'));
                             }
                             final providers = state.popularServicesProviders!;
                             return ListView.builder(
@@ -367,25 +337,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       ClipRRect(
-                                        borderRadius:
-                                            const BorderRadius.vertical(
-                                                top: Radius.circular(12)),
+                                        borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                                         child: Image.network(
                                           provider.imageUrl ?? '',
                                           width: 100,
                                           height: 80,
                                           fit: BoxFit.cover,
-                                          errorBuilder: (context, error,
-                                                  stackTrace) =>
-                                              const Icon(Icons.broken_image),
+                                          errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
                                         ),
                                       ),
                                       const SizedBox(height: 6),
                                       Text(
                                         provider.name ?? '',
-                                        style: const TextStyle(
-                                            fontSize: 13,
-                                            fontWeight: FontWeight.bold),
+                                        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.bold),
                                         textAlign: TextAlign.center,
                                       ),
                                     ],

@@ -16,7 +16,7 @@ class MyImageWidget extends StatelessWidget {
         },
         child: CachedNetworkImage(
           httpHeaders: {'Connection': 'Keep-Alive'},
-          imageUrl: 'http://10.0.0.2:8000/storage/7/Carpet-Cleaning.jpg',
+          imageUrl: imagePath,
           errorWidget: (context, url, error) =>
               Card(child: Text(error.toString())),
         ));

@@ -48,7 +48,7 @@ class MyHttpOverrides extends HttpOverrides {
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port) {
         // Allow only for local dev server
-        if (host == "10.0.2.2" || host == "localhost") {
+        if (host == "home.mustafafares.com" || host == "https") {
           return true;
         }
         return false;

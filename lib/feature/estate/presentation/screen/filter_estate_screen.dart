@@ -19,23 +19,12 @@ class _FilteredEstatesScreenState extends State<FilteredEstatesScreen> {
     setState(() {
       _filters = options;
       _filteredEstates = estates.where((estate) {
-        final matchesType =
-            options.selectedType == null || estate.type == options.selectedType;
-        final matchesArea =
-            options.minArea == null || estate.area >= options.minArea!;
-        final matchesPrice =
-            options.maxPrice == null || estate.price <= options.maxPrice!;
-        final matchesLocation = options.selectedLocation == null ||
-            estate.location
-                .toLowerCase()
-                .contains(options.selectedLocation!.toLowerCase());
-        final matchesRooms = options.selectedRooms == null ||
-            estate.rooms == options.selectedRooms;
-        return matchesType &&
-            matchesArea &&
-            matchesPrice &&
-            matchesLocation &&
-            matchesRooms;
+        final matchesType = options.selectedType == null || estate.type == options.selectedType;
+        final matchesArea = options.minArea == null || estate.area >= options.minArea!;
+        final matchesPrice = options.maxPrice == null || estate.price <= options.maxPrice!;
+        final matchesLocation = options.selectedLocation == null || estate.location.toLowerCase().contains(options.selectedLocation!.toLowerCase());
+        final matchesRooms = options.selectedRooms == null || estate.rooms == options.selectedRooms;
+        return matchesType && matchesArea && matchesPrice && matchesLocation && matchesRooms;
       }).toList();
     });
   }

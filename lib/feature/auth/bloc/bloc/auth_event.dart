@@ -21,6 +21,13 @@ class SignupButtonPressedEvent extends AuthEvent {
   });
 }
 
+class JoinRequestEvent extends AuthEvent {
+  final String service, address, name;
+  final File cv;
+
+  JoinRequestEvent(this.cv, {required this.service, required this.address, required this.name});
+}
+
 class PasswordButtonPressed extends AuthEvent {
   final String current_password, new_password, new_password_confirmation;
   PasswordButtonPressed(
