@@ -32,66 +32,83 @@ class _ProvidersScreenState extends State<ProvidersScreen> {
           'المخدمين',
         ),
       ),
-      body: BlocBuilder<ServiceBloc, ServiceState>(
-        builder: (context, state) {
-          switch (state.serviceWithProvStatus) {
-            case ApiStatus.initial:
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            case ApiStatus.success:
-              return state.serviceWithProv!.serviceProviders.isNotEmpty
-                  ? ListView.separated(
-                      padding: EdgeInsetsDirectional.only(start: 20, end: 20, top: 20),
-                      itemBuilder: (context, index) => Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: Colors.grey.withAlpha(21),
-                        ),
-                        child: Row(
-                          children: [
-                            state.serviceWithProv!.serviceProviders[index].image == null
-                                ? SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: Center(
-                                        child: Icon(
-                                      Icons.person,
-                                      size: 40,
-                                    )))
-                                : SizedBox(
-                                    height: 100,
-                                    width: 100,
-                                    child: MyImageWidget(imagePath: state.serviceWithProv!.serviceProviders[index].image!),
-                                  ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(state.serviceWithProv!.serviceProviders[index].name),
-                                Text(state.serviceWithProv!.serviceProviders[index].phone),
-                                Text(state.serviceWithProv!.serviceProviders[index].email),
-                                Text(state.serviceWithProv!.serviceProviders[index].hourlyRate),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 10,
-                      ),
-                      itemCount: state.categoryDetails!.services.length,
-                    )
-                  : Center(child: Text('لا يوجد خدمات'));
-            case ApiStatus.failed:
-              return Center(
-                child: Text('حصلت مشكلة ما'),
-              );
-            case ApiStatus.loading:
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-          }
-        },
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 20),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (val) {
+                context.read<ServiceBloc>().add(SearchProviders(query: val));
+              },
+            ),
+          ),
+          Expanded(
+            child: BlocBuilder<ServiceBloc, ServiceState>(
+              builder: (context, state) {
+                switch (state.serviceWithProvStatus) {
+                  case ApiStatus.initial:
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  case ApiStatus.success:
+                    return state.serviceWithProv!.serviceProviders.isNotEmpty
+                        ? ListView.separated(
+                            padding: EdgeInsetsDirectional.only(start: 20, end: 20, top: 20),
+                            itemBuilder: (context, index) => Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(16),
+                                color: Colors.grey.withAlpha(21),
+                              ),
+                              child: Row(
+                                children: [
+                                  state.serviceWithProv!.serviceProviders[index].image == null
+                                      ? SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: Center(
+                                              child: Icon(
+                                            Icons.person,
+                                            size: 40,
+                                          )))
+                                      : SizedBox(
+                                          height: 100,
+                                          width: 100,
+                                          child: MyImageWidget(imagePath: state.serviceWithProv!.serviceProviders[index].image!),
+                                        ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(state.serviceWithProv!.serviceProviders[index].name),
+                                      Text(state.serviceWithProv!.serviceProviders[index].phone),
+                                      Text(state.serviceWithProv!.serviceProviders[index].email),
+                                      Text(state.serviceWithProv!.serviceProviders[index].hourlyRate),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(
+                              height: 10,
+                            ),
+                            itemCount: state.serviceWithProv!.serviceProviders.length,
+                          )
+                        : Center(child: Text('لا يوجد خدمات'));
+                  case ApiStatus.failed:
+                    return Center(
+                      child: Text('حصلت مشكلة ما'),
+                    );
+                  case ApiStatus.loading:
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -22,14 +22,11 @@ class CustomListTile extends StatelessWidget {
       leading: leading,
       trailing: trailing,
       tileColor: color4,
-      title: Padding(
-        padding: EdgeInsets.only(left: 80),
-        child: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+      title: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

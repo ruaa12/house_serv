@@ -18,6 +18,18 @@ class GetPopularServicesEvent extends ServiceEvent {}
 
 class GetPopularServicesProvidersEvent extends ServiceEvent {}
 
+class SearchServiceEvent extends ServiceEvent {
+  final String query;
+
+  SearchServiceEvent({required this.query});
+}
+
+class SearchProviders extends ServiceEvent {
+  final String query;
+
+  SearchProviders({required this.query});
+}
+
 /*class GetServiceProvidersEvent extends ServiceEvent {
   final int serviceId;
   GetServiceProvidersEvent({required this.serviceId});*/

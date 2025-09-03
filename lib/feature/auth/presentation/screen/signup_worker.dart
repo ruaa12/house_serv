@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:home_serviece/feature/auth/presentation/screen/login_screen.dart';
+import 'package:home_serviece/feature/auth/presentation/screen/pending_screen.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/button.dart';
 import 'package:home_serviece/feature/auth/presentation/widget/custom_text_field.dart';
 import 'package:home_serviece/feature/home/presentation/screen/home_screen.dart';
@@ -330,14 +331,15 @@ class _SignupWorkerState extends State<SignupWorker> {
                               return Button(
                                   ontap: () {
                                     if (formKey.currentState!.validate()) {
-                                      context.read<AuthBloc>().add(
-                                            JoinRequestEvent(
-                                              cv!,
-                                              name: fullnameController.text,
-                                              address: addressController.text,
-                                              service: serviceController.text,
-                                            ),
-                                          );
+                                      // context.read<AuthBloc>().add(
+                                      //       JoinRequestEvent(
+                                      //         cv!,
+                                      //         name: fullnameController.text,
+                                      //         address: addressController.text,
+                                      //         service: serviceController.text,
+                                      //       ),
+                                      //     );
+                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => PendingScreen()), (route) => false);
                                     }
                                   },
                                   name: 'Sign up');
@@ -354,6 +356,7 @@ class _SignupWorkerState extends State<SignupWorker> {
                                     );
                                   },
                                 );
+                                Future.delayed(Duration(seconds: 4), (){Navigator.of(context).pop();});
                               }
                               if (State is RegisterSuccess) {
                                 pageController.nextPage(duration: const Duration(seconds: 2), curve: Curves.ease);

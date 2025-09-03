@@ -33,61 +33,79 @@ class _ServicesScreenState extends State<ServicesScreen> {
           'الخدمات',
         ),
       ),
-      body: BlocBuilder<ServiceBloc, ServiceState>(
-        builder: (context, state) {
-          switch (state.categoryDetailsStatus) {
-            case ApiStatus.initial:
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-            case ApiStatus.success:
-              return state.categoryDetails!.services.isNotEmpty
-                  ? ListView.separated(
-                      padding: EdgeInsetsDirectional.only(start: 20, end: 20, top: 20),
-                      itemBuilder: (context, index) => InkWell(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => ProvidersScreen(serviceId: state.categoryDetails!.services[index].id)));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Colors.grey.withAlpha(21),
-                          ),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                height: 100,
-                                width: 100,
-                                child: MyImageWidget(imagePath: state.categoryDetails!.services[index].imageUrl),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 20),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (val) {
+                context.read<ServiceBloc>().add(SearchServiceEvent(query: val));
+              },
+            ),
+          ),
+          SizedBox(height: 15,),
+          Expanded(
+            child: BlocBuilder<ServiceBloc, ServiceState>(
+              builder: (context, state) {
+                switch (state.categoryDetailsStatus) {
+                  case ApiStatus.initial:
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  case ApiStatus.success:
+                    return state.categoryDetails!.services.isNotEmpty
+                        ? ListView.separated(
+                            padding: EdgeInsetsDirectional.only(start: 20, end: 20, top: 20),
+                            itemBuilder: (context, index) => InkWell(
+                              onTap: () {
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => ProvidersScreen(serviceId: state.categoryDetails!.services[index].id)));
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  color: Colors.grey.withAlpha(21),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 100,
+                                      width: 100,
+                                      child: MyImageWidget(imagePath: state.categoryDetails!.services[index].imageUrl),
+                                    ),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(state.categoryDetails!.services[index].name),
+                                        Text('لا يوجد شرح'),
+                                      ],
+                                    )
+                                  ],
+                                ),
                               ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(state.categoryDetails!.services[index].name),
-                                  Text('لا يوجد شرح'),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      separatorBuilder: (context, index) => SizedBox(
-                        height: 10,
-                      ),
-                      itemCount: state.categoryDetails!.services.length,
-                    )
-                  : Center(child: Text('لا يوجد خدمات'));
-            case ApiStatus.failed:
-              return Center(
-                child: Text('حصلت مشكلة ما'),
-              );
-            case ApiStatus.loading:
-              return Center(
-                child: CircularProgressIndicator.adaptive(),
-              );
-          }
-        },
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(
+                              height: 10,
+                            ),
+                            itemCount: state.categoryDetails!.services.length,
+                          )
+                        : Center(child: Text('لا يوجد خدمات'));
+                  case ApiStatus.failed:
+                    return Center(
+                      child: Text('حصلت مشكلة ما'),
+                    );
+                  case ApiStatus.loading:
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                }
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

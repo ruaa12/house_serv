@@ -85,6 +85,25 @@ class _FilteredEstateListState extends State<FilteredEstateList> {
               ),
             ),
           ),
+          SizedBox(
+            height: 15,
+          ),
+          Padding(
+            padding: EdgeInsetsDirectional.symmetric(horizontal: 20),
+            child: TextFormField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+              ),
+              onChanged: (val) {
+                index == 1
+                    ? context.read<EstateBloc>().add(SearchCategoryEvent(query: val))
+                    : context.read<EstateBloc>().add(SearchHomeEvent(query: val));
+              },
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
           index == 0 ? estateBody() : serviceBody(),
         ],
       ),

@@ -17,7 +17,7 @@ class EstateCard extends StatelessWidget {
       // 🟡 أضفنا GestureDetector للكارد ككل
       onTap: () {
         if (estate.id != null) {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (_) => EstateDetailsScreen(

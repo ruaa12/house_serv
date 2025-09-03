@@ -23,3 +23,15 @@ class GetEstateDetailsEvent extends EstateEvent {
 
   GetEstateDetailsEvent(this.estateId);
 }
+
+class SearchHomeEvent extends EstateEvent{
+  final String query;
+
+  SearchHomeEvent({required this.query});
+}
+
+class SearchCategoryEvent extends EstateEvent{
+  final String query;
+
+  SearchCategoryEvent({required this.query});
+}

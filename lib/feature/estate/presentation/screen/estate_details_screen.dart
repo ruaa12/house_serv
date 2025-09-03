@@ -212,28 +212,201 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 12),
+                    SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: color7,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CreateHouseOrderContent(
+                                    houseId: 1,
+                                    estate: estates.first,
+                                  )),
+                            );
+                          },
+                          child: Text(
+                            'Buy Now',
+                            style: TextStyle(color: color5, fontSize: 16),
+                          ),
+                        )),
+                    const SizedBox(height: 12),
                   ],
                 ),
               );
 
             case ApiStatus.failed:
-              return Center(
+              final estate = state.estatedetails;
+
+              return SafeArea(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      state.message ?? 'حدث خطأ أثناء تحميل البيانات.',
-                      style: TextStyle(color: Colors.red, fontSize: 16),
-                      textAlign: TextAlign.center,
+                    // صورة العقار الأساسية
+                    Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(25),
+                            bottomRight: Radius.circular(25),
+                          ),
+                          child: estate?.images != null &&
+                              estate!.images!.isNotEmpty
+                              ? MyImageWidget(imagePath: estate.images!.first)
+                          //  Image.network(
+                          //     estate.images!.first,
+                          //     height: MediaQuery.of(context).size.height * 0.6,
+                          //     width: double.infinity,
+                          //     fit: BoxFit.cover,
+                          //     errorBuilder: (context, error, stackTrace) {
+                          //       return Container(
+                          //         height: MediaQuery.of(context).size.height * 0.6,
+                          //         width: double.infinity,
+                          //         color: color4,
+                          //         alignment: Alignment.center,
+                          //         child: Icon(
+                          //           Icons.error_outline,
+                          //           color: Colors.redAccent,
+                          //           size: 60,
+                          //         ),
+                          //       );
+                          //     },
+                          //   )
+                              : Container(
+                            height:
+                            MediaQuery.of(context).size.height * 0.4,
+                            width: double.infinity,
+                            color: color4,
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.redAccent,
+                              size: 60,
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 16,
+                          left: 16,
+                          child: _circleButton(
+                            icon: Icons.arrow_back,
+                            onTap: () => Navigator.pop(context),
+                          ),
+                        ),
+                        Positioned(
+                          top: 16,
+                          right: 16,
+                          child: _circleButton(
+                            icon:
+                            isFav ? Icons.favorite : Icons.favorite_border,
+                            color: isFav ? Colors.red : color7,
+                            onTap: () {
+                              setState(() {
+                                isFav = !isFav;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 12),
-                    ElevatedButton(
-                      onPressed: () {
-                        context
-                            .read<EstateBloc>()
-                            .add(GetEstateDetailsEvent(widget.estateId));
-                      },
-                      child: Text('حاول مرة أخرى'),
+
+                    // باقي المعلومات والتفاصيل + معرض الصور
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              estate?.title ?? "بدون عنوان",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: color1,
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              estate?.description ?? "لا يوجد وصف",
+                              style: TextStyle(
+                                color: color3,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Row(
+                              children: [
+                                Icon(Icons.location_on, color: color3),
+                                const SizedBox(width: 4),
+                                Expanded(
+                                  child: Text(
+                                    estate?.address != null
+                                        ? '${estate?.address!.city ?? ""}, ${estate?.address!.region ?? ""}, ${estate?.address!.street ?? ""}'
+                                        : "لا يوجد عنوان",
+                                    style: TextStyle(color: color3),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 16),
+
+                            // السعر والحالة والفترة
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  estate?.price ?? "-",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: color2,
+                                  ),
+                                ),
+                                Text(
+                                  estate?.status ?? "-",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: color3,
+                                  ),
+                                ),
+                                if (estate?.period != null)
+                                  Text(
+                                    estate!.period!,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: color3,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            const SizedBox(height: 24),
+
+                            // معرض الصور كشبكة
+
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Gallery',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: color1,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 12),
                     SizedBox(
@@ -251,9 +424,9 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => CreateHouseOrderContent(
-                                        houseId: 1,
-                                        estate: estates.first,
-                                      )),
+                                    houseId: 1,
+                                    estate: estates.first,
+                                  )),
                             );
                           },
                           child: Text(
@@ -261,6 +434,7 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                             style: TextStyle(color: color5, fontSize: 16),
                           ),
                         )),
+                    const SizedBox(height: 12),
                   ],
                 ),
               );

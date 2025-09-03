@@ -28,7 +28,7 @@ class CategoryDetailsData {
   final int id;
   final String name;
   final String mediaUrls;
-  final List<ServiceData> services;
+  List<ServiceData> services;
 
   CategoryDetailsData({
     required this.id,

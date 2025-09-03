@@ -23,7 +23,7 @@ class ServiceWithproviderData {
   final String name;
   final String description;
   final String imageUrl;
-  final List<ServiceProvider> serviceProviders;
+  List<ServiceProvider> serviceProviders;
 
   ServiceWithproviderData({
     required this.id,

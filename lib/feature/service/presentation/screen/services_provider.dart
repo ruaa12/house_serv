@@ -56,9 +56,7 @@ class ServiceProvidersScreen extends StatelessWidget {
                     child: CustomListTile(
                       trailing: Text('Rate: \$${provider.hourlyRate}/hour'),
                       title: provider.name,
-                      leading: MyImageWidget(
-                          imagePath:
-                              '38/vila.jpg'), // عرض الصورة من المسار المحدد
+                      leading: provider.image == null ? null : Image.network(provider.image!), // عرض الصورة من المسار المحدد
 
                       onTap: () {
                         Navigator.push(

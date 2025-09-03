@@ -6,6 +6,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:home_serviece/feature/auth/presentation/screen/pending_screen.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -102,10 +103,17 @@ Future<void> main() async {
 class DreamHouse extends StatelessWidget {
   final NotificationRepository notificationRepository;
 
-  const DreamHouse({
+  DreamHouse({
     Key? key,
     required this.notificationRepository,
   }) : super(key: key);
+
+  getPendingValue() async {
+    final prefs = await SharedPreferences.getInstance();
+    isInPending = await prefs.getBool('isInPending') ?? false;
+  }
+
+  bool isInPending = false;
 
   @override
   Widget build(BuildContext context) {
@@ -121,26 +129,19 @@ class DreamHouse extends StatelessWidget {
           create: (_) => AddressBloc(dataSource: AddressDataSource()),
         ),
         BlocProvider(
-          create: (_) =>
-              HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
+          create: (_) => HomeBloc(homeDatasource: HomeDatasource()), // أضف الـ HomeBloc
         ),
         BlocProvider(
           create: (_) => EstateBloc(estateDatasource: EstateDatasource()),
         ),
         BlocProvider(
-          create: (_) => OrderBloc(
-              dataSource: OrderDataSource(
-                  apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
+          create: (_) => OrderBloc(dataSource: OrderDataSource(apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
         ),
         BlocProvider(
-          create: (_) => WalletBloc(
-              dataSource: WalletDataSource(
-                  apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
+          create: (_) => WalletBloc(dataSource: WalletDataSource(apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
         ),
         BlocProvider(
-          create: (_) => ServiceBloc(
-              dataSource: ServiceDataSource(
-                  apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
+          create: (_) => ServiceBloc(dataSource: ServiceDataSource(apiVariabels: ApiVariabels())), // أضف الـ HomeBloc
         ),
         BlocProvider<NotificationCubit>(
           create: (_) {
@@ -156,10 +157,9 @@ class DreamHouse extends StatelessWidget {
             locale: context.locale,
             supportedLocales: context.supportedLocales,
             localizationsDelegates: context.localizationDelegates,
-            theme:
-                state.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
+            theme: state.isDarkModeEnabled ? ThemeData.dark() : ThemeData.light(),
             debugShowCheckedModeBanner: false,
-            home: OnbordingScreen(),
+            home: isInPending ? PendingScreen() : OnbordingScreen(),
             routes: {
               IamLookingFor.id: (context) => const IamLookingFor(),
               LoginScreen.id: (context) => LoginScreen(),
