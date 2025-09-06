@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
@@ -5,6 +7,8 @@ import 'package:home_serviece/core/unified_api/status.dart';
 import 'package:home_serviece/feature/estate/presentation/widget/estate_data.dart';
 import 'package:home_serviece/feature/order/bloc/bloc/order_bloc.dart';
 import 'package:home_serviece/feature/wallet/presentation/screen/wallet_screen.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:signature/signature.dart';
 
 class CreateHouseOrderContent extends StatefulWidget {
   final int houseId;
@@ -17,8 +21,7 @@ class CreateHouseOrderContent extends StatefulWidget {
   });
 
   @override
-  State<CreateHouseOrderContent> createState() =>
-      _CreateHouseOrderContentState();
+  State<CreateHouseOrderContent> createState() => _CreateHouseOrderContentState();
 }
 
 class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
@@ -30,6 +33,11 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
     _notesController.dispose();
     super.dispose();
   }
+
+  final SignatureController _controller = SignatureController(
+    penStrokeWidth: 5,
+    penColor: Colors.cyan,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -84,8 +92,7 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
                   const SizedBox(height: 8),
                   Row(
                     children: [
-                      const Icon(Icons.location_on,
-                          size: 16, color: Colors.grey),
+                      const Icon(Icons.location_on, size: 16, color: Colors.grey),
                       const SizedBox(width: 4),
                       Expanded(
                         child: Text(
@@ -118,7 +125,20 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
                   ),
                   const SizedBox(height: 20),
 
-                  // --- زر الإرسال ---
+                  Container(
+                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), border: Border.all(color: Colors.black)),
+                    padding: EdgeInsetsDirectional.symmetric(vertical: 10),
+                    child: Signature(
+                      controller: _controller,
+                      width: 300,
+                      height: 300,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 20,
+                  ),
                   state.createHouseOrderStatus == ApiStatus.loading
                       ? const Center(child: CircularProgressIndicator())
                       : SizedBox(
@@ -134,40 +154,21 @@ class _CreateHouseOrderContentState extends State<CreateHouseOrderContent> {
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
-                                final confirmed = await showDialog<bool>(
+                                final image = await _controller.toPngBytes();
+                                final tempDir = await getExternalStorageDirectory();
+                                final tempPath = '${tempDir!.path}/signature_${DateTime.now().millisecondsSinceEpoch}.png';
+
+                                final File file = File(tempPath);
+                                await file.writeAsBytes(image!.toList());
+                                print(file.path);
+                                print(widget.houseId);
+                                File imageFile = await File(tempPath).create();
+
+                                context.read<OrderBloc>().add(CreateHouseOrderEvent(
+                                      image: imageFile,
+                                      houseId: widget.houseId,
                                   context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text("تأكيد الطلب"),
-                                    content: const Text(
-                                        "هل أنت متأكد من أنك تريد إتمام هذا الطلب؟"),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(false),
-                                        child: const Text("إلغاء"),
-                                      ),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.of(context).pop(true),
-                                        child: const Text("تأكيد"),
-                                      ),
-                                    ],
-                                  ),
-                                );
-
-                                if (confirmed == true) {
-                                  // هنا ممكن تستدعي الـ bloc لإرسال الطلب
-                                  // BlocProvider.of<OrderBloc>(context).add(...);
-
-                                  // الانتقال إلى شاشة المحفظة
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const WalletScreen(),
-                                    ),
-                                  );
-                                }
+                                    ));
                               }
                             },
                             label: const Text("إرسال الطلب"),

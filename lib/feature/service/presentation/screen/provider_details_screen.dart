@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:home_serviece/feature/service/presentation/screen/book_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../order/presentation/screen/request_serv_screen.dart';
+
 class ProviderDetailsScreen extends StatelessWidget {
   final Map<String, dynamic> provider;
 
@@ -78,7 +80,7 @@ class ProviderDetailsScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _infoCard(Icons.star, '${provider['rating']}', 'Rating'),
+                  _infoCard(Icons.star, '${provider['hourlyRate']}', 'Rating'),
                   _infoCard(Icons.assignment_turned_in, '${provider['orders']}',
                       'Orders'),
                   _infoCard(Icons.work, '${provider['experience']} Years',
@@ -94,7 +96,7 @@ class ProviderDetailsScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BookScreen(),
+                      builder: (context) => CreateServiceOrderContent(serviceId: provider['id']),
                     ));
               },
               style: ElevatedButton.styleFrom(

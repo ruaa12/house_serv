@@ -34,7 +34,6 @@ class EstateCard extends StatelessWidget {
         padding: const EdgeInsets.all(6.0),
         child: Container(
           width: 220,
-          height: 300,
           margin: const EdgeInsets.only(left: 16),
           decoration: BoxDecoration(
             color: color2,

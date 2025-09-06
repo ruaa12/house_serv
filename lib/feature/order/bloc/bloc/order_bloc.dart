@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:home_serviece/core/unified_api/failures.dart';
 import 'package:home_serviece/core/unified_api/status.dart';
+import 'package:home_serviece/feature/home/presentation/screen/navbar.dart';
 import 'package:home_serviece/feature/order/data/data_source/order_datasource.dart';
 import 'package:home_serviece/feature/order/data/model/show_order.dart';
 part 'order_event.dart';
@@ -41,12 +45,14 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
     try {
       final result = await dataSource.createHouseOrder(
         houseId: event.houseId,
-        notes: event.notes,
+        image: event.image,
       );
       if (result) {
+        Navigator.pushAndRemoveUntil(event.context, MaterialPageRoute(builder: (context) => Navbar()), (route) => false);
         emit(state.copyWith(createHouseOrderStatus: ApiStatus.success));
       }
     } catch (e) {
+      print(e.toString());
       emit(state.copyWith(
         createHouseOrderStatus: ApiStatus.failed,
         createHouseOrderFailure: ServerFailure(message: e.toString()),
@@ -63,9 +69,10 @@ class OrderBloc extends Bloc<OrderEvent, OrderState> {
       final result = await dataSource.createServOrder(
         serviceId: event.serviceId,
         notes: event.notes,
-        serviceDate: event.serviceDate,
+        image: event.image,
       );
       if (result) {
+        Navigator.pushAndRemoveUntil(event.context, MaterialPageRoute(builder: (context) => Navbar()), (route) => false);
         emit(state.copyWith(createServOrderStatus: ApiStatus.success));
       }
     } catch (e) {

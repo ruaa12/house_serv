@@ -402,6 +402,7 @@ class _EstateDetailsScreenState extends State<EstateDetailsScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 12),
+                                Expanded(child: EstateDetailsGallery(images: estate!.images!,)),
                               ],
                             ),
                           ],

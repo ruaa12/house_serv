@@ -1,10 +1,8 @@
 import 'dart:convert';
 
-EstateDetailsResponseModel estateDetailsResponseModelFromJson(String str) =>
-    EstateDetailsResponseModel.fromJson(json.decode(str));
+EstateDetailsResponseModel estateDetailsResponseModelFromJson(String str) => EstateDetailsResponseModel.fromJson(json.decode(str));
 
-String estateDetailsResponseModelToJson(EstateDetailsResponseModel data) =>
-    json.encode(data.toJson());
+String estateDetailsResponseModelToJson(EstateDetailsResponseModel data) => json.encode(data.toJson());
 
 class EstateDetailsResponseModel {
   final bool? status;
@@ -17,8 +15,7 @@ class EstateDetailsResponseModel {
     this.data,
   });
 
-  factory EstateDetailsResponseModel.fromJson(Map<String, dynamic> json) =>
-      EstateDetailsResponseModel(
+  factory EstateDetailsResponseModel.fromJson(Map<String, dynamic> json) => EstateDetailsResponseModel(
         status: json["status"],
         message: json["message"],
         data: json["data"] == null ? null : EstateDetails.fromJson(json["data"]),
@@ -40,7 +37,8 @@ class EstateDetails {
   final String? period;
   final List<String>? images;
   final Address? address;
-  final Owner? owner;
+  final String? owner;
+  final String? ownerPhone;
 
   EstateDetails({
     this.id,
@@ -52,6 +50,7 @@ class EstateDetails {
     this.images,
     this.address,
     this.owner,
+    this.ownerPhone,
   });
 
   factory EstateDetails.fromJson(Map<String, dynamic> json) => EstateDetails(
@@ -60,12 +59,11 @@ class EstateDetails {
         description: json["description"],
         price: json["price"],
         status: json["status"],
+        ownerPhone: json["owner_phone"],
         period: json["period"],
-        images: json["images"] == null
-            ? []
-            : List<String>.from(json["images"].map((x) => x)),
+        images: json["images"] == null ? [] : List<String>.from(json["images"].map((x) => x)),
         address: json["address"] == null ? null : Address.fromJson(json["address"]),
-        owner: json["owner"] == null ? null : Owner.fromJson(json["owner"]),
+        owner: json["owner"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,11 +73,9 @@ class EstateDetails {
         "price": price,
         "status": status,
         "period": period,
-        "images": images == null
-            ? []
-            : List<dynamic>.from(images!.map((x) => x)),
+        "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
         "address": address?.toJson(),
-        "owner": owner?.toJson(),
+        "owner": owner,
       };
 }
 
